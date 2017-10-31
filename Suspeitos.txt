@@ -1,0 +1,41 @@
+Carmen Sandiego
+Feminino
+Viajar
+Ruivo
+Joias
+Conversivel
+
+Bruce Peck
+Masculino
+Golf
+Loiro
+Tattoo
+Esportivo
+
+Nicolas Cage
+Masculino
+Filmes
+Castanho
+Anel
+Limousine
+
+Louis Colombo
+Masculino
+Musica
+Preto
+Tattoo
+Conversivel
+
+Igor Artusky
+Masculino
+Danca
+Preto
+Mancando
+Jipe
+
+Matthew Drinkwater
+Masculino
+Filmes
+Loiro
+Joias
+Esportivo
