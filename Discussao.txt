@@ -1,2 +1,47 @@
 Versão 1.0
-ola
+
+Primeira Tela:
+	Pede login do player
+		- Se for admin (administrador) pede a senha de administrador.
+			- Se acertar, entra no menu de administrador.
+			- Se errar, avisa o erro e fecha o jogo.
+			
+		- Se não, se for um player que já existe, carrega seus pontos e sua patente
+			- Entra no jogo e começa um caso
+		
+		- Se não, quer dizer que o player não existe. Perguntar se quer fazer um novo player ou errou na digitação
+			- Se sim, cria um novo player, com patente 1 e pontuacao 0, e comeca um caso
+			- Se não, quer dizer que o usuario queria uma coisa e aconteceu outra. Voltar para a parte que pede um login.
+
+Menu de Administrador
+	Segunda Tela
+	1 - Mudar Login e Senha
+	2 - Criar um caso
+	3 - Fechar
+	
+	Main Game
+	REGRAS: Para vencer no caso, é necessário encontrar no minimo 3 caracteristcas do vilão
+	REGRAS: Além disso, precisa encontrar o ladrão em um certo numero de cidades "seguidas"
+		- 2 para caso fácil
+		- 4 para caso médio
+		- 6 para caso dificil
+		
+	 - Escolhe um dos casos registrados aleatoriamente.
+	 - Coloca player na cidade 1
+	 
+	  - Investigar
+		- Tem 3 dicas por cidade.
+			- Uma para a proxima cidade
+			- Uma para alguma caracterisca do vilao
+			- Uma para perder tempo
+	  
+	  - Viajar
+		- Tem de 3 a 4 cidades para poder viajar
+			- Cidade aonde estava
+			- Cidade que a dica diz para ir
+			- Cidade errada
+			- Cidade errada
+		
+	  - Anotar caracteristicas do vilao
+		- Pensar para a versao 1.1
+	
