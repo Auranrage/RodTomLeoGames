@@ -47,7 +47,7 @@ void cadastroVilao(char vilao[]) {
             //cadastro de novo suspeito
             if(opcaoYN == 'y' || opcaoYN == 'Y') {
                 getchar();
-                strtok(vssilao, "\n");
+                strtok(vilao, "\n");
                 printf("Escolha o sexo\n1- MASCULINO  2- FEMININO\n");
                 scanf("%i", &menu);
                 switch (menu) {
