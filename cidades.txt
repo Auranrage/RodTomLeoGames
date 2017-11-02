@@ -1,0 +1,30 @@
+1 New York
+2 Rio de Janeiro
+3 Sao Paulo
+4 Berlim
+5 Paris
+6 Los Angeles
+7 Roma
+8 Montreal
+9 Moscow
+10 Londres
+11 Athenas
+12 Tokyo
+13 Oslo
+14 Instanbul
+15 Buenos Aires
+16 Pequim
+17 Campinas
+18 Cidade do Mexico
+19 Cairo
+20 Dubai
+21 Baghdad
+22 Delhi
+23 Lagos
+24 Karachi
+25 Dhaka
+26 Seoul
+27 Bogota
+28 Hong King
+29 Casablanca
+30 Santiago
