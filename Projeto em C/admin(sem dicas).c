@@ -10,6 +10,197 @@ typedef enum {
     avancado,
 } nivelDificuldade;
 
+void cadastroCidade (char nomeCidade[]) {
+    int qtdeCidades = 0, booleanCidade = 0, opcaoN = 0;
+    FILE *listaCidades = fopen("cidades.txt", "r");
+    char cmpCidade[50], opcaoYN;
+    
+    while (booleanCidade != 1) {
+        if(opcaoN == 1) {
+            printf("Cidade roubada: ");
+            gets(nomeCidade);
+        }
+        
+        //loop para verificar o numero de cidades e se a cidade ja foi cadastrada
+        while (!feof(listaCidades)) {
+            fscanf(listaCidades, " %i", &qtdeCidades);
+            fgets(cmpCidade, sizeof(cmpCidade), listaCidades);
+            memmove(cmpCidade, cmpCidade+1, strlen(cmpCidade)); //retira o espaco no comeco da string
+            if(strcmp(nomeCidade, cmpCidade) == 0) {
+                booleanCidade = 1;
+            }
+        }
+        
+        if(booleanCidade == 0) {
+            printf("Cidade não cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
+            scanf("%c", &opcaoYN);
+            
+            //loop para caso a opcao entrada seja invalida (diferente de y ou n)
+            while (opcaoYN != 'y' && opcaoYN != 'Y' && opcaoYN != 'n' && opcaoYN != 'N') {
+                getchar();
+                printf("Opcao invalida\n");
+                printf("Cidade não cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
+                scanf("%c", &opcaoYN);
+            }
+            
+            //cadastro de nova cidade
+            if(opcaoYN == 'y' || opcaoYN == 'Y') {
+                rewind(listaCidades);
+                fclose(listaCidades);
+                listaCidades = fopen("cidades.txt", "a");
+                strtok(nomeCidade, "\n");
+                fprintf(listaCidades, "%i %s\n", qtdeCidades+1, nomeCidade);
+                booleanCidade = 1;
+            }
+            else {
+                getchar();
+                opcaoN = 1;
+            }
+        }
+    }
+    
+    
+}
+
+//funcao para cadastrar novos viloes
+void cadastroVilao(char vilao[]) {
+    FILE *listaSuspeitos;
+    int menu, booleanVilao = 0, opcaoN = 0;
+    char leitura[50], opcaoYN, sexo[15], hobby[20], cabelo[15], destaque[20], carro[25];
+    //booleanVilao = 1 -> vilao cadastrado
+    
+    listaSuspeitos = fopen("Suspeitos.txt", "r");
+    
+    while (booleanVilao != 1) {
+        if (opcaoN == 1) {
+            printf("Vilao do caso: ");
+            gets(vilao);
+        }
+        
+        //verifica se o nome ja foi cadastrado
+        while (!feof(listaSuspeitos) && booleanVilao != 1) {
+            fgets(leitura, sizeof(leitura), listaSuspeitos);
+            if (strcmp(leitura, vilao) == 0) {
+                booleanVilao = 1;
+            }
+        }
+        if (booleanVilao == 0) {
+            rewind(listaSuspeitos);
+            printf("O vilao nao foi encontrado. Voce gostaria de cadastrar um novo vilao?(Y/N)\n");
+            scanf(" %c", &opcaoYN);
+            //loop para caso a opcao entrada seja invalida (diferente de y ou n)
+            while (opcaoYN != 'y' && opcaoYN != 'Y' && opcaoYN != 'n' && opcaoYN != 'N') {
+                getchar();
+                printf("Opcao invalida\n");
+                printf("O vilao nao foi encontrado. Voce gostaria de cadastrar um novo vilao?(Y/N)\n");
+                scanf(" %c", &opcaoYN);
+            }
+            
+            //cadastro de novo suspeito
+            if(opcaoYN == 'y' || opcaoYN == 'Y') {
+                getchar();
+                strtok(vilao, "\n");
+                printf("Escolha o sexo\n1- MASCULINO  2- FEMININO\n");
+                scanf("%i", &menu);
+                switch (menu) {
+                    case 1:
+                        strcpy(sexo, "Masculino");
+                        break;
+                    case 2:
+                        strcpy(sexo, "Feminino");
+                    default:
+                        break;
+                }
+                printf("Escolha o hobby\n1- GOLF  2- MUSICA  3- VIAJAR  4- FILMES  5- DANCA\n");
+                scanf("%i", &menu);
+                switch (menu) {
+                    case 1:
+                        strcpy(hobby, "Golf");
+                        break;
+                    case 2:
+                        strcpy(hobby, "Musica");
+                        break;
+                    case 3:
+                        strcpy(hobby, "Viajar");
+                        break;
+                    case 4:
+                        strcpy(hobby, "Filmes");
+                        break;
+                    case 5:
+                        strcpy(hobby, "Danca");
+                        break;
+                    default:
+                        break;
+                }
+                printf("Escolha o cabelo\n1- PRETO  2- CASTANHO 3- LOIRO  4- RUIVO\n");
+                scanf("%i", &menu);
+                switch (menu) {
+                    case 1:
+                        strcpy(cabelo, "Preto");
+                        break;
+                    case 2:
+                        strcpy(cabelo, "Castanho");
+                        break;
+                    case 3:
+                        strcpy(cabelo, "Loiro");
+                        break;
+                    case 4:
+                        strcpy(cabelo, "Ruivo");
+                        break;
+                    default:
+                        break;
+                }
+                printf("Escolha o destaque\n1- ANEL  2- JOIAS  3- TATTOO  4- BENGALA\n");
+                scanf("%i", &menu);
+                switch (menu) {
+                    case 1:
+                        strcpy(destaque, "Anel");
+                        break;
+                    case 2:
+                        strcpy(destaque, "Joias");
+                        break;
+                    case 3:
+                        strcpy(destaque, "Tattoo");
+                        break;
+                    case 4:
+                        strcpy(destaque, "Bengala");
+                        break;
+                    default:
+                        break;
+                }
+                printf("Escolha o carro\n1- CONVERSIVEL  2- JIPE  3- LIMOUSINE 4- ESPORTIVO\n");
+                scanf("%i", &menu);
+                switch (menu) {
+                    case 1:
+                        strcpy(carro, "Conversivel");
+                        break;
+                    case 2:
+                        strcpy(carro, "Jipe");
+                        break;
+                    case 3:
+                        strcpy(carro, "Limousine");
+                        break;
+                    case 4:
+                        strcpy(carro, "Esportivo");
+                        break;
+                    default:
+                        break;
+                }
+                fclose(listaSuspeitos);
+                listaSuspeitos = fopen("Suspeitos.txt", "a");
+                fprintf(listaSuspeitos, "\n%s\n%s\n%s\n%s\n%s\n%s\n", vilao, sexo, hobby, cabelo, destaque, carro);
+                printf("Vilao cadastrado\n");
+                booleanVilao = 1;
+            }
+            //caso o usuario nao deseje cadastrar o nove nome, o programa ira ler outro nome
+            if(opcaoYN == 'n' || opcaoYN == 'N') {
+                getchar();
+                opcaoN = 1;
+            }
+        }
+    }
+}
+
 //procedimento para editar dados do admin
 void editarDados(FILE *admin) {
     char nome[30], login[30], senha[30];
@@ -33,111 +224,10 @@ void editarDados(FILE *admin) {
     fclose(admin);
 }
 
-//Funcao de criptografia da senha
-int criptografia()
-{
-	FILE *criptoSenha, *admin;
-	char c;
-	admin = fopen("admin.txt", "r");
-	criptoSenha = fopen("criptosenha.txt", "w+");
-	while (!feof(admin) || c != ' ')
-	{
-		c = fgetc(admin);
-	}
-	do
-	{
-		c = fgetc(admin);
-		if (c % 2 != 0)
-		{
-			c += 2;
-			if (c == 123)
-			{
-				c = 97;
-			}
-			if (c == 91)
-			{
-				c = 65;
-			}
-			if (c == 59)
-			{
-				c = 49;
-			}
-		}
-		else
-		{
-			c -= 2;
-			if (c == 96)
-			{
-				c = 122;
-			}
-			if (c == 64)
-			{
-				c = 90;
-			}
-			if (c == 46)
-			{
-				c = 56;
-			}
-		}
-		fprintf(criptoSenha, "%c", c);
-	} while (!feof(admin));
-	return 0;
-}
-
-int descriptografia()
-{
-	FILE *descriptoSenha, *criptoSenha;
-	char c;
-	criptoSenha = fopen("criptoSenha.txt", "r");
-	criptoSenha = fopen("descriptosenha.txt", "w+");
-	while (!feof(criptoSenha) || c != ' ')
-	{
-		c = fgetc(criptoSenha);
-	}
-	do
-	{
-		c = fgetc(criptoSenha);
-		if (c % 2 != 0)
-		{
-			c -= 2;
-			if (c == 95)
-			{
-				c = 121;
-			}
-			if (c == 63)
-			{
-				c = 89;
-			}
-			if (c == 47)
-			{
-				c = 57;
-			}
-		}
-		else
-		{
-			c += 2;
-			if (c == 124)
-			{
-				c = 98;
-			}
-			if (c == 92)
-			{
-				c = 66;
-			}
-			if (c == 58)
-			{
-				c = 48;
-			}
-		}
-		fprintf(descriptoSenha, "%c", c);
-	} while (!feof(criptoSenha));
-	return 0;
-}
-
 int cadastrarCaso() {
     FILE *listaCasos = fopen("caso.txt", "r");
     int numeroCaso = 1, dificuldade;
-    char tesouro[50], pais[30], vilao[50], leitura[100], cmpCaso[20];
+    char tesouro[50], cidade[50], vilao[50], leitura[100], cmpCaso[20];
     
     sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
     
@@ -156,16 +246,24 @@ int cadastrarCaso() {
     printf("Tesouro roubado: ");
     fgets(tesouro, sizeof(tesouro), stdin);
     strtok(tesouro, "\n");
-    printf("Pais roubado: ");
-    fgets(pais, sizeof(pais), stdin);
-    strtok(pais, "\n");
+    printf("Cidade roubada: ");
+    fgets(cidade, sizeof(cidade), stdin);
+    cadastroCidade(cidade);
+    getchar();
+    strtok(cidade, "\n");
     printf("Vilao do caso: ");
     fgets(vilao, sizeof(vilao), stdin);
+    
+    //cadastrar vilao caso ele não exista em Suspeitos.txt
+    cadastroVilao(vilao);
     strtok(vilao, "\n");
+    
     printf("Nivel do caso (1/2/3): ");
     scanf("%i", &dificuldade);
     
-    fprintf(listaCasos, "\n%s%s\n%s\n%s\n%d\n", cmpCaso, tesouro, pais, vilao, dificuldade);
+    //numero de pistas cadastradas depende do nivel de dificuldade
+    
+    fprintf(listaCasos, "\n%s%s\n%s\n%s\n%d\n", cmpCaso, tesouro, cidade, vilao, dificuldade);
     
     fclose(listaCasos);
     
@@ -198,7 +296,7 @@ int opcaoAdmin(char login[]) {
             getchar();
             switch (menu)
             {
-                //editar dados do admin
+                    //editar dados do admin
                 case 1:
                     editarDados(dadosAdmin);
                     break;
@@ -293,7 +391,7 @@ int identificarAgente(char nomeAgente[]) {
 }
 
 int main() {
-    char agente[20], opcaoYN;
+    char agente[20];
     int nivelAgente;
     
     printf("Bem-vindo agente. Por favor, idenfitique-se: ");
@@ -332,3 +430,4 @@ int main() {
     
     system("pause");
 }
+
