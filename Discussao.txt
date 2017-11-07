@@ -1,4 +1,4 @@
-Vers„o 1.0
+Vers√£o 1.0
 
 Primeira Tela:
 	Pede login do player
@@ -6,12 +6,12 @@ Primeira Tela:
 			- Se acertar, entra no menu de administrador.
 			- Se errar, avisa o erro e fecha o jogo.
 			
-		- Se n„o, se for um player que j· existe, carrega seus pontos e sua patente
-			- Entra no jogo e comeÁa um caso
+		- Se n√£o, se for um player que j√° existe, carrega seus pontos e sua patente
+			- Entra no jogo e come√ßa um caso
 		
-		- Se n„o, quer dizer que o player n„o existe. Perguntar se quer fazer um novo player ou errou na digitaÁ„o
+		- Se n√£o, quer dizer que o player n√£o existe. Perguntar se quer fazer um novo player ou errou na digita√ß√£o
 			- Se sim, cria um novo player, com patente 1 e pontuacao 0, e comeca um caso
-			- Se n„o, quer dizer que o usuario queria uma coisa e aconteceu outra. Voltar para a parte que pede um login.
+			- Se n√£o, quer dizer que o usuario queria uma coisa e aconteceu outra. Voltar para a parte que pede um login.
 
 Menu de Administrador
 	Segunda Tela
@@ -20,10 +20,10 @@ Menu de Administrador
 	3 - Fechar
 	
 	Main Game
-	REGRAS: Para vencer no caso, È necess·rio encontrar no minimo 3 caracteristcas do vil„o
-	REGRAS: AlÈm disso, precisa encontrar o ladr„o em um certo numero de cidades "seguidas"
-		- 2 para caso f·cil
-		- 4 para caso mÈdio
+	REGRAS: Para vencer no caso, √© necess√°rio encontrar no minimo 3 caracteristcas do vil√£o
+	REGRAS: Al√©m disso, precisa encontrar o ladr√£o em um certo numero de cidades "seguidas"
+		- 2 para caso f√°cil
+		- 4 para caso m√©dio
 		- 6 para caso dificil
 		
 	 - Escolhe um dos casos registrados aleatoriamente.
@@ -31,9 +31,7 @@ Menu de Administrador
 	 
 	  - Investigar
 		- Tem 3 dicas por cidade.
-			- Uma para a proxima cidade
-			- Uma para alguma caracterisca do vilao
-			- Uma para perder tempo
+			- No minimo uma delas tem que ser para saber qual √© a proxima cidade
 	  
 	  - Viajar
 		- Tem de 3 a 4 cidades para poder viajar
@@ -44,4 +42,34 @@ Menu de Administrador
 		
 	  - Anotar caracteristicas do vilao
 		- Pensar para a versao 1.1
+	
+Arquivos
+	- DadosDoAdministrador cont√©m as informa√ß√µes relevantes ao administrador. Formato:
+	LOGIN SENHA
+	NOME
+	
+	- DadosDosAgentes cont√©m as informa√ß√µes sobre os players. Formato:
+	PLAYER1
+	NIVEL_DO_PLAYER1
+	PLAYER2
+	NIVEL_DO_PLAYER2
+	...
+	
+	- DadosDosSuspeitos cont√©m as informa√ß√µes sobre os suspeitos da VILE, os vil√µes. Formato:
+	NOME1
+	SEXO_DO_NOME1
+	HOBBY_DO_NOME1
+	COR_DE_CABELO_DO_NOME1
+	DESTAQUE_DO_NOME1
+	CARRO_DO_NOME1
+	
+	NOME2
+	SEXO_DO_NOME2
+	HOBBY_DO_NOME2
+	COR_DE_CABELO_DO_NOME2
+	DESTAQUE_DO_NOME2
+	CARRO_DO_NOME2
+	
+	...
+	
 	
