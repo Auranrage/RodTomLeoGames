@@ -354,6 +354,7 @@ int identificarAgente(char nomeAgente[]) {
     if(id == 0) {
         getchar();
         
+        //verifica se o login esta no arquivo de admin
         admin = fopen("admin.txt", "r");
         fscanf(admin, "%s", leitura);
         if(strcmp(leitura, nomeAgente) == 0) {
