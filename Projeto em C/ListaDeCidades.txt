@@ -1,30 +1,26 @@
-1 New York
-2 Rio de Janeiro
-3 Sao Paulo
-4 Berlim
-5 Paris
-6 Los Angeles
-7 Roma
-8 Montreal
-9 Moscow
-10 Londres
-11 Athenas
-12 Tokyo
-13 Oslo
-14 Instanbul
-15 Buenos Aires
-16 Pequim
-17 Campinas
-18 Cidade do Mexico
-19 Cairo
-20 Dubai
-21 Baghdad
-22 Delhi
-23 Lagos
-24 Karachi
-25 Dhaka
-26 Seoul
-27 Bogota
-28 Hong Kong
-29 Casablanca
-30 Santiago
+Caso 3:
+Cristo Redentor
+Carmen Sandiego
+3
+Rio de Janeiro
+Eu vi uma mulher ruiva passando por aqui ontem. Ela parecia estar com pressa
+Acredito que seu suspeito esteve por aqui ontem. Ela trocou todo o dinheiro dela por Euros
+Sim, ela esteve no nosso restaurante ontem. Ela estava sozinha e comeu uma das massas da casa
+Ela embarcou em um vao com uma bandeira vermelha, branca e verde
+Roma
+Ela veio em nossa loja ontem a tarde e comprou um anel com um rubi
+Eu ouvi ela conversando com aluem. Parece que ela queria visitar um grande pais na Asia
+Ela saiu daqui em um conversivel com uma bandeira vermelha
+Pequim
+Ela passou aqui ontem a tarde. Ela trocou todo o dinheiro dela por Rupias
+Ela me contou que adorava viajar e que mal podia esperar para conhecer uma regiao desertica
+Ela saiu em um aviao com uma bandeira verde e branca
+Karachi
+Ela esteve nesse mercado ontem. Parece que ela estava procurando por bacalhau
+Ela trocou todo o dinheiro dela por Euros
+Ela passou na biblioteca ontem, procurando um livro chamado Os Lusiadas
+Lisboa
+Ela me disse que queria visitar um dos Tigres Asiaticos
+Ela passou aqui na biblioteca. Ela ficou intrigada com uma foto de uma garota correndo de uma bomba e me perguntou aonde que isso tinha acontecido
+Ela trocou todo o dinheiro dela por Dongs
+Hanoi
