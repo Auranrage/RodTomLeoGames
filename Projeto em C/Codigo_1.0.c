@@ -343,7 +343,6 @@ int cadastrarCaso() {
     int dificuldade, numeroCaso = 1;
     
     sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
-    printf("%s", cmpCaso);
     
     printf("Tesouro roubado: ");
     fgets(tesouro, sizeof(tesouro), stdin);
