@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 //enum para os niveis de dificuldade
 typedef enum {
@@ -10,21 +10,34 @@ typedef enum {
     avancado,
 } nivelDificuldade;
 
-void cadastroCidade (char nomeCidade[]) {
-    int qtdeCidades = 0, booleanCidade = 0, opcaoN = 0;
-    FILE *listaCidades = fopen("cidades.txt", "r");
+//funcao para verificar se a cidade lida ja esta cadastrada. Caso nao esteja, o usuario pode cadastra-la
+int cadastroCidade(char nomeCidade[]) {
+    //variaveis com cmp sao somente para leitura do arquivo
+    int booleanCidade = 0, opcaoN = 0, cmp, booleanCadastro = 0, qtdeCidades = 0;
+    FILE *listaCidades = fopen("ListaDeCidades.txt", "r");
     char cmpCidade[50], opcaoYN;
     
+    while (!feof(listaCidades)) {
+        fgets(cmpCidade, sizeof(cmpCidade), listaCidades);
+        qtdeCidades++;
+    }
+    rewind(listaCidades);
+    
     while (booleanCidade != 1) {
+        
+        //caso o usuario tenha escolhido para nao cadastrar a cidade
         if(opcaoN == 1) {
+            rewind(listaCidades);
             printf("Cidade roubada: ");
-            gets(nomeCidade);
+            fgets(nomeCidade, sizeof(nomeCidade), stdin);
+            strtok(nomeCidade, "\n");
         }
         
-        //loop para verificar o numero de cidades e se a cidade ja foi cadastrada
+        //loop para verificar se a cidade ja foi cadastrada
         while (!feof(listaCidades)) {
-            fscanf(listaCidades, " %i", &qtdeCidades);
+            fscanf(listaCidades, " %i", &cmp);
             fgets(cmpCidade, sizeof(cmpCidade), listaCidades);
+            strtok(cmpCidade, "\n");
             memmove(cmpCidade, cmpCidade+1, strlen(cmpCidade)); //retira o espaco no comeco da string
             if(strcmp(nomeCidade, cmpCidade) == 0) {
                 booleanCidade = 1;
@@ -37,44 +50,48 @@ void cadastroCidade (char nomeCidade[]) {
             
             //loop para caso a opcao entrada seja invalida (diferente de y ou n)
             while (opcaoYN != 'y' && opcaoYN != 'Y' && opcaoYN != 'n' && opcaoYN != 'N') {
-                getchar();
                 printf("Opcao invalida\n");
                 printf("Cidade não cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
+                fflush(stdin);
                 scanf("%c", &opcaoYN);
             }
             
             //cadastro de nova cidade
             if(opcaoYN == 'y' || opcaoYN == 'Y') {
-                rewind(listaCidades);
                 fclose(listaCidades);
-                listaCidades = fopen("cidades.txt", "a");
+                listaCidades = fopen("ListaDeCidades.txt", "a");
                 strtok(nomeCidade, "\n");
-                fprintf(listaCidades, "%i %s\n", qtdeCidades+1, nomeCidade);
+                fprintf(listaCidades, "%i %s\n", qtdeCidades, nomeCidade);
+                fflush(listaCidades);
+                qtdeCidades++;
                 booleanCidade = 1;
+                booleanCadastro = 1;
+                getchar();
             }
+            //caso o usuario nao queira cadastrar a cidade lida
             else {
                 getchar();
                 opcaoN = 1;
             }
         }
     }
-    
-    
+    return booleanCadastro; //indica se a cidade lida foi cadastrada no arquivo
 }
 
-//funcao para cadastrar novos viloes
+//procedimento para cadastrar novos viloes
 void cadastroVilao(char vilao[]) {
     FILE *listaSuspeitos;
     int menu, booleanVilao = 0, opcaoN = 0;
     char leitura[50], opcaoYN, sexo[15], hobby[20], cabelo[15], destaque[20], carro[25];
-    //booleanVilao = 1 -> vilao cadastrado
+    //booleanVilao == 1 -> vilao cadastrado
     
-    listaSuspeitos = fopen("Suspeitos.txt", "r");
+    listaSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
     
     while (booleanVilao != 1) {
         if (opcaoN == 1) {
             printf("Vilao do caso: ");
             gets(vilao);
+            strcat(vilao, "\n");
         }
         
         //verifica se o nome ja foi cadastrado
@@ -187,8 +204,9 @@ void cadastroVilao(char vilao[]) {
                         break;
                 }
                 fclose(listaSuspeitos);
-                listaSuspeitos = fopen("Suspeitos.txt", "a");
+                listaSuspeitos = fopen("DadosDosSuspeitos.txt", "a");
                 fprintf(listaSuspeitos, "\n%s\n%s\n%s\n%s\n%s\n%s\n", vilao, sexo, hobby, cabelo, destaque, carro);
+                fflush(listaSuspeitos);
                 printf("Vilao cadastrado\n");
                 booleanVilao = 1;
             }
@@ -201,11 +219,104 @@ void cadastroVilao(char vilao[]) {
     }
 }
 
+//procedimento para cadastro de dicas
+void cadastroDicas(int nivelDificuldade) {
+    int cidadeCaso, i, j, qtdeCidades = 0, cidadeCadastrada;
+    char cidade[30], dica[500], leitura[50];
+    FILE *salvarDados, *cidades = fopen("ListaDeCidades.txt", "r");
+    getchar();
+    
+    //loop para determinar qtde de cidades cadastradas
+    while (!feof(cidades)) {
+        fgets(leitura, sizeof(leitura), cidades);
+        qtdeCidades++;
+    }
+    
+    //determina a quantidade de cidades a ser visitada dependendo do nivel de dificuldade
+    switch (nivelDificuldade) {
+        case 1:
+            salvarDados = fopen("CasosFaceis.txt", "a");
+            cidadeCaso = 3;
+            break;
+        case 2:
+            salvarDados = fopen("CasosMedios.txt", "a");
+            cidadeCaso = 5;
+            break;
+        case 3:
+            salvarDados = fopen("CasosDificeis.txt", "a");
+            cidadeCaso = 7;
+            break;
+        default:
+            printf("error\n");
+            break;
+    }
+    
+    for (i = 0; i < cidadeCaso; i++) {
+        //leitura da primeira cidade com 4 dicas
+        if (i == 0) {
+            printf("Cidade nº%i: ", i+1);
+            fgets(cidade, sizeof(cidade), stdin);
+            strtok(cidade, "\n");
+            cidadeCadastrada = cadastroCidade(cidade);
+            if(cidadeCadastrada == 1) { //caso tenha ocorrido um cadastro de uma nova cidade, o programa atualiza a qtde de cidades cadastradas
+                qtdeCidades++;
+            }
+            fprintf(salvarDados, "%s\n", cidade);
+            fflush(salvarDados);
+            //leitura das primeiras 4 dicas
+            for (j = 0; j < 4; j++) {
+                fflush(stdin);
+                printf("Dica %i: ", j + 1);
+                fgets(dica, sizeof(dica), stdin);
+                strtok(dica, "\n");
+                fprintf(salvarDados, "%s\n", dica);
+                fflush(salvarDados);
+            }
+        }
+        else {
+            //leitura da ultima cidade, sem dicas
+            if (i == cidadeCaso - 1) {
+                printf("Ultima cidade: ");
+                fgets(cidade, sizeof(cidade), stdin);
+                strtok(cidade, "\n");
+                cidadeCadastrada = cadastroCidade(cidade);
+                if(cidadeCadastrada == 1) {
+                    qtdeCidades++;
+                }
+                fprintf(salvarDados, "%s\n", cidade);
+                fflush(salvarDados);
+            }
+            //leitura das outras cidades com 3 dicas
+            else {
+                printf("Cidade nº%i: ", i+1);
+                fgets(cidade, sizeof(cidade), stdin);
+                strtok(cidade, "\n");
+                cidadeCadastrada = cadastroCidade(cidade);
+                if(cidadeCadastrada == 1) {
+                    qtdeCidades++;
+                }
+                fprintf(salvarDados, "%s\n", cidade);
+                fflush(salvarDados);
+                
+                //leitura de tres dicas
+                for (j = 0; j < 3; j++) {
+                    fflush(stdin);
+                    printf("Dica %i: ", j + 1);
+                    fgets(dica, sizeof(dica), stdin);
+                    strtok(dica, "\n");
+                    fprintf(salvarDados, "%s\n", dica);
+                    fflush(salvarDados);
+                }
+            }
+        }
+    }
+}
+
 //procedimento para editar dados do admin
 void editarDados(FILE *admin) {
     char nome[30], login[30], senha[30];
     
-    admin = fopen("admin.txt", "w");
+    admin = fopen("DadosDoAdministrador.txt", "w");
     
     //leitura dos novos dados
     printf("Digite um novo nome: ");
@@ -220,73 +331,107 @@ void editarDados(FILE *admin) {
     
     //novos dados sao registrados no arquivo
     fprintf(admin, "%s %s\n%s", login, senha, nome);
+    fflush(admin);
     
     fclose(admin);
 }
 
+//funcao para cadastrar novos casos
 int cadastrarCaso() {
-    FILE *listaCasos = fopen("caso.txt", "r");
-    int numeroCaso = 1, dificuldade;
-    char tesouro[50], cidade[50], vilao[50], leitura[100], cmpCaso[20];
+    FILE *listaCasos;
+    char vilao[50], tesouro[30], cmpCaso[20], leitura[100];
+    int dificuldade, numeroCaso = 1;
     
     sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
-    
-    while (!feof(listaCasos)) {
-        fgets(leitura, sizeof(leitura), listaCasos);
-        if (strcmp(leitura, cmpCaso) == 0) {
-            numeroCaso++;
-            sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
-        }
-    }
-    
-    fclose(listaCasos);
-    
-    listaCasos = fopen("caso.txt", "a");
+    printf("%s", cmpCaso);
     
     printf("Tesouro roubado: ");
     fgets(tesouro, sizeof(tesouro), stdin);
     strtok(tesouro, "\n");
-    printf("Cidade roubada: ");
-    fgets(cidade, sizeof(cidade), stdin);
-    cadastroCidade(cidade);
-    getchar();
-    strtok(cidade, "\n");
+    
     printf("Vilao do caso: ");
     fgets(vilao, sizeof(vilao), stdin);
-    
-    //cadastrar vilao caso ele não exista em Suspeitos.txt
     cadastroVilao(vilao);
-    strtok(vilao, "\n");
     
-    printf("Nivel do caso (1/2/3): ");
+    printf("Nivel de dificuldade (1/2/3): ");
     scanf("%i", &dificuldade);
+    while (dificuldade != 1 && dificuldade != 2 && dificuldade != 3) {
+        printf("Opcao invalida\nNivel de dificuldade (1/2/3): ");
+        scanf("%i", &dificuldade);
+    }
     
-    //numero de pistas cadastradas depende do nivel de dificuldade
+    switch (dificuldade) {
+        case 1:
+            listaCasos = fopen("CasosFaceis.txt", "r");
+            //verifica quantos casos ja foram cadastrados nessa dificuldade
+            while (!feof(listaCasos)) {
+                fgets(leitura, sizeof(leitura), listaCasos);
+                if (strcmp(leitura, cmpCaso) == 0) {
+                    numeroCaso++;
+                    sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
+                }
+            }
+            //comeca a escrtia dos dados inseridos pelo usuario no arquivo
+            fclose(listaCasos);
+            listaCasos = fopen("CasosFaceis.txt", "a");
+            fprintf(listaCasos, "\n%s%s\n%s", cmpCaso, tesouro, vilao);
+            fflush(listaCasos);
+            break;
+        case 2:
+            listaCasos = fopen("CasosMedios.txt", "r");
+            
+            while (!feof(listaCasos)) {
+                fgets(leitura, sizeof(leitura), listaCasos);
+                if (strcmp(leitura, cmpCaso) == 0) {
+                    numeroCaso++;
+                    sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
+                }
+            }
+            fclose(listaCasos);
+            listaCasos = fopen("CasosMedios.txt", "a");
+            fprintf(listaCasos, "\n%s%s\n%s", cmpCaso, tesouro, vilao);
+            fflush(listaCasos);
+            break;
+        case 3:
+            listaCasos = fopen("CasosDificeis.txt", "r");
+            
+            while (!feof(listaCasos)) {
+                fgets(leitura, sizeof(leitura), listaCasos);
+                if (strcmp(leitura, cmpCaso) == 0) {
+                    numeroCaso++;
+                    sprintf(cmpCaso, "Caso %i:\n", numeroCaso);
+                }
+            }
+            fclose(listaCasos);
+            listaCasos = fopen("CasosDificeis.txt", "a");
+            fprintf(listaCasos, "\n%s%s\n%s", cmpCaso, tesouro, vilao);
+            fflush(listaCasos);
+            break;
+        default:
+            break;
+    }
     
-    fprintf(listaCasos, "\n%s%s\n%s\n%s\n%d\n", cmpCaso, tesouro, cidade, vilao, dificuldade);
+    cadastroDicas(dificuldade);
     
-    fclose(listaCasos);
-    
-    printf("Caso cadastrado com suecesso!\n");
     
     return 0;
+    
 }
 
 int opcaoAdmin(char login[]) {
     char nome[50], senha[40], checarLogin[20], checarSenha[40];
     int menu;
-    FILE *dadosAdmin;
+    FILE *dadosAdmin = fopen("DadosDoAdministrador.txt", "r");
     
     printf("Senha: ");
     scanf("%s", &senha);
-    
-    dadosAdmin = fopen("admin.txt", "r");
     
     fscanf(dadosAdmin, "%s %s", &checarLogin, &checarSenha);
     if(strcmp(checarLogin, login) == 0 && strcmp(checarSenha, senha) == 0) {
         fgets(nome, sizeof(nome), dadosAdmin);
         fgets(nome, sizeof(nome), dadosAdmin);
         
+        //imprime menu admin
         printf("Bem vindo %s\n", nome);
         printf("O que voce deseja fazer hoje?\n");
         printf("1- ALTERAR CADASTRO   2- CRIAR CASO   3-SAIR\n");
@@ -296,16 +441,13 @@ int opcaoAdmin(char login[]) {
             getchar();
             switch (menu)
             {
-                    //editar dados do admin
-                case 1:
+                case 1:                                                       //editar dados do admin
                     editarDados(dadosAdmin);
                     break;
-                    //Criar caso
-                case 2:
+                case 2:                                                       //Criar caso
                     cadastrarCaso();
                     break;
-                    //finaliza o programa
-                case 3:
+                case 3:                                                       //finaliza o programa
                     printf("Saindo...\n");
                     break;
                 default:
@@ -324,15 +466,14 @@ int opcaoAdmin(char login[]) {
     }
 }
 
-//funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo arquivo
-//a funcao retorna o nivel do agente
+//funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
 int identificarAgente(char nomeAgente[]) {
     FILE *agentes, *admin;
     int id = 0, nivel, sucesso;
     char leitura[30], opcaoYN;
     nivelDificuldade nivelAgente;
     
-    agentes = fopen("agentes.txt", "r");
+    agentes = fopen("DadosDosAgentes.txt", "r");
     
     //busca o nome do agente no arquivo. Caso seja encontrado, o loop para, se nao, ao final do loop o novo nome sera cadastrado
     while (!feof(agentes) && id == 0) {
@@ -354,8 +495,7 @@ int identificarAgente(char nomeAgente[]) {
     if(id == 0) {
         getchar();
         
-        //verifica se o login esta no arquivo de admin
-        admin = fopen("admin.txt", "r");
+        admin = fopen("DadosDoAdministrador.txt", "r");
         fscanf(admin, "%s", leitura);
         if(strcmp(leitura, nomeAgente) == 0) {
             sucesso = opcaoAdmin(nomeAgente);
@@ -373,8 +513,9 @@ int identificarAgente(char nomeAgente[]) {
         scanf("%c", &opcaoYN);
         if(opcaoYN == 'y' || opcaoYN == 'Y') {
             fclose(agentes);
-            agentes = fopen("agentes.txt", "a");
+            agentes = fopen("DadosDosAgentes.txt", "a");
             fprintf(agentes, "%s\n1\n", nomeAgente);
+            fflush(agentes);
             printf("O seu nome foi salvo\nBem-vindo a agencia, %s!\n", nomeAgente);
             nivelAgente = iniciante;
         }
@@ -429,6 +570,5 @@ int main() {
     
     
     
-    system("pause");
+	system(“pause”);
 }
-
