@@ -32,3 +32,4 @@
 32 Hanoi
 33 Sydney
 34 Viena
+35 Cidade do Cabo
