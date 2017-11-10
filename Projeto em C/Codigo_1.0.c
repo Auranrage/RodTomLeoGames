@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include <stdlib.h>
 
 //enum para os niveis de dificuldade
@@ -9,6 +10,51 @@ typedef enum {
     intermediario,
     avancado,
 } nivelDificuldade;
+
+//funcao que sorteia um caso e retorna o numero sorteado
+int sorteioCaso(int dificuldade) {
+    int caso, maximo = 1;
+    char leitura[500], cmp[20];
+    FILE *listaCasos;
+    srand(time(NULL));
+    
+    sprintf(cmp, "Caso %i:\n", maximo);
+    
+    //switch para determinar qual arquivo sera lido
+    switch (dificuldade) {
+        case 1:
+            listaCasos = fopen("CasosFaceis.txt", "r");
+            break;
+        case 2:
+            listaCasos = fopen("CasosMedios.txt", "r");
+            break;
+        case 3:
+            listaCasos = fopen("CasosDificeis.txt", "r");
+            break;
+        default:
+            printf("error...\n");
+            break;
+    }
+    //determina o numero de casos existente no nivel de dificuldade do jogador
+    while (!feof(listaCasos)) {
+        fgets(leitura, sizeof(leitura), listaCasos);
+        if (strcmp(leitura, cmp) == 0) {
+            maximo++;
+            sprintf(cmp, "Caso %i:\n", maximo);
+        }
+    }
+    maximo--;
+    //caso so exista um unico caso na dificuldade escolhida
+    if(maximo == 1) {
+        caso = 1;
+    }
+    //caso exista mais de um caso na dificuldade escolhida
+    else {
+        caso = rand() % (maximo - 1) + 1; //sorteio de um numero entre 1 e (maximo - 1)
+    }
+    
+    return caso;
+}
 
 //funcao para verificar se a cidade lida ja esta cadastrada. Caso nao esteja, o usuario pode cadastra-la
 int cadastroCidade(char nomeCidade[]) {
@@ -533,7 +579,7 @@ int identificarAgente(char nomeAgente[]) {
 
 int main() {
     char agente[20];
-    int nivelAgente;
+    int nivelAgente, numeroCaso;
     
     printf("Bem-vindo agente. Por favor, idenfitique-se: ");
     scanf("%s", &agente);
@@ -543,15 +589,15 @@ int main() {
     switch (nivelAgente) {
         case 0:
             printf("Nivel: Iniciante\n");
-            //sorteio casos nivel iniciante
+            numeroCaso = sorteioCaso(nivelAgente+1);
             break;
         case 1:
             printf("Nivel: Intermediario\n");
-            //sorteio casos nivel intermediario
+            numeroCaso = sorteioCaso(nivelAgente+1);
             break;
         case 2:
             printf("Nivel: Avancado\n");
-            //sorteio casos nivel intermediario
+            numeroCaso = sorteioCaso(nivelAgente+1);
             break;
         case 3:
             printf("Desculpe, mas um cadastro e necessario para jogar\n");
@@ -567,7 +613,7 @@ int main() {
             break;
     }
     
+    //comeco do jogo
     
-    
-	system(“pause”);
+    system("pause");
 }
