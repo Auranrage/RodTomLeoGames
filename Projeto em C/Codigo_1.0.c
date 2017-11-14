@@ -11,7 +11,40 @@ typedef enum {
     avancado,
 } nivelDificuldade;
 
-//funcao que sorteia um caso e retorna o numero sorteado
+void menuJogo(FILE *dadosCaso)
+{
+    int menu, horas = 8, fimJogo = 0;
+    char diaSemana[30];
+    
+    strcpy(diaSemana, "Segunda-Feira");
+    
+    while (fimJogo == 0) {
+        printf("%s, ", diaSemana);
+        if (horas < 10) {
+            printf("0%i:00\n\n", horas);
+        }
+        else {
+            printf("%i:00\n\n", horas);
+        }
+        printf("O que voce deseja fazer, agente?\n\n");
+        printf("1- Viajar   2- Investigar   3- Interpol");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                //viajar
+                break;
+            case 2:
+                //investigar
+                break;
+            case 3:
+                //interpol
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 int sorteioCaso(int dificuldade) {
     int caso, maximo = 1;
     char leitura[500], cmp[20];
@@ -578,8 +611,9 @@ int identificarAgente(char nomeAgente[]) {
 }
 
 int main() {
-    char agente[20];
+    char agente[20], leitura[500], cmp[50], tesouro[50], cidade[50], sexo[20];
     int nivelAgente, numeroCaso;
+    FILE *nivelCaso, *dadosSuspeitos;
     
     printf("Bem-vindo agente. Por favor, idenfitique-se: ");
     scanf("%s", &agente);
@@ -590,14 +624,17 @@ int main() {
         case 0:
             printf("Nivel: Iniciante\n");
             numeroCaso = sorteioCaso(nivelAgente+1);
+            nivelCaso = fopen("CasosFaceis.txt", "r");
             break;
         case 1:
             printf("Nivel: Intermediario\n");
             numeroCaso = sorteioCaso(nivelAgente+1);
+            nivelCaso = fopen("CasosMedios.txt", "r");
             break;
         case 2:
             printf("Nivel: Avancado\n");
             numeroCaso = sorteioCaso(nivelAgente+1);
+            nivelCaso = fopen("CasosDificeis.txt", "r");
             break;
         case 3:
             printf("Desculpe, mas um cadastro e necessario para jogar\n");
@@ -613,7 +650,40 @@ int main() {
             break;
     }
     
-    //comeco do jogo
+    //obter informacaos sobre caso para serem impressas na tela na mensagem abaixo
+    sprintf(cmp, "Caso %i:\n", numeroCaso);
+    
+    while (!feof(nivelCaso)) {
+        fgets(leitura, sizeof(leitura), nivelCaso);
+        if(strcmp(leitura, cmp) == 0) {
+            break;
+        }
+    }
+    fgets(tesouro, sizeof(tesouro), nivelCaso);
+    fgets(sexo, sizeof(sexo), nivelCaso);
+    dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
+    while (!feof(dadosSuspeitos)) {
+        fgets(leitura, sizeof(leitura), dadosSuspeitos);
+        if(strcmp(leitura, sexo) == 0) {
+            fgets(sexo, sizeof(sexo), dadosSuspeitos);
+            strtok(sexo, "\n");
+            sexo[0] = sexo[0] + 32;
+            break;
+        }
+    }
+    fgets(cidade, sizeof(cidade), nivelCaso);
+    strtok(tesouro, "\n");
+    strtok(cidade, "\n");
+    
+    
+    //imrpime mensagem inicial do caso
+    printf("\n*********** NEWS FLASH ***********\n");
+    printf("O tesouro %s foi roubado na cidade de %s. Um suspeito %s foi encontrado no local\n", tesouro, cidade, sexo);
+    printf("Agente, você deve localizar o suspeito e prende-lo antes que ele escape\n");
+    printf("Voce tem até as 19:00 do Domingo para prende-lo. Boa sorte!\n\n");
+    
+    //funcao menu, precisa mandar o arquivo  certo
+    menuJogo(nivelCaso);
     
     system("pause");
 }
