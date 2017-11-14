@@ -40,48 +40,6 @@ Loiro
 Joias
 Esportivo
 
-Carmen Sandiego
-Feminino
-Viajar
-Ruivo
-Joias
-Conversivel
-
-Bruce Peck
-Masculino
-Golf
-Loiro
-Tattoo
-Esportivo
-
-Nicolas Cage
-Masculino
-Filmes
-Castanho
-Anel
-Limousine
-
-Louis Colombo
-Masculino
-Musica
-Preto
-Tattoo
-Conversivel
-
-Igor Artusky
-Masculino
-Danca
-Preto
-Mancando
-Jipe
-
-Matthew Drinkwater
-Masculino
-Filmes
-Loiro
-Joias
-Esportivo
-
 Caio Martins
 Masculino
 Danca
@@ -117,3 +75,9 @@ Loiro
 Tattoo
 Conversivel
 
+Phoenix Wrong
+Masculino
+Filmes
+Preto
+Anel
+Limousine
