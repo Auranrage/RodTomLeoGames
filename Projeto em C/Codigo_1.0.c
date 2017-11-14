@@ -11,40 +11,7 @@ typedef enum {
     avancado,
 } nivelDificuldade;
 
-void menuJogo(FILE *dadosCaso)
-{
-    int menu, horas = 8, fimJogo = 0;
-    char diaSemana[30];
-    
-    strcpy(diaSemana, "Segunda-Feira");
-    
-    while (fimJogo == 0) {
-        printf("%s, ", diaSemana);
-        if (horas < 10) {
-            printf("0%i:00\n\n", horas);
-        }
-        else {
-            printf("%i:00\n\n", horas);
-        }
-        printf("O que voce deseja fazer, agente?\n\n");
-        printf("1- Viajar   2- Investigar   3- Interpol");
-        scanf("%i", &menu);
-        switch (menu) {
-            case 1:
-                //viajar
-                break;
-            case 2:
-                //investigar
-                break;
-            case 3:
-                //interpol
-                break;
-            default:
-                break;
-        }
-    }
-}
-
+//funcao que sorteia um caso e retorna o numero sorteado
 int sorteioCaso(int dificuldade) {
     int caso, maximo = 1;
     char leitura[500], cmp[20];
@@ -124,13 +91,13 @@ int cadastroCidade(char nomeCidade[]) {
         }
         
         if(booleanCidade == 0) {
-            printf("Cidade não cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
+            printf("Cidade nÃ£o cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
             scanf("%c", &opcaoYN);
             
             //loop para caso a opcao entrada seja invalida (diferente de y ou n)
             while (opcaoYN != 'y' && opcaoYN != 'Y' && opcaoYN != 'n' && opcaoYN != 'N') {
                 printf("Opcao invalida\n");
-                printf("Cidade não cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
+                printf("Cidade nÃ£o cadastrada. Deseja cadastrar essa cidade? (Y/N)\n");
                 fflush(stdin);
                 scanf("%c", &opcaoYN);
             }
@@ -333,7 +300,7 @@ void cadastroDicas(int nivelDificuldade) {
     for (i = 0; i < cidadeCaso; i++) {
         //leitura da primeira cidade com 4 dicas
         if (i == 0) {
-            printf("Cidade nº%i: ", i+1);
+            printf("Cidade nÂº%i: ", i+1);
             fgets(cidade, sizeof(cidade), stdin);
             strtok(cidade, "\n");
             cidadeCadastrada = cadastroCidade(cidade);
@@ -367,7 +334,7 @@ void cadastroDicas(int nivelDificuldade) {
             }
             //leitura das outras cidades com 3 dicas
             else {
-                printf("Cidade nº%i: ", i+1);
+                printf("Cidade nÂº%i: ", i+1);
                 fgets(cidade, sizeof(cidade), stdin);
                 strtok(cidade, "\n");
                 cidadeCadastrada = cadastroCidade(cidade);
@@ -405,7 +372,9 @@ void editarDados(FILE *admin) {
     fgets(login, sizeof(login), stdin);
     strtok(login, "\n");
     printf("Digite uma nova senha: ");
+    //inserir funcao de descriptografia aqui
     fgets(senha, sizeof(senha), stdin);
+    //inserir funcao de criptografia aqui
     strtok(senha, "\n");
     
     //novos dados sao registrados no arquivo
@@ -500,9 +469,10 @@ int opcaoAdmin(char login[]) {
     char nome[50], senha[40], checarLogin[20], checarSenha[40];
     int menu;
     FILE *dadosAdmin = fopen("DadosDoAdministrador.txt", "r");
-    
+    //inserir funcao de descriptografia aqui
     printf("Senha: ");
     scanf("%s", &senha);
+    //inserir funcao de criptografia aqui
     
     fscanf(dadosAdmin, "%s %s", &checarLogin, &checarSenha);
     if(strcmp(checarLogin, login) == 0 && strcmp(checarSenha, senha) == 0) {
@@ -532,7 +502,7 @@ int opcaoAdmin(char login[]) {
                     printf("Opcao invalida\n");
                     break;
             }
-            printf("Deseja fazer mais alguma operação, %s?\n", nome);
+            printf("Deseja fazer mais alguma operaÃ§Ã£o, %s?\n", nome);
             printf("1- ALTERAR CADASTRO   2- CRIAR CASO   3-SAIR\n");
             scanf("%i", &menu);
         }
@@ -611,9 +581,8 @@ int identificarAgente(char nomeAgente[]) {
 }
 
 int main() {
-    char agente[20], leitura[500], cmp[50], tesouro[50], cidade[50], sexo[20];
+    char agente[20];
     int nivelAgente, numeroCaso;
-    FILE *nivelCaso, *dadosSuspeitos;
     
     printf("Bem-vindo agente. Por favor, idenfitique-se: ");
     scanf("%s", &agente);
@@ -624,17 +593,14 @@ int main() {
         case 0:
             printf("Nivel: Iniciante\n");
             numeroCaso = sorteioCaso(nivelAgente+1);
-            nivelCaso = fopen("CasosFaceis.txt", "r");
             break;
         case 1:
             printf("Nivel: Intermediario\n");
             numeroCaso = sorteioCaso(nivelAgente+1);
-            nivelCaso = fopen("CasosMedios.txt", "r");
             break;
         case 2:
             printf("Nivel: Avancado\n");
             numeroCaso = sorteioCaso(nivelAgente+1);
-            nivelCaso = fopen("CasosDificeis.txt", "r");
             break;
         case 3:
             printf("Desculpe, mas um cadastro e necessario para jogar\n");
@@ -650,40 +616,7 @@ int main() {
             break;
     }
     
-    //obter informacaos sobre caso para serem impressas na tela na mensagem abaixo
-    sprintf(cmp, "Caso %i:\n", numeroCaso);
-    
-    while (!feof(nivelCaso)) {
-        fgets(leitura, sizeof(leitura), nivelCaso);
-        if(strcmp(leitura, cmp) == 0) {
-            break;
-        }
-    }
-    fgets(tesouro, sizeof(tesouro), nivelCaso);
-    fgets(sexo, sizeof(sexo), nivelCaso);
-    dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
-    while (!feof(dadosSuspeitos)) {
-        fgets(leitura, sizeof(leitura), dadosSuspeitos);
-        if(strcmp(leitura, sexo) == 0) {
-            fgets(sexo, sizeof(sexo), dadosSuspeitos);
-            strtok(sexo, "\n");
-            sexo[0] = sexo[0] + 32;
-            break;
-        }
-    }
-    fgets(cidade, sizeof(cidade), nivelCaso);
-    strtok(tesouro, "\n");
-    strtok(cidade, "\n");
-    
-    
-    //imrpime mensagem inicial do caso
-    printf("\n*********** NEWS FLASH ***********\n");
-    printf("O tesouro %s foi roubado na cidade de %s. Um suspeito %s foi encontrado no local\n", tesouro, cidade, sexo);
-    printf("Agente, você deve localizar o suspeito e prende-lo antes que ele escape\n");
-    printf("Voce tem até as 19:00 do Domingo para prende-lo. Boa sorte!\n\n");
-    
-    //funcao menu, precisa mandar o arquivo  certo
-    menuJogo(nivelCaso);
+    //comeco do jogo
     
     system("pause");
 }
