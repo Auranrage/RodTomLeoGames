@@ -39,3 +39,66 @@ Filmes
 Loiro
 Joias
 Esportivo
+
+Carmen Sandiego
+Feminino
+Viajar
+Ruivo
+Joias
+Conversivel
+
+Bruce Peck
+Masculino
+Golf
+Loiro
+Tattoo
+Esportivo
+
+Nicolas Cage
+Masculino
+Filmes
+Castanho
+Anel
+Limousine
+
+Louis Colombo
+Masculino
+Musica
+Preto
+Tattoo
+Conversivel
+
+Igor Artusky
+Masculino
+Danca
+Preto
+Mancando
+Jipe
+
+Matthew Drinkwater
+Masculino
+Filmes
+Loiro
+Joias
+Esportivo
+
+Caio Martins
+Masculino
+Danca
+Castanho
+Bengala
+Limousine
+
+Emily Wright
+Feminino
+Musica
+Ruivo
+Anel
+Conversivel
+
+Nick Coleman
+Masculino
+Filmes
+Preto
+Tattoo
+Limousine
