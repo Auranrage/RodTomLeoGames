@@ -4,17 +4,261 @@
 #include <time.h>
 #include <stdlib.h>
 
-//enum para os niveis de dificuldade
+//struct com informacoes sobre o vilao do caso (Interpol)
+struct vilaoLeitura {
+    char nome[50], sexo[20], hobby[20], cabelo[20], destaque[20], carro[25];
+};
+
+//strcut para comparar dados lidos com o database
+struct cmpVilao {
+    char nome[50], sexo[20], hobby[20], cabelo[20], destaque[20], carro[25];
+};
+
+//enum para os niveis de dificuldade (Interpol)
 typedef enum {
     iniciante,
     intermediario,
     avancado,
 } nivelDificuldade;
 
+//funcao para pesquisar suspeitos no database
+void interpol() {
+    char leitura[50], opcaoYN, compativel[50];
+    int menu, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
+    struct vilaoLeitura vilao;
+    struct cmpVilao cmpDados;
+    FILE *dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
+    
+    //pergunta se o usuario quer procurar por um suspeito
+    printf("Deseja buscar o suspeito do caso? (Y/N)\n");
+    scanf("%c", &opcaoYN);
+    while (opcaoYN != 'y'&& opcaoYN != 'Y' && opcaoYN != 'n'&& opcaoYN != 'N') {
+        printf("Opcao invalida\nDigite uma opcao valida (Y/N)\n");
+        getchar();
+        scanf("%c", &opcaoYN);
+    }
+    
+    //caso a opcao seja sim...
+    if (opcaoYN == 'y' || opcaoYN == 'Y') {
+        //o usuario digita as informacoes sobre o suspeito
+        //sexo
+        printf("Escolha o sexo:\n");
+        printf("1- MASCULINO    2- FEMININO     3- DESCONHECIDO\n");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                strcpy(cmpDados.sexo, "Masculino\n");
+                break;
+            case 2:
+                strcpy(cmpDados.sexo, "Feminino\n");
+                break;
+            case 3:
+                strcpy(cmpDados.sexo, "desconhecido\n");
+                break;
+            default:
+                break;
+        }
+        
+        //hobby
+        printf("Escolha o hobby:\n");
+        printf("1- GOLF    2- MUSICA     3- VIAJAR  4- FILMES   5- DANCA    6- DESCONHECIDO\n");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                strcpy(cmpDados.hobby, "Gold\n");
+                break;
+            case 2:
+                strcpy(cmpDados.hobby, "Musica\n");
+                break;
+            case 3:
+                strcpy(cmpDados.hobby, "Viajar\n");
+                break;
+            case 4:
+                strcpy(cmpDados.hobby, "Filmes\n");
+                break;
+            case 5:
+                strcpy(cmpDados.hobby, "Danca\n");
+                break;
+            case 6:
+                strcpy(cmpDados.hobby, "desconhecido\n");
+                break;
+            default:
+                break;
+        }
+        
+        //cabelo
+        printf("Escolha a cor do cabelo:\n");
+        printf("1- PRETO    2- CASTANHO     3- LOIRO    4- RUIVO    5- DESCONHECIDO\n");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                strcpy(cmpDados.cabelo, "Preto\n");
+                break;
+            case 2:
+                strcpy(cmpDados.cabelo, "Castanho\n");
+                break;
+            case 3:
+                strcpy(cmpDados.cabelo, "Loiro\n");
+                break;
+            case 4:
+                strcpy(cmpDados.cabelo, "Ruivo\n");
+                break;
+            case 5:
+                strcpy(cmpDados.cabelo, "desconhecido\n");
+                break;
+            default:
+                break;
+        }
+        
+        //destaque
+        printf("Escolha uma caracteristica de destaque:\n");
+        printf("1- ANEL    2- JOIA     3- TATTOO    4- BENGALA     5-DESCONHECIDO \n");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                strcpy(cmpDados.destaque, "Anel\n");
+                break;
+            case 2:
+                strcpy(cmpDados.destaque, "Joia\n");
+                break;
+            case 3:
+                strcpy(cmpDados.destaque, "Tattoo\n");
+                break;
+            case 4:
+                strcpy(cmpDados.destaque, "Bengala\n");
+                break;
+            case 5:
+                strcpy(cmpDados.destaque, "desconhecido\n");
+                break;
+            default:
+                break;
+        }
+        
+        //carro
+        printf("Escolha um carro:\n");
+        printf("1- CONVERSIVEL    2- JIPE     3- LIMOUSINE     4- ESPORTIVO     5- DESCONHECIDO\n");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                strcpy(cmpDados.carro, "Conversivel\n");
+                break;
+            case 2:
+                strcpy(cmpDados.carro, "Jipe\n");
+                break;
+            case 3:
+                strcpy(cmpDados.carro, "Limousine\n");
+                break;
+            case 4:
+                strcpy(cmpDados.carro, "Esportivo\n");
+                break;
+            case 5:
+                strcpy(cmpDados.carro, "desconhecido\n");
+                break;
+            default:
+                break;
+        }
+        
+        //procura pelas caracteristicas no database
+        while (!feof(dadosSuspeitos)) {
+            fgets(vilao.nome, sizeof(vilao.nome), dadosSuspeitos);
+            fgets(vilao.sexo, sizeof(vilao.sexo), dadosSuspeitos);
+            fgets(vilao.hobby, sizeof(vilao.hobby), dadosSuspeitos);
+            fgets(vilao.cabelo, sizeof(vilao.cabelo), dadosSuspeitos);
+            fgets(vilao.destaque, sizeof(vilao.destaque), dadosSuspeitos);
+            fgets(vilao.carro, sizeof(vilao.carro), dadosSuspeitos);
+            
+            //compara sexo
+            if(strcmp(vilao.sexo, cmpDados.sexo) == 0) {
+                rSexo = 1;
+            }
+            else {
+                if(strcmp(cmpDados.sexo, "desconhecido\n") == 0) {
+                    rSexo = 2;
+                }
+                else {
+                    rSexo = 0;
+                }
+            }
+            
+            //compara hobby
+            if(strcmp(vilao.hobby, cmpDados.hobby) == 0) {
+                rHobby = 1;
+            }
+            else {
+                if(strcmp(cmpDados.hobby, "desconhecido\n") == 0) {
+                    rHobby = 2;
+                }
+                else {
+                    rHobby = 0;
+                }
+            }
+            
+            //compara cabelo
+            if(strcmp(vilao.cabelo, cmpDados.cabelo) == 0) {
+                rCabelo = 1;
+            }
+            else {
+                if(strcmp(cmpDados.cabelo, "desconhecido\n") == 0) {
+                    rCabelo = 2;
+                }
+                else {
+                    rCabelo = 0;
+                }
+            }
+            
+            //compara destaque
+            if(strcmp(vilao.destaque, cmpDados.destaque) == 0) {
+                rDestaque = 1;
+            }
+            else {
+                if(strcmp(cmpDados.destaque, "desconhecido\n") == 0) {
+                    rDestaque = 2;
+                }
+                else {
+                    rDestaque = 0;
+                }
+            }
+            
+            //compara carro
+            if(strcmp(vilao.carro, cmpDados.carro) == 0) {
+                rCarro = 1;
+            }
+            else {
+                if(strcmp(cmpDados.carro, "desconhecido\n") == 0) {
+                    rCarro = 2;
+                }
+                else {
+                    rCarro = 0;
+                }
+            }
+            
+            //caso um vilao do arquivo seja compativel com os dados lidos, o programa imprime seu nome na tela
+            if (rSexo != 0 && rHobby != 0 && rCabelo != 0 && rDestaque != 0 && rCarro != 0) {
+                strcpy(compativel, vilao.nome);
+                printf("%s", compativel);
+                suspeitosRestantes++;
+            }
+            fgets(leitura, sizeof(leitura), dadosSuspeitos); //pula o \n que separa os viloes no arquivo
+        }
+        //caso so exista um suspeito restante, o programa imprime na tela, notificando o jogador de que ele pode prender o suspeito
+        if(suspeitosRestantes == 1) {
+            printf("Voce tem permissao para prender %s\n\n", compativel);
+        }
+        if (suspeitosRestantes == 0) {
+            printf("Nao foi encontrado nenhum suspeito com essas caracteristicas\n\n");
+        }
+    }
+    
+    //opcao N: caso o usuario nao queira pesquisar por um suspeito no programa principal, ele volta ao menu anterior, sem perder tempo
+    else {
+        printf("Voltando para o menu...\n");
+    }
+}
+
 void menuJogo(FILE *dadosCaso)
 {
     int menu, horas = 8, fimJogo = 0;
-    char diaSemana[30];
+    char diaSemana[30], cidade[50];
     
     strcpy(diaSemana, "Segunda-Feira");
     
@@ -26,9 +270,11 @@ void menuJogo(FILE *dadosCaso)
         else {
             printf("%i:00\n\n", horas);
         }
+        printf("Bem vindo a %s\n\n", cidade);
         printf("O que voce deseja fazer, agente?\n\n");
-        printf("1- Viajar   2- Investigar   3- Interpol");
+        printf("1- Viajar   2- Investigar   3- Interpol\n");
         scanf("%i", &menu);
+        getchar();
         switch (menu) {
             case 1:
                 //viajar
@@ -37,7 +283,7 @@ void menuJogo(FILE *dadosCaso)
                 //investigar
                 break;
             case 3:
-                //interpol
+                interpol();
                 break;
             default:
                 break;
@@ -52,7 +298,7 @@ int sorteioCaso(int dificuldade) {
     srand(time(NULL));
     
     sprintf(cmp, "Caso %i:\n", maximo);
-
+    
     //switch para determinar qual arquivo sera lido
     switch (dificuldade) {
         case 1:
@@ -558,9 +804,13 @@ int identificarAgente(char nomeAgente[]) {
     while (!feof(agentes) && id == 0) {
         fgets(leitura, sizeof(leitura), agentes);
         strtok(leitura, "\n");
-        fgets(lerNivel, sizeof(lerNivel), agentes);
+        //caso o nome lido seja encontrado, a var id indica que o nome foi encontrado
         if(strcmp(leitura, nomeAgente) == 0) {
             id = 1;
+        }
+        //caso nao encontre, o programa pula a proxima linha, que possui o nivel do jogador antes de recomecar o loop
+        else {
+            fgets(lerNivel, sizeof(lerNivel), agentes);
         }
     }
     
@@ -568,7 +818,7 @@ int identificarAgente(char nomeAgente[]) {
     if(id == 1) {
         printf("Agente identificado.\nBem-vindo, agente %s\n", nomeAgente);
         fscanf(agentes, "%i", &nivel);
-        nivelAgente = nivel - 1;
+        return nivel - 1;
         
     }
     //cadastro de novo agente, caso ele deseje
