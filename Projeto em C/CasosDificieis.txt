@@ -1,4 +1,4 @@
-Caso 1:
+1
 Cristo Redentor
 Carmen Sandiego
 Rio de Janeiro
@@ -27,8 +27,7 @@ Ela trocou todo o dinheiro dela por rands.
 Ela estava procurando um livro sobre uma antiga colonia holandesa.
 Ela disse que tinha interesse em conhecer uma cidade para fazer escaladas.
 Cidade do Cabo
-
-Caso 2:
+2
 Declaracao da Independencia
 Nicolas Cage
 Washington

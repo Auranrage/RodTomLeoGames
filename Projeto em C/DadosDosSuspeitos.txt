@@ -2,12 +2,12 @@ Carmen Sandiego
 Feminino
 Viajar
 Ruivo
-Joias
+Joia
 Conversivel
 
 Bruce Peck
 Masculino
-Golf
+Musica
 Loiro
 Tattoo
 Esportivo
@@ -37,7 +37,7 @@ Matthew Drinkwater
 Masculino
 Filmes
 Loiro
-Joias
+Joia
 Esportivo
 
 Caio Martins
@@ -75,9 +75,9 @@ Loiro
 Tattoo
 Conversivel
 
-Phoenix Wrong
+Fernando
 Masculino
-Filmes
+Viajar
 Preto
 Anel
-Limousine
+Conversivel

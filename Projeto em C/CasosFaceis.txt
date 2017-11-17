@@ -1,4 +1,4 @@
-Caso 1:
+﻿1
 Espada Samurai
 Nick Coleman
 Tokyo
@@ -9,10 +9,9 @@ Ele embarcou em um aviao com uma bandeira azul, vermelha e branca.
 Sydney
 Ele passou aqui ontem, procurando livros sobre uma grande estátua. O cabelo dele era preto.
 Ele passou uma noite aqui neste hotel. Na manha seguinte, ele foi embora em uma limousine.
-Ele partiu em um avião com uma bandeira azul, verde e amarela.
+Ele partiu em um aviao com uma bandeira azul, verde e amarela.
 Rio de Janeiro
-
-Caso 2:
+2
 Joias do Sheik
 Matthew Drinkwater
 Dubai
