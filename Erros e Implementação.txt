@@ -1,0 +1,9 @@
+Erros
+ - Tem alguma coisa errada com o interpol(). Quando eu, Rodrigo, testei, mesmo se eu colocasse Feminino e todo o resto desconhecido, o programa nao imprimia no terminal nenhum nome.
+ - Deu erro na hora de cadastrar caso, cadastrar vilao, nao querer cadastrar alguém, depois coloquei "Carmem Sandiego" e travou o programa. Ou nao ta conseguindo abrir o arquivo, ou nao ta conseguindo pegar a linha... talvez o strcat nao funciona direito porcausa do scanf e tem que dar sgets.
+
+Implementar
+- Na hora de cadastrar cidade, acho que ia ficar mais legal se a gente cadastrasse uma pequena descrição ou fato interessante sobre a cidade e o país. Eu vou colocar descrição nas cidades que já tem, via notepad, mas precisamos criar uma implementação pro ADMIN poder cadastrar tbm.
+ - Sera que precisa que as cidades tenham um numero e um nome? Sera que só nome e descrição nao fica melhor, no arquivo txt?
+ - Colocar a função de criptografia e descriptografia
+ - Mudar como os casos sao cadastrados nos arquivos. Tirar o "Caso 1, Caso 2" e deixar só com "1, 2"
