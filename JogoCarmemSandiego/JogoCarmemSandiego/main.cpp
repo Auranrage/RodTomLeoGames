@@ -336,16 +336,6 @@ Jogador IdentificarAgente(char nomeAgente[]) {
 	//Cadastro de novo agente, caso ele deseje
 	if (id == 0) {
 		getchar();
-
-		admin = fopen("DadosDoAdministrador.txt", "r");
-		fscanf(admin, "%s", leitura);
-		if (strcmp(leitura, nomeAgente) == 0) {
-			sucesso = opcaoAdmin(nomeAgente);
-			jogador.patente = 6;
-			return jogador;
-		}
-
-
 		printf("Nao achamos o seu nome na lista\nGostaria de registra-lo?(Y/N)\n");
 		scanf("%c", &opcaoYN);
 		if (opcaoYN == 'y' || opcaoYN == 'Y') {
@@ -419,55 +409,164 @@ void MenuJogoFacil(CasoFacil caso){
 
 //MAIN
 int main() {
-	char agente[20];
+	char agente[20], botaoApertado;
 	int nivelAgente, numeroCaso;
 	bool saidaWhile = false;
 	CasoFacil casoF;
 	CasoMedio casoM;
 	CasoDificil casoD;
 	Jogador jogador;
+	Botoes botoes; //Botoes comecam como padrao 0, 1, 2, 3 e 4
+	botoes.botao0 = '0';
+	botoes.botao1 = '1';
+	botoes.botao2 = '2';
+	botoes.botao3 = '3';
+	botoes.botao4 = '4';
 	srand(time(NULL));
 
-	while (saidaWhile != true) {
-		printf("Bem-vindo agente. Por favor, idenfitique-se: ");
-		scanf("%s", &agente);
+	//Introduçao
+	printf("Em que lugar da Terra esta Carmem Sandiego?\n\n");
+	printf("| RodTomLeoGames |\n\n");
+	system("pause");
+	system("cls");
 
-		//Imrpime o nivel de dificuldade, dependendo do retorno da funcao indentificarAgente
-		jogador = IdentificarAgente(agente);
-		switch (jogador.patente) {
-		case 1:
-			printf("Nivel: Iniciante\n");
-			casoF = arquivoParaObjetoCasoFacil(SorteioCaso(jogador.patente));
-			MenuJogoFacil(casoF);
-			saidaWhile = true;
-			break;
-		case 2:
-			printf("Nivel: Intermediario\n");
-			//casoM = arquivoParaObjetoCasoMedio(SorteioCaso(jogador.patente));
-			saidaWhile = true;
-			break;
-		case 3:
-			printf("Nivel: Avancado\n");
-			//casoD = arquivoParaObjetoCasoDificil(SorteioCaso(jogador.patente));
-			saidaWhile = true;
-			break;
-		case 4:
-			system("cls");
-			printf("Desculpe, mas um cadastro eh necessario para jogar\n\n");
-			break;
-		case 5:
-			system("cls");
-			printf("ERRO! - Ocorreu um erro. Tente novamente.\n");
-			break;
-		case 6:
-			/*printf("Finalizando...\n");
+	//Menu antes do jogo
+	while (saidaWhile == false) {	
+		printf("%c - Comecar o Jogo\n", botoes.botao1);
+		printf("%c - Ranking dos Jogadores\n", botoes.botao2);
+		printf("%c - Configuracoes do Jogo\n", botoes.botao3);
+		printf("%c - Entrar como administrador\n", botoes.botao4);
+		printf("%c - Fechar Programa\n", botoes.botao0);
+
+		scanf("%c", &botaoApertado);
+		getchar();
+		
+		//Fechar o Programa
+		if (botaoApertado == botoes.botao0) {
+
+			printf("\nFinalizando...\n\n");
 			system("pause");
 			exit(0);
-			*/
+			saidaWhile = true;
+		}
+		
+		//Comeca o Jogo
+		else if (botaoApertado == botoes.botao1) {
+			while (saidaWhile != true) {
+				system("cls");
+				printf("Bem-vindo agente. Por favor, idenfitique-se: ");
+				scanf("%s", &agente);
+
+				//Imrpime o nivel de dificuldade, dependendo do retorno da funcao indentificarAgente
+				jogador = IdentificarAgente(agente);
+				switch (jogador.patente) {
+				case 1:
+					printf("Nivel: Iniciante\n");
+					casoF = arquivoParaObjetoCasoFacil(SorteioCaso(jogador.patente));
+					MenuJogoFacil(casoF);
+					saidaWhile = true;
+					break;
+				case 2:
+					printf("Nivel: Intermediario\n");
+					//casoM = arquivoParaObjetoCasoMedio(SorteioCaso(jogador.patente));
+					saidaWhile = true;
+					break;
+				case 3:
+					printf("Nivel: Avancado\n");
+					//casoD = arquivoParaObjetoCasoDificil(SorteioCaso(jogador.patente));
+					saidaWhile = true;
+					break;
+				case 4:
+					system("cls");
+					printf("Desculpe, mas um cadastro eh necessario para jogar\n\n");
+					break;
+				case 5:
+					system("cls");
+					printf("ERRO! - Ocorreu um erro. Tente novamente.\n");
+					break;
+				case 6:
+					system("cls");
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		
+		//Ranking dos Jogadores
+		else if (botaoApertado == botoes.botao2) {
+			printf("Imprimir os jogadores por ordem de pontuacao aqui.\n");
+			system("pause");
+		}
+		
+		//Configuracoes do Jogo
+		else if (botaoApertado == botoes.botao3) {
+			char editor = ' ';
+			printf("\n\nEdicao dos Botoes de jogo\n");
+			printf("Lembre-se: Como padrao, os botoes 1, 2, 3 e 4 servem para escolher a primeira, a segunda, a terceira e a quarta opcao\ndo menu correspondente.\n");
+			printf("Enquanto que o botao 0 serve para sair ou voltar um menu.\n");
+			printf("Digite o novo botao e, depois disso, aperte Enter para gravar.\n");
+			printf("O sistema soh aceita botoes no formato de char.\n");
+
+			printf("\nBotao 0 = ");
+			scanf("%c", &editor);
+			getchar();
+			botoes.botao0 = editor;
+
+			printf("\nBotao 1 = ");
+			scanf("%c", &editor);
+			getchar();
+			while (editor == botoes.botao0) {
+				printf("ERRO! - Esse char ja esta sendo usado por outro botao.\n");
+				printf("\nBotao 1 = ");
+				scanf("%c", &editor);
+				getchar();
+			}
+			botoes.botao1 = editor;
+
+			printf("\nBotao 2 = ");
+			scanf("%c", &editor);
+			getchar();
+			while (editor == botoes.botao0 || editor == botoes.botao1) {
+				printf("ERRO! - Esse char ja esta sendo usado por outro botao.\n");
+				printf("\nBotao 2 = ");
+				scanf("%c", &editor);
+				getchar();
+			}
+			botoes.botao2 = editor;
+
+			printf("\nBotao 3 = ");
+			scanf("%c", &editor);
+			getchar();
+			while (editor == botoes.botao0 || editor == botoes.botao1 || editor == botoes.botao2) {
+				printf("ERRO! - Esse char ja esta sendo usado por outro botao.\n");
+				printf("\nBotao 3 = ");
+				scanf("%c", &editor);
+				getchar();
+			}
+			botoes.botao3 = editor;
+
+			printf("\nBotao 4 = ");
+			scanf("%c", &editor);
+			getchar();
+			while (editor == botoes.botao0 || editor == botoes.botao1 || editor == botoes.botao2 || editor == botoes.botao3) {
+				printf("ERRO! - Esse char ja esta sendo usado por outro botao.\n");
+				printf("\nBotao 4 = ");
+				scanf("%c", &editor);
+				getchar();
+			}
+			botoes.botao4 = editor;
 			system("cls");
-			break;
-		default:
-			break;
+		}
+
+		//Entrar como administrador
+		else if (botaoApertado == botoes.botao4) {
+			opcaoAdmin(botoes);
+		}
+		else{
+			printf("%c", botaoApertado);
+			system("cls");
+			printf("ERRO! - Opcao invalida\n\n");
 		}
 	}
 	system("pause");
@@ -475,9 +574,6 @@ int main() {
 
 
 /*
-LEMBRAR - FAZER UMA STRUCT DE BOTOES, E COLOCAR OPCOES DE FECHAR O PROGRAMA, VER PONTUACAO GERAL, OU MUDAR OS BOTOES
-OU JOGAR O JOGO EM SI.
-
 int main() {
 char agente[20];
 int nivelAgente, numeroCaso, i;

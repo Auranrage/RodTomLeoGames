@@ -492,57 +492,83 @@ void editarDados(FILE *admin) {
 }
 
 //MENU DO ADMIN
-int opcaoAdmin(char login[]) {
-	char nome[50], senha[15], checarLogin[20], checarSenha[15];
-	int menu;
+void opcaoAdmin(Botoes botoes) {
+	char nome[20], senha[15], checarLogin[20], checarSenha[15], menu = 'z';
 	FILE *dadosAdmin = fopen("DadosDoAdministrador.txt", "r");
 	
-	strcpy(checarSenha, Descriptografia());  //Funcao de descriptografia
-	printf("Senha: ");
-	scanf("%s", &senha);
+	system("cls");
+	fscanf(dadosAdmin, "%s", checarLogin);
+	printf("Login: ");
+	scanf("%s", &nome);
 
-	if (strcmp(checarSenha, senha) == 0) {
-		fgets(nome, sizeof(nome), dadosAdmin);
-		fgets(nome, sizeof(nome), dadosAdmin);
+	if (strcmp(checarLogin, nome) == 0) {
+		strcpy(checarSenha, Descriptografia());  //Funcao de descriptografia
+		printf("Senha: ");
+		scanf("%s", &senha);
 
-		//Imprime o Menu do Admin
-		system("cls");
-		printf("Bem vindo %s.\n", nome);
-		printf("O que voce deseja fazer hoje?\n\n");
-		printf("1- ALTERAR CADASTRO   2- CRIAR CASO   3-SAIR\n");
-
-		scanf("%i", &menu);
-		while (menu != 3) {
-			getchar();
-			switch (menu)
-			{
-			case 1:                                                       //editar dados do admin
-				editarDados(dadosAdmin);
-				break;
-			case 2:                                                       //Criar caso
-				cadastrarCaso();
-				break;
-			case 3:                                                       //finaliza o programa
-				printf("Saindo...\n");
-				break;
-			default:
-				printf("Opcao invalida\n");
-				break;
-			}
-			rewind(dadosAdmin);
+		if (strcmp(checarSenha, senha) == 0) {
 			fgets(nome, sizeof(nome), dadosAdmin);
 			fgets(nome, sizeof(nome), dadosAdmin);
+
+			//Imprime o Menu do Admin
 			system("cls");
-			printf("Deseja fazer mais alguma operacao, %s?\n\n", nome);
-			printf("1- ALTERAR CADASTRO   2- CRIAR CASO   3-SAIR\n");
-			scanf("%i", &menu);
+			printf("Bem vindo %s.\n", nome);
+			printf("O que voce deseja fazer hoje?\n\n");
+			printf("%c - ALTERAR CADASTRO   %c - CRIAR CASO   %c - SAIR\n", botoes.botao1, botoes.botao2, botoes.botao0);
+			getchar();
+			
+			while (menu != botoes.botao0){
+				
+				scanf("%c", &menu);
+				getchar();
+
+				
+				if (menu == botoes.botao1) {										//Editar Dados do Admin
+					editarDados(dadosAdmin);
+					rewind(dadosAdmin);					   //Volta pro comeco do arquivo
+					fgets(nome, sizeof(nome), dadosAdmin); //Pega lixo
+					fgets(nome, sizeof(nome), dadosAdmin); //Pega o nome de novo, pra imprimir atualizado mesmo se alterar o cadastro
+					
+					system("cls");
+					printf("Deseja fazer mais alguma operacao, %s?\n\n", nome);
+					printf("%c - ALTERAR CADASTRO   %c - CRIAR CASO   %c - SAIR\n", botoes.botao1, botoes.botao2, botoes.botao0);
+				}
+
+				else if (menu == botoes.botao2) {                                                       //Criar Caso
+					cadastrarCaso();
+					
+					system("cls");
+					printf("Deseja fazer mais alguma operacao, %s?\n\n", nome);
+					printf("%c - ALTERAR CADASTRO   %c - CRIAR CASO   %c - SAIR\n", botoes.botao1, botoes.botao2, botoes.botao0);
+				}
+
+				else if (menu == botoes.botao0) {                                                       //Finaliza o Programa
+					printf("Saindo...\n");
+					break;
+				}
+				else{
+					system("cls");
+					printf("ERRO! - Opcao invalida.\n");
+					printf("Escolha uma opcao valida\n\n", nome);
+					printf("%c - ALTERAR CADASTRO   %c - CRIAR CASO   %c - SAIR\n", botoes.botao1, botoes.botao2, botoes.botao0);
+				}
+			}
+			system("cls");
+			return;
 		}
-		return 1;
+		else {
+			printf("ERRO! - Senha incorreta\n");
+			system("pause");
+			system("cls");
+			getchar(); //Pega o enter, limpa o stdin
+			return;
+		}
 	}
 	else {
-		system("cls");
-		printf("ERRO! - Senha incorreta\n");
+		printf("ERRO! - Login incorreto\n");
 		system("pause");
-		return 0;
+		system("cls");
+		getchar(); //Pega o enter, limpa o stdin
+		return;
 	}
 }

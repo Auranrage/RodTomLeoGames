@@ -3,3 +3,9 @@ Admin:
  - A senha que ta no arquivo DadosDoAdmin.txt é "password". "ncuuyqpb" = "password"
  - Login: admin
  - Senha: password
+
+Funcionando:
+ - Configurações de jogo. Edita os botoes e como quer usa-los
+ - Menu do administrador
+   - Edicao dos dados do administrador
+ - Comeco do menu do jogo
