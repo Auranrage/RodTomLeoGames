@@ -252,11 +252,10 @@ int SorteioCaso(int dificuldade) {
 	int caso, maximo = 1;
 	char leitura[500], cmp[20];
 	FILE *listaCasos;
-	srand(time(NULL));
+		
+	sprintf(cmp, "%i\n", maximo);
 
-	sprintf(cmp, "Caso %i:\n", maximo);
-
-	//switch para determinar qual arquivo sera lido
+	//Switch para determinar qual arquivo sera lido
 	switch (dificuldade) {
 	case 1:
 		listaCasos = fopen("CasosFaceis.txt", "r");
@@ -268,28 +267,34 @@ int SorteioCaso(int dificuldade) {
 		listaCasos = fopen("CasosDificieis.txt", "r");
 		break;
 	default:
-		printf("error...\n");
+		printf("ERRO! - Nao foi possivel abrir o arquivo para a funcao sorteio caso.\n");
 		break;
 	}
-	//determina o numero de casos existente no nivel de dificuldade do jogador
+	//Determina o numero de casos existente no nivel de dificuldade do jogador
 	while (!feof(listaCasos)) {
 		fgets(leitura, sizeof(leitura), listaCasos);
 		if (strcmp(leitura, cmp) == 0) {
 			maximo++;
-			sprintf(cmp, "Caso %i:\n", maximo);
+			sprintf(cmp, "%i\n", maximo);
 		}
 	}
 	maximo--;
-	//caso so exista um unico caso na dificuldade escolhida
+	//Caso so exista um unico caso na dificuldade escolhida
 	if (maximo == 1) {
 		caso = 1;
 	}
-	//caso exista mais de um caso na dificuldade escolhida
+	//Caso exista mais de um caso na dificuldade escolhida
 	else {
-		caso = rand() % (maximo - 1) + 1; //sorteio de um numero entre 1 e (maximo - 1)
+		int divisor = RAND_MAX / maximo;		//int divisor = RAND_MAX/(limit+1). Nesse programa, limit+1 da errado.
+												//Nao entendi porque no site falava que precisava do +1. Usando divisao por 5 funciona.
+		do {
+			caso = (rand() % divisor) + 1;
+		} while (caso > maximo);				// Colocar 5 no lugar do limit
+
+		//caso = rand() % (maximo - 1) + 1; sorteio de um numero entre 1 e (maximo - 1)[Deveria ser entre 1 e maximo, nao maximo menos 1, por isso tava dando sempre 1 porque ficava entre 1 e 1]
 	}
 
-	return caso;
+return caso;
 }
 
 //IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
@@ -420,7 +425,7 @@ int main() {
 	CasoMedio casoM;
 	CasoDificil casoD;
 	Jogador jogador;
-	
+	srand(time(NULL));
 
 	while (saidaWhile != true) {
 		printf("Bem-vindo agente. Por favor, idenfitique-se: ");

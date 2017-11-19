@@ -1,3 +1,1 @@
-﻿  FuncoesAdmin.cpp
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(170): warning C4477: 'scanf': a cadeia de formato '%s' requer um argumento do tipo 'char *', mas um argumento variadic 1 tem o tipo 'char *[]'
-  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
+﻿  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
