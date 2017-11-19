@@ -3,8 +3,9 @@
 
 //ARQUIVO PARA CASO - Transforma as informações no txt em um objeto do código
 CasoFacil arquivoParaObjetoCasoFacil(int numero) {
+	int i = 0;
 	FILE *arquivo;
-	char auxiliar[10], numeroEmString[2];
+	char auxiliar[30], numeroEmString[2];
 	CasoFacil caso;
 
 	caso.numeroDoCaso = numero;
@@ -12,7 +13,7 @@ CasoFacil arquivoParaObjetoCasoFacil(int numero) {
 
 	arquivo = fopen("CasosFaceis.txt", "r");
 	if (arquivo == NULL) {
-		printf("ERRO! - Impossivel abrir o arquivo!\n");
+		printf("ERRO! - Impossivel abrir o arquivo de casos!\n");
 		caso.numeroDoCaso = 0;
 		return caso;
 	}
@@ -39,5 +40,58 @@ CasoFacil arquivoParaObjetoCasoFacil(int numero) {
 			break;
 		}
 	}
+
+	arquivo = fopen("DadosDosSuspeitos.txt", "r");
+	if (arquivo == NULL) {
+		printf("ERRO! - Impossivel abrir o arquivo de suspeitos!\n");
+		caso.numeroDoCaso = 0;
+		return caso;
+	}
+
+	while (!feof(arquivo)) {
+		fgets(auxiliar, sizeof(auxiliar), arquivo);
+		//strtok(auxiliar, "\n");
+
+		if (strcmp(auxiliar, caso.vilaoDoCaso.nome) == 0) {
+			fgets(caso.vilaoDoCaso.sexo, sizeof(caso.vilaoDoCaso.sexo), arquivo);
+			fgets(caso.vilaoDoCaso.hobby, sizeof(caso.vilaoDoCaso.hobby), arquivo);
+			fgets(caso.vilaoDoCaso.corCabelo, sizeof(caso.vilaoDoCaso.corCabelo), arquivo);
+			fgets(caso.vilaoDoCaso.destaque, sizeof(caso.vilaoDoCaso.destaque), arquivo);
+			fgets(caso.vilaoDoCaso.carro, sizeof(caso.vilaoDoCaso.carro), arquivo);
+			break;
+		}
+	}
+
+	arquivo = fopen("ListaDeCidades.txt", "r");
+	if (arquivo == NULL) {
+		printf("ERRO! - Impossivel abrir o arquivo de cidades!\n");
+		caso.numeroDoCaso = 0;
+		return caso;
+	}
+
+	while (!feof(arquivo)) {
+		
+		fgets(auxiliar, sizeof(auxiliar), arquivo);
+		//strtok(auxiliar, "\n");
+
+		for (i = 0; i < 3; i++) {		
+			if (strcmp(auxiliar, caso.cidade[i].nome) == 0) {
+				fgets(caso.cidade[i].breveDescricao, sizeof(caso.cidade[i].breveDescricao), arquivo);
+			}
+		}
+	}
+	strtok(caso.tesouro, "\n");
+	strtok(caso.vilaoDoCaso.nome, "\n");
+	strtok(caso.vilaoDoCaso.sexo, "\n");
+	strtok(caso.vilaoDoCaso.hobby, "\n");
+	strtok(caso.vilaoDoCaso.corCabelo, "\n");
+	strtok(caso.vilaoDoCaso.destaque, "\n");
+	strtok(caso.vilaoDoCaso.carro, "\n");
+	strtok(caso.cidade[0].nome, "\n");
+	strtok(caso.cidade[0].breveDescricao, "\n");
+	strtok(caso.cidade[1].nome, "\n");
+	strtok(caso.cidade[1].breveDescricao, "\n");
+	strtok(caso.cidade[2].nome, "\n");
+	strtok(caso.cidade[2].breveDescricao, "\n");
 	return caso;
 }

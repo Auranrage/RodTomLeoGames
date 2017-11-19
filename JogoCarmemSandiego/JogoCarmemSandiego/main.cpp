@@ -16,8 +16,8 @@ typedef enum {
 } nivelDificuldade;
 
 //MENU INTERPOL - Funcao para Pesquisar Suspeitos no Database
-void interpol() {
-	char leitura[30], opcaoYN, lixo, compativel[30];
+void Interpol() {
+	char leitura[30], opcaoYN, compativel[30];
 	int menu, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
 	Vilao vilao, cmpDados;
 	FILE *dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
@@ -293,12 +293,13 @@ int SorteioCaso(int dificuldade) {
 }
 
 //IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
-int identificarAgente(char nomeAgente[]) {
+Jogador IdentificarAgente(char nomeAgente[]) {
 	FILE *agentes, *admin;
 	int id = 0, nivel, sucesso;
 	char leitura[30], opcaoYN;
-	char lerNivel[5];
+	char pulaLinha[5];
 	nivelDificuldade nivelAgente;
+	Jogador jogador;
 
 	agentes = fopen("DadosDosAgentes.txt", "r");
 
@@ -310,17 +311,20 @@ int identificarAgente(char nomeAgente[]) {
 		if (strcmp(leitura, nomeAgente) == 0) {
 			id = 1;
 		}
-		//Caso nao encontre, o programa pula a proxima linha, que possui o nivel do jogador antes de recomecar o loop
+		//Caso nao encontre, o programa pula as 2 proximas linhas, que possui o nivel do jogador antes de recomecar o loop.
 		else {
-			fgets(lerNivel, sizeof(lerNivel), agentes);
+			fgets(pulaLinha, sizeof(pulaLinha), agentes);
+			fgets(pulaLinha, sizeof(pulaLinha), agentes);
 		}
 	}
 
 	//Agente ja existente
 	if (id == 1) {
 		printf("Agente identificado.\nBem-vindo, agente %s\n", nomeAgente);
-		fscanf(agentes, "%i", &nivel);
-		return nivel - 1;
+		strcpy(jogador.nome, nomeAgente);
+		fscanf(agentes, "%i", &jogador.patente);
+		fscanf(agentes, "%i", &jogador.pontos);
+		return jogador;
 
 	}
 	//Cadastro de novo agente, caso ele deseje
@@ -331,297 +335,49 @@ int identificarAgente(char nomeAgente[]) {
 		fscanf(admin, "%s", leitura);
 		if (strcmp(leitura, nomeAgente) == 0) {
 			sucesso = opcaoAdmin(nomeAgente);
-			if (sucesso == 1) {
-				return 5;
-			}
-			else {
-				return 4;
-			}
+			jogador.patente = 6;
+			return jogador;
 		}
+
 
 		printf("Nao achamos o seu nome na lista\nGostaria de registra-lo?(Y/N)\n");
 		scanf("%c", &opcaoYN);
 		if (opcaoYN == 'y' || opcaoYN == 'Y') {
 			fclose(agentes);
 			agentes = fopen("DadosDosAgentes.txt", "a");
-			fprintf(agentes, "%s\n1\n", nomeAgente);
+			fprintf(agentes, "%s\n1\n0\n", nomeAgente);
 			fflush(agentes);
 			printf("O seu nome foi salvo\nBem-vindo a agencia, %s!\n", nomeAgente);
 			nivelAgente = iniciante;
 		}
 		else {
 			if (opcaoYN == 'n' || opcaoYN == 'N') {
-				return 3;
+				jogador.patente = 4;
+				return jogador;
 			}
 			else {
-				return 4;
+				jogador.patente = 5;
+				return jogador;
 			}
 		}
 	}
-	return nivelAgente;
+	jogador.patente = nivelAgente;
+	return jogador;
 }
 
-//MAIN
-int main() {
-	char agente[20];
-	int nivelAgente, numeroCaso, i;
-	CasoFacil casoF;
-	bool valido = false;
-
-	//Botoes
-	char botao = 'z', botao0, botao1, botao2, botao3, botao4, lixo;
-	botao0 = '0';
-	botao1 = '1';
-	botao2 = '2';
-	botao3 = '3';
-	botao4 = '4';
-
-	//Tela Inicial do Jogo
-	while (agente != 0) {
-		printf("Bem-vindo agente. Por favor, idenfitique-se: ");
-		scanf("%s", &agente);
-
-		if (strcmp(agente, "0") == 0) {  //Fecha o programa com 0
-			return 0;
-		}
-
-		//Imrpime o nivel de dificuldade, dependendo do retorno da funcao indentificarAgente
-		nivelAgente = identificarAgente(agente);
-		switch (nivelAgente) {
-		case 0:
-			//Casos iniciantes
-			printf("Nivel: Iniciante\n");
-
-			//Leitura do arquivo txt e transformaçao em uma Struct/Objeto
-			casoF = arquivoParaObjetoCasoFacil(SorteioCaso(nivelAgente + 1));
-
-			//Introduçào ao caso
-			printf("\nCaso %i:\n", casoF.numeroDoCaso);
-			printf("Tesouro Roubado: %sSupeito: %sEncontre-o e prenda-o em menos de 7 dias!\n\n", casoF.tesouro, casoF.vilaoDoCaso.nome);
-			system("pause");
-			system("cls");
-
-			//Chegada na primeira cidade
-			printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[0].nome);
-			printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
-			valido = false;
-			while (valido != true) {
-
-				fflush(stdin);
-				scanf("%c", &lixo);
-				scanf("%c", &botao);
-
-				if (botao == botao1) {
-					system("cls");
-					printf("%s\n", casoF.dica[0]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao2) {
-					system("cls");
-					printf("%s\n", casoF.dica[1]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao3) {
-					system("cls");
-					printf("%s\n", casoF.dica[2]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao4) {
-					system("cls");
-					printf("%s\n", casoF.dica[3]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao0) {
-					valido = true;
-				}
-				else {
-					system("cls");
-					printf("ERRO - Opcao invalida!\n");
-					printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[0].nome);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
-				}
-			}
-
-			//Pós invetigação
-			system("cls");
-			printf("O que fazer agora?\n");
-			printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-			valido = false;
-			while (valido != true) {
-				fflush(stdin);
-				scanf("%c", &lixo);
-				scanf("%c", &botao);
-
-				if (botao == botao1) {
-					system("cls");
-					printf("Ir para a tela de invetigacao ainda nao implementado\n");
-					printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-				}
-				else if (botao == botao2) {
-					system("cls");
-					interpol();
-					printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-				}
-				else if (botao == botao3) {
-					system("cls");
-					printf("Escolher proxima cidade de viagem ainda nao implementado\n");
-					printf("Viajando para a proxima cidade...\n\n");
-					valido = true;
-				}
-				else {
-					system("cls");
-					printf("ERRO - Opcao invalida!\n");
-					printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-				}
-			}
-			system("pause");
-
-			//Chegada na segunda cidade
-			system("cls");
-			printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[1].nome);
-			printf("Escolha um local para investigar.\n1 = Lojinha | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-			valido = false;
-			while (valido != true) {
-				fflush(stdin);
-				scanf("%c", &lixo);
-				scanf("%c", &botao);
-
-				if (botao == botao1) {
-					system("cls");
-					printf("%s\n", casoF.dica[4]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao2) {
-					system("cls");
-					printf("%s\n", casoF.dica[5]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao3) {
-					system("cls");
-					printf("%s\n", casoF.dica[6]);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao0) {
-					valido = true;
-				}
-				else {
-					system("cls");
-					printf("ERRO - Opcao invalida!\n");
-					printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[1].nome);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-			}
-
-			//Pós invetigação
-			system("cls");
-			printf("O que fazer agora?\n");
-			printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-			valido = false;
-			while (valido != true) {
-				fflush(stdin);
-				scanf("%c", &lixo);
-				scanf("%c", &botao);
-
-				if (botao == botao1) {
-					system("cls");
-					printf("Ir para a tela de invetigacao ainda nao implementado\n");
-					printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-				}
-				else if (botao == botao2) {
-					system("cls");
-					interpol();
-					printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-				}
-				else if (botao == botao3) {
-					system("cls");
-					printf("Escolher proxima cidade de viagem ainda nao implementado\n");
-					printf("Viajando para a proxima cidade...\n\n");
-					valido = true;
-				}
-				else {
-					system("cls");
-					printf("ERRO - Opcao invalida!\n");
-					printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
-				}
-			}
-			system("pause");
-
-			//Chegada na ultima cidade
-			system("cls");
-			printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[2].nome);
-			printf("Escolha um local para investigar.\n1 = Lojinha | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-			valido = false;
-			while (valido != true) {
-				fflush(stdin);
-				scanf("%c", &lixo);
-				scanf("%c", &botao);
-
-				if (botao == botao1) {
-					system("cls");
-					printf("Dica dizendo que o vilao esta por perto 1\n");
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao2) {
-					system("cls");
-					printf("Dica dizendo que o vilao esta por perto 2\n");
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao3) {
-					system("cls");
-					printf("Dica dizendo que o vilao esta por perto 3\n");
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-				else if (botao == botao0) {
-					valido = true;
-				}
-				else {
-					system("cls");
-					printf("ERRO - Opcao invalida!\n");
-					printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[2].nome);
-					printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
-				}
-			}
-			break;
-
-		case 1:
-			printf("Nivel: Intermediario\n");
-			numeroCaso = SorteioCaso(nivelAgente + 1);
-			break;
-
-		case 2:
-			printf("Nivel: Avancado\n");
-			numeroCaso = SorteioCaso(nivelAgente + 1);
-			break;
-
-		case 3:
-			system("cls");
-			printf("Desculpe, mas um cadastro e necessario para jogar\n\n");
-			break;
-
-		case 4:
-			system("cls");
-			printf("Ocorreu um erro. Tente novamente mais tarde\n\n");
-			break;
-
-		case 5:
-			printf("Finalizando...\n");
-			break;
-
-		default:
-			break;
-		}
-	}
-
-	system("pause");
-}
-
-
-//MAIN E MENU ALTERNATIVO. VOU ANALISAR.
-/*
-void menuJogo(FILE *dadosCaso)
-{
+//MENU PARA CASO FACIL
+void MenuJogoFacil(CasoFacil caso){
 	int menu, horas = 8, fimJogo = 0;
 	char diaSemana[30], cidade[50];
+
+
+	//Imrprime mensagem inicial do caso
+	printf("\n*********** NEWS FLASH ***********\n");
+	printf("O tesouro %s foi roubado na cidade de %s. Um suspeito %s foi encontrado no local!\n", caso.tesouro, caso.cidade[0].nome, caso.vilaoDoCaso.sexo);
+	printf("Agente, voce deve localizar o suspeito e prende-lo antes que ele escape!\n");
+	printf("Voce tem ate as 19:00 do Domingo para prende-lo. Boa sorte!\n\n");
+	system("pause");
+	system("cls");
 
 	strcpy(diaSemana, "Segunda-Feira");
 
@@ -633,7 +389,7 @@ void menuJogo(FILE *dadosCaso)
 		else {
 			printf("%i:00\n\n", horas);
 		}
-		printf("Bem vindo a %s\n\n", cidade);
+		printf("Bem vindo a %s\n%s\n", caso.cidade[0].nome,caso.cidade[0].breveDescricao);
 		printf("O que voce deseja fazer, agente?\n\n");
 		printf("1- Viajar   2- Investigar   3- Interpol\n");
 		scanf("%i", &menu);
@@ -646,7 +402,7 @@ void menuJogo(FILE *dadosCaso)
 			//investigar
 			break;
 		case 3:
-			interpol();
+			Interpol();
 			break;
 		default:
 			break;
@@ -655,82 +411,317 @@ void menuJogo(FILE *dadosCaso)
 }
 
 
+//MAIN
+int main() {
+	char agente[20];
+	int nivelAgente, numeroCaso;
+	bool saidaWhile = false;
+	CasoFacil casoF;
+	CasoMedio casoM;
+	CasoDificil casoD;
+	Jogador jogador;
+	
+
+	while (saidaWhile != true) {
+		printf("Bem-vindo agente. Por favor, idenfitique-se: ");
+		scanf("%s", &agente);
+
+		//Imrpime o nivel de dificuldade, dependendo do retorno da funcao indentificarAgente
+		jogador = IdentificarAgente(agente);
+		switch (jogador.patente) {
+		case 1:
+			printf("Nivel: Iniciante\n");
+			casoF = arquivoParaObjetoCasoFacil(SorteioCaso(jogador.patente));
+			MenuJogoFacil(casoF);
+			saidaWhile = true;
+			break;
+		case 2:
+			printf("Nivel: Intermediario\n");
+			//casoM = arquivoParaObjetoCasoMedio(SorteioCaso(jogador.patente));
+			saidaWhile = true;
+			break;
+		case 3:
+			printf("Nivel: Avancado\n");
+			//casoD = arquivoParaObjetoCasoDificil(SorteioCaso(jogador.patente));
+			saidaWhile = true;
+			break;
+		case 4:
+			system("cls");
+			printf("Desculpe, mas um cadastro eh necessario para jogar\n\n");
+			break;
+		case 5:
+			system("cls");
+			printf("ERRO! - Ocorreu um erro. Tente novamente.\n");
+			break;
+		case 6:
+			/*printf("Finalizando...\n");
+			system("pause");
+			exit(0);
+			*/
+			system("cls");
+			break;
+		default:
+			break;
+		}
+	}
+	system("pause");
+}
+
+
+/*
+LEMBRAR - FAZER UMA STRUCT DE BOTOES, E COLOCAR OPCOES DE FECHAR O PROGRAMA, VER PONTUACAO GERAL, OU MUDAR OS BOTOES
+OU JOGAR O JOGO EM SI.
 
 int main() {
-	char agente[20], leitura[500], cmp[50], tesouro[50], cidade[50], sexo[20];
-	int nivelAgente, numeroCaso;
-	FILE *nivelCaso, *dadosSuspeitos;
+char agente[20];
+int nivelAgente, numeroCaso, i;
+CasoFacil casoF;
+bool valido = false;
 
-	printf("Bem-vindo agente. Por favor, idenfitique-se: ");
-	scanf("%s", &agente);
+//Botoes
+char botao = 'z', botao0, botao1, botao2, botao3, botao4, lixo;
+botao0 = '0';
+botao1 = '1';
+botao2 = '2';
+botao3 = '3';
+botao4 = '4';
 
-	//imrpime o nivel de dificuldade, dependendo do retorno da funcao indentificarAgente
-	nivelAgente = identificarAgente(agente);
-	switch (nivelAgente) {
-	case 0:
-		printf("Nivel: Iniciante\n");
-		numeroCaso = sorteioCaso(nivelAgente + 1);
-		nivelCaso = fopen("CasosFaceis.txt", "r");
-		break;
-	case 1:
-		printf("Nivel: Intermediario\n");
-		numeroCaso = sorteioCaso(nivelAgente + 1);
-		nivelCaso = fopen("CasosMedios.txt", "r");
-		break;
-	case 2:
-		printf("Nivel: Avancado\n");
-		numeroCaso = sorteioCaso(nivelAgente + 1);
-		nivelCaso = fopen("CasosDificeis.txt", "r");
-		break;
-	case 3:
-		printf("Desculpe, mas um cadastro e necessario para jogar\n");
-		return 0;
-		break;
-	case 4:
-		printf("Ocorreu um erro. Tente novamente mais tarde\n");
-		break;
-	case 5:
-		printf("Finalizando...\n");
-		break;
-	default:
-		break;
-	}
+//Tela Inicial do Jogo
+while (agente != 0) {
+printf("Bem-vindo agente. Por favor, idenfitique-se: ");
+scanf("%s", &agente);
 
-	//obter informacaos sobre caso para serem impressas na tela na mensagem abaixo
-	sprintf(cmp, "Caso %i:\n", numeroCaso);
+if (strcmp(agente, "0") == 0) {  //Fecha o programa com 0
+return 0;
+}
 
-	while (!feof(nivelCaso)) {
-		fgets(leitura, sizeof(leitura), nivelCaso);
-		if (strcmp(leitura, cmp) == 0) {
-			break;
-		}
-	}
-	fgets(tesouro, sizeof(tesouro), nivelCaso);
-	fgets(sexo, sizeof(sexo), nivelCaso);
-	dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
-	while (!feof(dadosSuspeitos)) {
-		fgets(leitura, sizeof(leitura), dadosSuspeitos);
-		if (strcmp(leitura, sexo) == 0) {
-			fgets(sexo, sizeof(sexo), dadosSuspeitos);
-			strtok(sexo, "\n");
-			sexo[0] = sexo[0] + 32;
-			break;
-		}
-	}
-	fgets(cidade, sizeof(cidade), nivelCaso);
-	strtok(tesouro, "\n");
-	strtok(cidade, "\n");
+//Imrpime o nivel de dificuldade, dependendo do retorno da funcao indentificarAgente
+nivelAgente = identificarAgente(agente);
+switch (nivelAgente) {
+case 0:
+//Casos iniciantes
+printf("Nivel: Iniciante\n");
 
+//Leitura do arquivo txt e transformaçao em uma Struct/Objeto
+casoF = arquivoParaObjetoCasoFacil(SorteioCaso(nivelAgente + 1));
 
-	//imrpime mensagem inicial do caso
-	printf("\n*********** NEWS FLASH ***********\n");
-	printf("O tesouro %s foi roubado na cidade de %s. Um suspeito %s foi encontrado no local\n", tesouro, cidade, sexo);
-	printf("Agente, você deve localizar o suspeito e prende-lo antes que ele escape\n");
-	printf("Voce tem até as 19:00 do Domingo para prende-lo. Boa sorte!\n\n");
+//Introduçào ao caso
+printf("\nCaso %i:\n", casoF.numeroDoCaso);
+printf("Tesouro Roubado: %sSupeito: %sEncontre-o e prenda-o em menos de 7 dias!\n\n", casoF.tesouro, casoF.vilaoDoCaso.nome);
+system("pause");
+system("cls");
 
-	//funcao menu, precisa mandar o arquivo  certo
-	menuJogo(nivelCaso);
+//Chegada na primeira cidade
+printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[0].nome);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
+valido = false;
+while (valido != true) {
 
-	system("pause");
+fflush(stdin);
+scanf("%c", &lixo);
+scanf("%c", &botao);
+
+if (botao == botao1) {
+system("cls");
+printf("%s\n", casoF.dica[0]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
+}
+else if (botao == botao2) {
+system("cls");
+printf("%s\n", casoF.dica[1]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
+}
+else if (botao == botao3) {
+system("cls");
+printf("%s\n", casoF.dica[2]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
+}
+else if (botao == botao4) {
+system("cls");
+printf("%s\n", casoF.dica[3]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
+}
+else if (botao == botao0) {
+valido = true;
+}
+else {
+system("cls");
+printf("ERRO - Opcao invalida!\n");
+printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[0].nome);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 4 - Lojinha | 0 = Parar de Investigar\n");
+}
+}
+
+//Pós invetigação
+system("cls");
+printf("O que fazer agora?\n");
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+valido = false;
+while (valido != true) {
+fflush(stdin);
+scanf("%c", &lixo);
+scanf("%c", &botao);
+
+if (botao == botao1) {
+system("cls");
+printf("Ir para a tela de invetigacao ainda nao implementado\n");
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+}
+else if (botao == botao2) {
+system("cls");
+interpol();
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+}
+else if (botao == botao3) {
+system("cls");
+printf("Escolher proxima cidade de viagem ainda nao implementado\n");
+printf("Viajando para a proxima cidade...\n\n");
+valido = true;
+}
+else {
+system("cls");
+printf("ERRO - Opcao invalida!\n");
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+}
+}
+system("pause");
+
+//Chegada na segunda cidade
+system("cls");
+printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[1].nome);
+printf("Escolha um local para investigar.\n1 = Lojinha | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+valido = false;
+while (valido != true) {
+fflush(stdin);
+scanf("%c", &lixo);
+scanf("%c", &botao);
+
+if (botao == botao1) {
+system("cls");
+printf("%s\n", casoF.dica[4]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+else if (botao == botao2) {
+system("cls");
+printf("%s\n", casoF.dica[5]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+else if (botao == botao3) {
+system("cls");
+printf("%s\n", casoF.dica[6]);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+else if (botao == botao0) {
+valido = true;
+}
+else {
+system("cls");
+printf("ERRO - Opcao invalida!\n");
+printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[1].nome);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+}
+
+//Pós invetigação
+system("cls");
+printf("O que fazer agora?\n");
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+valido = false;
+while (valido != true) {
+fflush(stdin);
+scanf("%c", &lixo);
+scanf("%c", &botao);
+
+if (botao == botao1) {
+system("cls");
+printf("Ir para a tela de invetigacao ainda nao implementado\n");
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+}
+else if (botao == botao2) {
+system("cls");
+interpol();
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+}
+else if (botao == botao3) {
+system("cls");
+printf("Escolher proxima cidade de viagem ainda nao implementado\n");
+printf("Viajando para a proxima cidade...\n\n");
+valido = true;
+}
+else {
+system("cls");
+printf("ERRO - Opcao invalida!\n");
+printf("1 = Investigar | 2 =  Interpol | 3 = Viajar\n");
+}
+}
+system("pause");
+
+//Chegada na ultima cidade
+system("cls");
+printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[2].nome);
+printf("Escolha um local para investigar.\n1 = Lojinha | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+valido = false;
+while (valido != true) {
+fflush(stdin);
+scanf("%c", &lixo);
+scanf("%c", &botao);
+
+if (botao == botao1) {
+system("cls");
+printf("Dica dizendo que o vilao esta por perto 1\n");
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+else if (botao == botao2) {
+system("cls");
+printf("Dica dizendo que o vilao esta por perto 2\n");
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+else if (botao == botao3) {
+system("cls");
+printf("Dica dizendo que o vilao esta por perto 3\n");
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+else if (botao == botao0) {
+valido = true;
+}
+else {
+system("cls");
+printf("ERRO - Opcao invalida!\n");
+printf("Bem vindo a %sCidade conhecida por X.\n", casoF.cidade[2].nome);
+printf("Escolha um local para investigar.\n1 = Banco | 2 =  Centro | 3 = Aeroporto | 0 = Parar de Investigar\n");
+}
+}
+break;
+
+case 1:
+printf("Nivel: Intermediario\n");
+numeroCaso = SorteioCaso(nivelAgente + 1);
+break;
+
+case 2:
+printf("Nivel: Avancado\n");
+numeroCaso = SorteioCaso(nivelAgente + 1);
+break;
+
+case 3:
+system("cls");
+printf("Desculpe, mas um cadastro e necessario para jogar\n\n");
+break;
+
+case 4:
+system("cls");
+printf("Ocorreu um erro. Tente novamente mais tarde\n\n");
+break;
+
+case 5:
+printf("Finalizando...\n");
+break;
+
+default:
+break;
+}
+}
+
+system("pause");
 }
 */

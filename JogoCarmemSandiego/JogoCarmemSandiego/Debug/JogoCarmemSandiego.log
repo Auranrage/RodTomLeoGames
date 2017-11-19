@@ -1,9 +1,3 @@
-﻿  main.cpp
-c:\users\16430126\documents\visual studio 2017\projects\jogocarmemsandiego\jogocarmemsandiego\main.cpp(20): warning C4101: 'lixo': variável local não referenciada
-c:\users\16430126\documents\visual studio 2017\projects\jogocarmemsandiego\jogocarmemsandiego\main.cpp(255): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
-c:\users\16430126\documents\visual studio 2017\projects\jogocarmemsandiego\jogocarmemsandiego\main.cpp(367): warning C4101: 'i': variável local não referenciada
-  FuncoesAdmin.cpp
-c:\users\16430126\documents\visual studio 2017\projects\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(86): warning C4477: 'scanf': a cadeia de formato '%s' requer um argumento do tipo 'char *', mas um argumento variadic 1 tem o tipo 'char *[]'
-  Gerando Código...
-  JogoCarmemSandiego.vcxproj -> C:\Users\16430126\Documents\Visual Studio 2017\Projects\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
-  JogoCarmemSandiego.vcxproj -> C:\Users\16430126\Documents\Visual Studio 2017\Projects\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.pdb (Partial PDB)
+﻿  FuncoesAdmin.cpp
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(170): warning C4477: 'scanf': a cadeia de formato '%s' requer um argumento do tipo 'char *', mas um argumento variadic 1 tem o tipo 'char *[]'
+  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe

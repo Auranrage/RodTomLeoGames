@@ -1,5 +1,89 @@
 #include "FuncoesAdmin.h"
 
+//FUNCAO DE CRIPTOGRAFIA
+void Criptografia() {
+
+	FILE *admin;
+	int count = 0;
+	char aux = 'z', arquivoOriginal[20];
+
+	admin = fopen("DadosDoAdministrador.txt", "w+");
+	while (aux != ' ' || aux != feof(admin)) {
+		aux = fgetc(admin);
+	}
+	do {
+		aux = fgetc(admin);
+		arquivoOriginal[count] = aux;
+		if (arquivoOriginal[count] % 2 != 0) {
+			arquivoOriginal[count] = arquivoOriginal[count] + 2;
+			if (arquivoOriginal[count] == '{') {
+				arquivoOriginal[count] = 'a';
+			}
+			if (arquivoOriginal[count] == '[') {
+				arquivoOriginal[count] = 'A';
+			}
+			if (arquivoOriginal[count] == ';') {
+				arquivoOriginal[count] = '1';
+			}
+		}
+		else {
+			arquivoOriginal[count] = arquivoOriginal[count] - 2;
+			if (arquivoOriginal[count] == '`') {
+				arquivoOriginal[count] = 'z';
+			}
+			if (arquivoOriginal[count] == '@') {
+				arquivoOriginal[count] = 'Z';
+			}
+			if (arquivoOriginal[count] == '.') {
+				arquivoOriginal[count] = '8';
+			}
+		}
+		count++;
+	} while (aux != ' ');
+}
+
+//FUNCAO PARA DESCRIPTORAFIA
+void Descriptografia() {
+	FILE *admin;
+	int count = 0;
+	char aux = 'z', arquivoOriginal[20];
+
+	admin = fopen("DadosDoAdministrador.txt", "w+");
+
+	while (aux != ' ' || aux != feof(admin)) {
+		aux = fgetc(admin);
+	}
+	do {
+		aux = fgetc(admin);
+		arquivoOriginal[count] = aux;
+
+		if (arquivoOriginal[count] % 2 != 0) {
+			arquivoOriginal[count] = arquivoOriginal[count] - 2;
+			if (arquivoOriginal[count] == '_') {
+				arquivoOriginal[count] = 'y';
+			}
+			if (arquivoOriginal[count] == '?') {
+				arquivoOriginal[count] = 'Y';
+			}
+			if (arquivoOriginal[count] == '/') {
+				arquivoOriginal[count] = '9';
+			}
+		}
+		else {
+			arquivoOriginal[count] = arquivoOriginal[count] + 2;
+			if (arquivoOriginal[count] == '|') {
+				arquivoOriginal[count] = 'b';
+			}
+			if (arquivoOriginal[count] == '\\') {
+				arquivoOriginal[count] = 'B';
+			}
+			if (arquivoOriginal[count] == ':') {
+				arquivoOriginal[count] = '0';
+			}
+		}
+		count++;
+	} while (aux != ' ');
+}
 
 //CADASTRO DE CIDADE - Funcao para verificar se a cidade lida ja esta cadastrada. Caso nao esteja, o usuario pode cadastra-la
 int cadastroCidade(char nomeCidade[]) {
@@ -395,9 +479,9 @@ void editarDados(FILE *admin) {
 	strtok(login, "\n");
 	printf("Digite uma nova senha: ");
 	
-	//IMPORTANTE Inserir funcao de descriptografia aqui
+	Descriptografia();  //IMPORTANTE Inserir funcao de descriptografia aqui
 	fgets(senha, sizeof(senha), stdin);
-	//IMPORTANTE Inserir funcao de criptografia aqui
+	Criptografia();   //IMPORTANTE Inserir funcao de criptografia aqui
 	strtok(senha, "\n");
 
 	//Novos dados sao registrados no arquivo
@@ -413,10 +497,10 @@ int opcaoAdmin(char login[]) {
 	int menu;
 	FILE *dadosAdmin = fopen("DadosDoAdministrador.txt", "r");
 	
-	//IMPORTANTE inserir funcao de descriptografia aqui
+	Descriptografia();  //IMPORTANTE inserir funcao de descriptografia aqui
 	printf("Senha: ");
 	scanf("%s", &senha);
-	//IMPORTANTE inserir funcao de criptografia aqui
+	Criptografia();    //IMPORTANTE inserir funcao de criptografia aqui
 
 	fscanf(dadosAdmin, "%s %s", &checarLogin, &checarSenha);
 	if (strcmp(checarLogin, login) == 0 && strcmp(checarSenha, senha) == 0) {
@@ -453,7 +537,9 @@ int opcaoAdmin(char login[]) {
 		return 1;
 	}
 	else {
-		printf("Senha incorreta\n");
+		system("cls");
+		printf("ERRO! - Senha incorreta\n");
+		system("pause");
 		return 0;
 	}
 }

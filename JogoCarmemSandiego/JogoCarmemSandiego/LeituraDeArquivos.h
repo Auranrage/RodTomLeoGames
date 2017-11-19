@@ -14,13 +14,13 @@ typedef struct Jogador Jogador;
 //Structs
 struct Jogador {
 	char nome[30];
+	int patente;
 	int pontos;
-	char patente[30];
 };
 
 struct Vilao {
 	char nome[30];
-	char sexo[10];
+	char sexo[15];
 	char hobby[10];
 	char corCabelo[10];
 	char destaque[10];
@@ -29,7 +29,7 @@ struct Vilao {
 
 struct Cidade {
 	char nome[20];
-	char breveDescricao[120];
+	char breveDescricao[300];
 };
 
 struct CasoFacil {
