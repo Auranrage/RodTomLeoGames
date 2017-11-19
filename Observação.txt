@@ -1,0 +1,5 @@
+Admin:
+ - A senha do administrador só pode letras e numeros.
+ - A senha que ta no arquivo DadosDoAdmin.txt é "password". "ncuuyqpb" = "password"
+ - Login: admin
+ - Senha: password

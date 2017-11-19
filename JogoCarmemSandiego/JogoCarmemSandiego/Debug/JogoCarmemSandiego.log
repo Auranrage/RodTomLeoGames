@@ -1,1 +1,6 @@
-﻿  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
+﻿  FuncoesAdmin.cpp
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(172): warning C4477: 'scanf': a cadeia de formato '%s' requer um argumento do tipo 'char *', mas um argumento variadic 1 tem o tipo 'char *[]'
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(496): warning C4101: 'checarLogin': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(87): warning C4172: retornando o endereço da variável local ou temporário: arquivoOriginal
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(40): warning C4172: retornando o endereço da variável local ou temporário: arquivoOriginal
+  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe

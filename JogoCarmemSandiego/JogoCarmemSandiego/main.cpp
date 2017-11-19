@@ -291,7 +291,8 @@ int SorteioCaso(int dificuldade) {
 			caso = (rand() % divisor) + 1;
 		} while (caso > maximo);				// Colocar 5 no lugar do limit
 
-		//caso = rand() % (maximo - 1) + 1; sorteio de um numero entre 1 e (maximo - 1)[Deveria ser entre 1 e maximo, nao maximo menos 1, por isso tava dando sempre 1 porque ficava entre 1 e 1]
+		//caso = rand() % (maximo - 1) + 1; sorteio de um numero entre 1 e (maximo - 1)
+		//[Deveria ser entre 1 e maximo, nao maximo menos 1, por isso tava dando sempre 1 porque ficava entre 1 e 1]
 	}
 
 return caso;

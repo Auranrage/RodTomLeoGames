@@ -1,22 +1,17 @@
 #include "FuncoesAdmin.h"
 
 //FUNCAO DE CRIPTOGRAFIA
-void Criptografia() {
-
-	FILE *admin;
+char* Criptografia(char *senha) {
 	int count = 0;
-	char aux = 'z', arquivoOriginal[20];
+	char arquivoOriginal[20];
 
-	admin = fopen("DadosDoAdministrador.txt", "w+");
-	while (aux != ' ' || aux != feof(admin)) {
-		aux = fgetc(admin);
-	}
 	do {
-		aux = fgetc(admin);
-		arquivoOriginal[count] = aux;
+		arquivoOriginal[count] = senha[count];
+		
 		if (arquivoOriginal[count] % 2 != 0) {
-			arquivoOriginal[count] = arquivoOriginal[count] + 2;
-			if (arquivoOriginal[count] == '{') {
+			arquivoOriginal[count] = arquivoOriginal[count] + 2; //Criptografia impar
+			
+			if (arquivoOriginal[count] == '{') {				 //Limites de criptografia. só pdoe letras e numeros
 				arquivoOriginal[count] = 'a';
 			}
 			if (arquivoOriginal[count] == '[') {
@@ -27,8 +22,9 @@ void Criptografia() {
 			}
 		}
 		else {
-			arquivoOriginal[count] = arquivoOriginal[count] - 2;
-			if (arquivoOriginal[count] == '`') {
+			arquivoOriginal[count] = arquivoOriginal[count] - 2; //Criptografia par
+			
+			if (arquivoOriginal[count] == '`') {				 //Limites de criptografia
 				arquivoOriginal[count] = 'z';
 			}
 			if (arquivoOriginal[count] == '@') {
@@ -39,18 +35,20 @@ void Criptografia() {
 			}
 		}
 		count++;
-	} while (aux != ' ');
+	} while (senha[count] != '\0');
+	arquivoOriginal[count] = '\0';
+	return arquivoOriginal;
 }
 
 //FUNCAO PARA DESCRIPTORAFIA
-void Descriptografia() {
+char* Descriptografia() {
 	FILE *admin;
 	int count = 0;
 	char aux = 'z', arquivoOriginal[20];
 
-	admin = fopen("DadosDoAdministrador.txt", "w+");
+	admin = fopen("DadosDoAdministrador.txt", "r+");
 
-	while (aux != ' ' || aux != feof(admin)) {
+	while (aux != ' ') {
 		aux = fgetc(admin);
 	}
 	do {
@@ -59,6 +57,7 @@ void Descriptografia() {
 
 		if (arquivoOriginal[count] % 2 != 0) {
 			arquivoOriginal[count] = arquivoOriginal[count] - 2;
+			
 			if (arquivoOriginal[count] == '_') {
 				arquivoOriginal[count] = 'y';
 			}
@@ -71,6 +70,7 @@ void Descriptografia() {
 		}
 		else {
 			arquivoOriginal[count] = arquivoOriginal[count] + 2;
+
 			if (arquivoOriginal[count] == '|') {
 				arquivoOriginal[count] = 'b';
 			}
@@ -82,7 +82,9 @@ void Descriptografia() {
 			}
 		}
 		count++;
-	} while (aux != ' ');
+	} while (aux != '\n');
+	strtok(arquivoOriginal, "\f");
+	return arquivoOriginal;
 }
 
 //CADASTRO DE CIDADE - Funcao para verificar se a cidade lida ja esta cadastrada. Caso nao esteja, o usuario pode cadastra-la
@@ -466,11 +468,10 @@ int cadastrarCaso() {
 
 //EDITAR DADOS DO ADMIN - Procedimento para editar dados do admin
 void editarDados(FILE *admin) {
-	char nome[30], login[30], senha[30];
-
-	admin = fopen("DadosDoAdministrador.txt", "w");
+	char nome[30], login[30], senha[15];
 
 	//Leitura dos novos dados
+	system("cls");
 	printf("Digite um novo nome: ");
 	fgets(nome, sizeof(nome), stdin);
 	strtok(nome, "\n");
@@ -479,37 +480,35 @@ void editarDados(FILE *admin) {
 	strtok(login, "\n");
 	printf("Digite uma nova senha: ");
 	
-	Descriptografia();  //IMPORTANTE Inserir funcao de descriptografia aqui
 	fgets(senha, sizeof(senha), stdin);
-	Criptografia();   //IMPORTANTE Inserir funcao de criptografia aqui
 	strtok(senha, "\n");
+	strcpy(senha, Criptografia(senha));   //Funcao de criptografia
 
 	//Novos dados sao registrados no arquivo
+	admin = fopen("DadosDoAdministrador.txt", "w");
 	fprintf(admin, "%s %s\n%s", login, senha, nome);
 	fflush(admin);
-
 	fclose(admin);
 }
 
 //MENU DO ADMIN
 int opcaoAdmin(char login[]) {
-	char nome[50], senha[40], checarLogin[20], checarSenha[40];
+	char nome[50], senha[15], checarLogin[20], checarSenha[15];
 	int menu;
 	FILE *dadosAdmin = fopen("DadosDoAdministrador.txt", "r");
 	
-	Descriptografia();  //IMPORTANTE inserir funcao de descriptografia aqui
+	strcpy(checarSenha, Descriptografia());  //Funcao de descriptografia
 	printf("Senha: ");
 	scanf("%s", &senha);
-	Criptografia();    //IMPORTANTE inserir funcao de criptografia aqui
 
-	fscanf(dadosAdmin, "%s %s", &checarLogin, &checarSenha);
-	if (strcmp(checarLogin, login) == 0 && strcmp(checarSenha, senha) == 0) {
+	if (strcmp(checarSenha, senha) == 0) {
 		fgets(nome, sizeof(nome), dadosAdmin);
 		fgets(nome, sizeof(nome), dadosAdmin);
 
-		//Imprime menu admin
-		printf("Bem vindo %s\n", nome);
-		printf("O que voce deseja fazer hoje?\n");
+		//Imprime o Menu do Admin
+		system("cls");
+		printf("Bem vindo %s.\n", nome);
+		printf("O que voce deseja fazer hoje?\n\n");
 		printf("1- ALTERAR CADASTRO   2- CRIAR CASO   3-SAIR\n");
 
 		scanf("%i", &menu);
@@ -530,7 +529,11 @@ int opcaoAdmin(char login[]) {
 				printf("Opcao invalida\n");
 				break;
 			}
-			printf("Deseja fazer mais alguma operação, %s?\n", nome);
+			rewind(dadosAdmin);
+			fgets(nome, sizeof(nome), dadosAdmin);
+			fgets(nome, sizeof(nome), dadosAdmin);
+			system("cls");
+			printf("Deseja fazer mais alguma operacao, %s?\n\n", nome);
 			printf("1- ALTERAR CADASTRO   2- CRIAR CASO   3-SAIR\n");
 			scanf("%i", &menu);
 		}
