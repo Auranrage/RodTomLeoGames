@@ -21,9 +21,9 @@ struct Jogador {
 struct Vilao {
 	char nome[30];
 	char sexo[15];
-	char hobby[10];
-	char corCabelo[10];
-	char destaque[10];
+	char hobby[15];
+	char cabelo[15];
+	char destaque[15];
 	char carro[15];
 };
 

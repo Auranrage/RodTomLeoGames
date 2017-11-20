@@ -55,7 +55,7 @@ CasoFacil arquivoParaObjetoCasoFacil(int numero) {
 		if (strcmp(auxiliar, caso.vilaoDoCaso.nome) == 0) {
 			fgets(caso.vilaoDoCaso.sexo, sizeof(caso.vilaoDoCaso.sexo), arquivo);
 			fgets(caso.vilaoDoCaso.hobby, sizeof(caso.vilaoDoCaso.hobby), arquivo);
-			fgets(caso.vilaoDoCaso.corCabelo, sizeof(caso.vilaoDoCaso.corCabelo), arquivo);
+			fgets(caso.vilaoDoCaso.cabelo, sizeof(caso.vilaoDoCaso.cabelo), arquivo);
 			fgets(caso.vilaoDoCaso.destaque, sizeof(caso.vilaoDoCaso.destaque), arquivo);
 			fgets(caso.vilaoDoCaso.carro, sizeof(caso.vilaoDoCaso.carro), arquivo);
 			break;
@@ -84,7 +84,7 @@ CasoFacil arquivoParaObjetoCasoFacil(int numero) {
 	strtok(caso.vilaoDoCaso.nome, "\n");
 	strtok(caso.vilaoDoCaso.sexo, "\n");
 	strtok(caso.vilaoDoCaso.hobby, "\n");
-	strtok(caso.vilaoDoCaso.corCabelo, "\n");
+	strtok(caso.vilaoDoCaso.cabelo, "\n");
 	strtok(caso.vilaoDoCaso.destaque, "\n");
 	strtok(caso.vilaoDoCaso.carro, "\n");
 	strtok(caso.cidade[0].nome, "\n");
