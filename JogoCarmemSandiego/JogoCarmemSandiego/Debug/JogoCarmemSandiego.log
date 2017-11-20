@@ -1,15 +1,16 @@
 ﻿  main.cpp
 c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.h(13): warning C4091: 'typedef ': ignorado à esquerda de 'Botoes' quando nenhuma variável é declarada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(347): warning C4101: 'nivel': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(347): warning C4101: 'sucesso': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(346): warning C4101: 'admin': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(543): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1039): warning C4101: 'cidade': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1039): warning C4101: 'diaSemana': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1120): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1108): warning C4101: 'nivelAgente': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1112): warning C4101: 'casoD': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1108): warning C4101: 'numeroCaso': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1111): warning C4101: 'casoM': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1034): warning C4715: 'InvestigarCidade': nem todos os caminhos de controle retornam um valor
-  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(126): error C2131: a expressão não foi avaliada como uma constante
+  c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(126): note: falha causada por uma leitura de uma variável fora de seu tempo de vida
+  c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(126): note: consulte uso de "%*"
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(130): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(131): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(140): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(151): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(152): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(154): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(155): error C3863: o tipo de matriz 'int [qtde]' não é atribuível
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(172): warning C4018: '<': incompatibilidade de signed/unsigned
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(175): warning C4477: 'printf': a cadeia de formato '%i' requer um argumento do tipo 'int', mas um argumento variadic 1 tem o tipo 'int [qtde]'
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(793): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1188): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
