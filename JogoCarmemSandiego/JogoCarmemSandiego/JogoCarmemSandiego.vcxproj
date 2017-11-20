@@ -115,9 +115,11 @@
     <ClCompile Include="FuncoesAdmin.cpp" />
     <ClCompile Include="LeituraDeArquivos.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="FuncoesAuxiliares.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FuncoesAdmin.h" />
+    <ClInclude Include="FuncoesAuxiliares.h" />
     <ClInclude Include="LeituraDeArquivos.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

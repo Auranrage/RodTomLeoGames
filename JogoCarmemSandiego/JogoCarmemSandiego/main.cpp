@@ -5,110 +5,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "FuncoesAdmin.h"
 #include "LeituraDeArquivos.h"
+#include "FuncoesAuxiliares.h"
+#include "FuncoesAdmin.h"
 
-//NIVEL DE DIFICULDADE - Enum para os Niveis de Dificuldade
-typedef enum {
-	iniciante,
-	intermediario,
-	avancado,
-} nivelDificuldade;
-
-//PRINT DAS HORAS E DO DIA
-void PrintDasHoras(int horas) {
-	int dia = horas / 24;
-	
-	//Print do dia
-	if (dia == 0) {
-		printf("Segunda-feira, ");
-	}
-	else if (dia == 1) {
-		printf("Terca-feira, ");
-	}
-	else if (dia == 2) {
-		printf("Quarta-feira, ");
-	}
-	else if (dia == 3) {
-		printf("Quinta-feira, ");
-	}
-	else if (dia == 4) {
-		printf("Sexta-feira, ");
-	}
-	else if (dia == 5) {
-		printf("Sabado, ");
-	}
-	else if (dia == 6) {
-		printf("Domingo, ");
-	}
-
-	//Print da hora
-	if (horas%24 < 10) {
-		printf("0%i:00\n\n", horas%24);
-	}
-	else {
-		printf("%i:00\n\n", horas%24);
-	}
-}
-
-//NUMERO RANDOMICO - Cria um numero randomico entre 1 e maximo
-int NumeroRandomico(int maximo) {
-	int numAleatorio;
-	int divisor = RAND_MAX / maximo;		//int divisor = RAND_MAX/(limit+1). Nesse programa, limit+1 da errado.
-											//Nao entendi porque no site falava que precisava do +1. Usando divisao por 5 funciona
-	do {
-		numAleatorio = (rand() % divisor) + 1;
-	} while (numAleatorio > maximo);				// Colocar 5 no lugar do limit
-
-	return numAleatorio;
-}
-
-//CASO ALEATORIO - Funcao que sorteia um caso e retorna o numero sorteado
-int SorteioCaso(int dificuldade) {
-	int caso, maximo = 1;
-	char leitura[500], cmp[20];
-	FILE *listaCasos;
-
-	sprintf(cmp, "%i\n", maximo);
-
-	//Switch para determinar qual arquivo sera lido
-	switch (dificuldade) {
-	case 1:
-		listaCasos = fopen("CasosFaceis.txt", "r");
-		break;
-	case 2:
-		listaCasos = fopen("CasosMedios.txt", "r");
-		break;
-	case 3:
-		listaCasos = fopen("CasosDificieis.txt", "r");
-		break;
-	default:
-		printf("ERRO! - Nao foi possivel abrir o arquivo para a funcao sorteio caso.\n");
-		break;
-	}
-	//Determina o numero de casos existente no nivel de dificuldade do jogador
-	while (!feof(listaCasos)) {
-		fgets(leitura, sizeof(leitura), listaCasos);
-		if (strcmp(leitura, cmp) == 0) {
-			maximo++;
-			sprintf(cmp, "%i\n", maximo);
-		}
-	}
-	maximo--;
-	//Caso so exista um unico caso na dificuldade escolhida
-	if (maximo == 1) {
-		caso = 1;
-	}
-	//Caso exista mais de um caso na dificuldade escolhida
-	else {
-		caso = NumeroRandomico(maximo);
-	}
-
-	return caso;
-}
 
 //MENU INTERPOL - Funcao para Pesquisar Suspeitos no Database
-void Interpol(Botoes botoes) {
+int Interpol(Botoes botoes) {
 	char leitura[50], opcaoYN, compativel[50], menu;
 	int prisao = 0, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
 	Vilao vilao, cmpDados;
@@ -322,6 +225,7 @@ void Interpol(Botoes botoes) {
 		//Caso so exista um suspeito restante, o programa imprime na tela, notificando o jogador de que ele pode prender o suspeito
 		if (suspeitosRestantes == 1) {
 			printf("\nVoce tem permissao para prender %s\n\n\n", compativel);
+			return 1;
 		}
 		else if (suspeitosRestantes == 0) {
 			printf("\nNenhum suspeito foi encontrado com essas caracteristicas\n\n\n");
@@ -338,6 +242,7 @@ void Interpol(Botoes botoes) {
 		system("cls");
 		printf("Voltando para o menu...\n");
 	}
+	return 0;
 }
 
 //IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
@@ -1034,7 +939,7 @@ int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int
 
 //MENU PARA CASO FACIL
 void MenuJogoFacil(CasoFacil caso, Botoes botoes){
-	int menu, horas = 8, fimJogo = 0, cidadeAtual = 0;
+	int menu, horas = 8, fimJogo = 0, cidadeAtual = 0, vilaoEncontrado = 0;
 	char diaSemana[30], cidade[50];
 	char dica1[120], dica2[120], dica3[120];
 
@@ -1089,8 +994,11 @@ void MenuJogoFacil(CasoFacil caso, Botoes botoes){
 			break;
 		case 3:
 			//INTERPOL
-			Interpol(botoes);
+			vilaoEncontrado = Interpol(botoes);
 			horas = horas + 4;
+			//Vilao encontrado é um inteiro que é 1 quando encontra o suspeito e 0 quando nao encontra
+			//Ou seja, se só tiver um suspeito no arquivo com as caracteristicas, vilaoEncontrado = 1
+			//Se nao, vilaoEncontrado = 0
 			break;
 		default:
 			break;
@@ -1189,8 +1097,22 @@ int main() {
 		
 		//Ranking dos Jogadores
 		else if (botaoApertado == botoes.botao2) {
-			printf("Imprimir os jogadores por ordem de pontuacao aqui.\n");
+			system("cls");
+			printf("%c - Ranking do top 5\n%c - Ranking Geral\n", botoes.botao1, botoes.botao2);
+			scanf("%c", &botaoApertado);
+			getchar();
+			
+
+			if (botaoApertado == botoes.botao1) {
+				ranking();
+			}
+			else if (botaoApertado == botoes.botao2) {
+				printf("ranking geral");
+			}
+
+			printf("\n\n");
 			system("pause");
+			system("cls");
 		}
 		
 		//Configuracoes do Jogo
