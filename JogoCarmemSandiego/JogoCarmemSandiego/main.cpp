@@ -9,438 +9,15 @@
 #include "FuncoesAuxiliares.h"
 #include "FuncoesAdmin.h"
 
-
-//MENU INTERPOL - Funcao para Pesquisar Suspeitos no Database
-int Interpol(Botoes botoes) {
-	char leitura[50], opcaoYN, compativel[50], menu;
-	int prisao = 0, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
-	Vilao vilao, cmpDados;
-	FILE *dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
-
-	//Pergunta se o usuario quer procurar por um suspeito
-	system("cls");
-	printf("Deseja buscar o suspeito do caso? (Y/N)\n");
-	scanf("%c", &opcaoYN);
-	getchar();
-	while (opcaoYN != 'y'&& opcaoYN != 'Y' && opcaoYN != 'n'&& opcaoYN != 'N') {
-		system("cls");
-		printf("Opcao invalida\nDigite uma opcao valida (Y/N)\n");
-		scanf("%c", &opcaoYN);
-		getchar();
-	}
-
-	//Caso a opcao seja sim...
-	if (opcaoYN == 'y' || opcaoYN == 'Y') {
-		//O usuario digita as informacoes sobre o suspeito
-		//Sexo
-		system("cls");
-		printf("\nEscolha o sexo:\n");
-		printf("%c- MASCULINO    %c- FEMININO     %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao0);
-		scanf("%c", &menu);
-		getchar();
-		
-		if (menu == botoes.botao1) {
-			strcpy(cmpDados.sexo, "Masculino\n");
-		}
-		else if (menu == botoes.botao2) {
-			strcpy(cmpDados.sexo, "Feminino\n");
-		}
-		else if (menu == botoes.botao0) {
-			strcpy(cmpDados.sexo, "desconhecido\n");
-		}
-
-		//Hobby
-		printf("\nEscolha o hobby:\n");
-		printf("%c- MUSICA     %c- VIAJAR  %c- FILMES   %c- DANCA   %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
-		scanf("%c", &menu);
-		getchar();
-
-		if (menu == botoes.botao1) {
-			strcpy(cmpDados.hobby, "Musica\n");
-		}		
-		else if (menu == botoes.botao2) {
-			strcpy(cmpDados.hobby, "Viajar\n");
-		}
-		else if (menu == botoes.botao3) {
-			strcpy(cmpDados.hobby, "Filmes\n");
-		}
-		else if (menu == botoes.botao4) {
-			strcpy(cmpDados.hobby, "Danca\n");
-		}
-		else if (menu == botoes.botao0) {
-			strcpy(cmpDados.hobby, "desconhecido\n");
-		}
-
-		//Cabelo
-		printf("\nEscolha a cor do cabelo:\n");
-		printf("%c- PRETO    %c- CASTANHO     %c- LOIRO    %c- RUIVO    %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
-		scanf("%c", &menu);
-		getchar();
-
-		if (menu == botoes.botao1) {
-			strcpy(cmpDados.cabelo, "Preto\n");
-		}
-		else if (menu == botoes.botao2) {
-			strcpy(cmpDados.cabelo, "Castanho\n");
-		}
-		else if (menu == botoes.botao3) {
-			strcpy(cmpDados.cabelo, "Loiro\n");
-		}
-		else if (menu == botoes.botao4) {
-			strcpy(cmpDados.cabelo, "Ruivo\n");
-		}
-		else if (menu == botoes.botao0) {
-			strcpy(cmpDados.cabelo, "desconhecido\n");
-		}
-
-		//Destaque
-		printf("\nEscolha uma caracteristica de destaque:\n");
-		printf("%c- ANEL    %c- JOIA     %c- TATTOO    %c- BENGALA     %c-DESCONHECIDO \n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
-		scanf("%c", &menu);
-		getchar();
-
-		if (menu == botoes.botao1) {
-			strcpy(cmpDados.destaque, "Anel\n");
-		}
-		else if (menu == botoes.botao2) {
-			strcpy(cmpDados.destaque, "Joia\n");
-		}
-		else if (menu == botoes.botao3) {
-			strcpy(cmpDados.destaque, "Tattoo\n");
-		}
-		else if (menu == botoes.botao4) {
-			strcpy(cmpDados.destaque, "Bengala\n");
-		}
-		else if (menu == botoes.botao0) {
-			strcpy(cmpDados.destaque, "desconhecido\n");
-		}
-
-		//Carro
-		printf("\nEscolha um carro:\n");
-		printf("%c- CONVERSIVEL    %c- JIPE     %c- LIMOUSINE     %c- ESPORTIVO    %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
-		scanf("%c", &menu);
-		getchar();
-
-		if (menu == botoes.botao1) {
-			strcpy(cmpDados.carro, "Conversivel\n");
-		}
-		else if (menu == botoes.botao2) {
-			strcpy(cmpDados.carro, "Jipe\n");
-		}
-		else if (menu == botoes.botao3) {
-			strcpy(cmpDados.carro, "Limousine\n");
-		}
-		else if (menu == botoes.botao4) {
-			strcpy(cmpDados.carro, "Esportivo\n");
-		}
-		else if (menu == botoes.botao0) {
-			strcpy(cmpDados.carro, "desconhecido\n");
-		}
-		
-		system("cls"); //Limpa a tela
-		printf("Suspeitos encontrados:\n");
-		
-		//Procura pelas caracteristicas no database
-		while (!feof(dadosSuspeitos)) {
-			fgets(vilao.nome, sizeof(vilao.nome), dadosSuspeitos);
-			fgets(vilao.sexo, sizeof(vilao.sexo), dadosSuspeitos);
-			fgets(vilao.hobby, sizeof(vilao.hobby), dadosSuspeitos);
-			fgets(vilao.cabelo, sizeof(vilao.cabelo), dadosSuspeitos);
-			fgets(vilao.destaque, sizeof(vilao.destaque), dadosSuspeitos);
-			fgets(vilao.carro, sizeof(vilao.carro), dadosSuspeitos);
-
-			//Compara sexo
-			if (strcmp(vilao.sexo, cmpDados.sexo) == 0) {
-				rSexo = 1;
-			}
-			else {
-				if (strcmp(cmpDados.sexo, "desconhecido\n") == 0) {
-					rSexo = 2;
-				}
-				else {
-					rSexo = 0;
-				}
-			}
-
-			//Compara hobby
-			if (strcmp(vilao.hobby, cmpDados.hobby) == 0) {
-				rHobby = 1;
-			}
-			else {
-				if (strcmp(cmpDados.hobby, "desconhecido\n") == 0) {
-					rHobby = 2;
-				}
-				else {
-					rHobby = 0;
-				}
-			}
-
-			//Compara cabelo
-			if (strcmp(vilao.cabelo, cmpDados.cabelo) == 0) {
-				rCabelo = 1;
-			}
-			else {
-				if (strcmp(cmpDados.cabelo, "desconhecido\n") == 0) {
-					rCabelo = 2;
-				}
-				else {
-					rCabelo = 0;
-				}
-			}
-
-			//Compara destaque
-			if (strcmp(vilao.destaque, cmpDados.destaque) == 0) {
-				rDestaque = 1;
-			}
-			else {
-				if (strcmp(cmpDados.destaque, "desconhecido\n") == 0) {
-					rDestaque = 2;
-				}
-				else {
-					rDestaque = 0;
-				}
-			}
-
-			//Compara carro
-			if (strcmp(vilao.carro, cmpDados.carro) == 0) {
-				rCarro = 1;
-			}
-			else {
-				if (strcmp(cmpDados.carro, "desconhecido\n") == 0) {
-					rCarro = 2;
-				}
-				else {
-					rCarro = 0;
-				}
-			}
-
-			//Caso um vilao do arquivo seja compativel com os dados lidos, o programa imprime seu nome na tela
-			if (rSexo != 0 && rHobby != 0 && rCabelo != 0 && rDestaque != 0 && rCarro != 0) {
-				strcpy(compativel, vilao.nome);
-				printf("%s", compativel);
-				suspeitosRestantes++;
-			}
-			fgets(leitura, sizeof(leitura), dadosSuspeitos); //pula o \n que separa os viloes no arquivo
-		}
-		//Caso so exista um suspeito restante, o programa imprime na tela, notificando o jogador de que ele pode prender o suspeito
-		if (suspeitosRestantes == 1) {
-			printf("\nVoce tem permissao para prender %s\n\n\n", compativel);
-			return 1;
-		}
-		else if (suspeitosRestantes == 0) {
-			printf("\nNenhum suspeito foi encontrado com essas caracteristicas\n\n\n");
-		}
-		else {
-			printf("\nVoce precisa de mais informacoes para prender um deles\n\n\n");
-		}
-		system("pause");
-		system("cls");
-	}
-
-	//opcao N: caso o usuario nao queira pesquisar por um suspeito no programa principal, ele volta ao menu anterior, sem perder tempo
-	else {
-		system("cls");
-		printf("Voltando para o menu...\n");
-	}
+//MENU DE VIAJAR
+int ProximaCidade(char cidadeAtual[], char proximaAtual[]) {
 	return 0;
 }
 
-//IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
-Jogador IdentificarAgente(char nomeAgente[]) {
-	FILE *agentes, *admin;
-	int id = 0, nivel, sucesso;
-	char leitura[30], opcaoYN;
-	char pulaLinha[5];
-	nivelDificuldade nivelAgente;
-	Jogador jogador;
-
-	agentes = fopen("DadosDosAgentes.txt", "r");
-
-	//Busca o nome do agente no arquivo. Caso seja encontrado, o loop para, se nao, ao final do loop o novo nome sera cadastrado
-	while (!feof(agentes) && id == 0) {
-		fgets(leitura, sizeof(leitura), agentes);
-		strtok(leitura, "\n");
-		//Caso o nome lido seja encontrado, a variavel id indica que o nome foi encontrado
-		if (strcmp(leitura, nomeAgente) == 0) {
-			id = 1;
-		}
-		//Caso nao encontre, o programa pula as 2 proximas linhas, que possui o nivel do jogador antes de recomecar o loop.
-		else {
-			fgets(pulaLinha, sizeof(pulaLinha), agentes);
-			fgets(pulaLinha, sizeof(pulaLinha), agentes);
-		}
-	}
-
-	//Agente ja existente
-	if (id == 1) {
-		printf("Agente identificado.\nBem-vindo, agente %s\n", nomeAgente);
-		strcpy(jogador.nome, nomeAgente);
-		fscanf(agentes, "%i", &jogador.patente);
-		fscanf(agentes, "%i", &jogador.pontos);
-		return jogador;
-
-	}
-	//Cadastro de novo agente, caso ele deseje
-	if (id == 0) {
-		getchar();
-		printf("Nao achamos o seu nome na lista\nGostaria de registra-lo?(Y/N)\n");
-		scanf("%c", &opcaoYN);
-		if (opcaoYN == 'y' || opcaoYN == 'Y') {
-			fclose(agentes);
-			agentes = fopen("DadosDosAgentes.txt", "a");
-			fprintf(agentes, "%s\n1\n0\n", nomeAgente);
-			fflush(agentes);
-			printf("O seu nome foi salvo\nBem-vindo a agencia, %s!\n", nomeAgente);
-			nivelAgente = iniciante;
-		}
-		else {
-			if (opcaoYN == 'n' || opcaoYN == 'N') {
-				jogador.patente = 4;
-				return jogador;
-			}
-			else {
-				jogador.patente = 5;
-				return jogador;
-			}
-		}
-	}
-	jogador.patente = nivelAgente;
-	return jogador;
-}
-
-//CIDADE ERRADA - Funcao para quando o usuario escolher uma idade errada
-void CidadeErrada(char escolhida[], char anterior[]) {
-	FILE *cidades = fopen("cidades.txt", "r");
-	char aleatorio1[50], aleatorio2[50], leitura[500], ogEscolha[50], ogAnterior[50];
-	int menu, ordem, random, max = 0, erros = 1;
-
-	strcpy(ogAnterior, anterior);
-	strcpy(ogEscolha, escolhida);
-
-	//Define a qtde de cidades registradas no arquivo
-	while (!feof(cidades)) {
-		fgets(leitura, sizeof(leitura), cidades);
-		max++;
-	}
-	rewind(cidades);
-
-	//Enquanto o jogador ainda estiver em uma cidade errada
-	while (erros > 0) {
-
-		printf("\nBem vindo a %s", escolhida);
-
-		strcpy(aleatorio1, escolhida);
-		strcpy(aleatorio2, escolhida);
-
-		//Sorteio de duas cidades aleatorias
-		while (strcmp(aleatorio2, aleatorio1) == 0 || strcmp(aleatorio1, anterior) == 0 || strcmp(aleatorio1, escolhida) == 0 || strcmp(aleatorio2, anterior) == 0 || strcmp(aleatorio2, escolhida) == 0) {
-			//Sorteio da primeira cidade aleatoria
-			random = rand() % max;
-			for (int i = 0; i < random; i++) {
-				fgets(leitura, sizeof(leitura), cidades);
-			}
-			strcpy(aleatorio1, leitura);
-			rewind(cidades);
-
-			//Sorteio da segunda cidade aleatoria
-			random = rand() % max;
-			for (int i = 0; i < random; i++) {
-				fgets(leitura, sizeof(leitura), cidades);
-			}
-			strcpy(aleatorio2, leitura);
-			rewind(cidades);
-		}
-		//Sorteio de ordem das cidades no menu
-		ordem = rand() % 3;
-		switch (ordem) {
-		case 0:
-			printf("1- %s2- %s3- %s", anterior, aleatorio1, aleatorio2);
-			scanf("%i", &menu);
-			//cidade certa escolhida
-			if (menu == 1) {
-				erros--;
-				strcpy(leitura, anterior);
-				strcpy(anterior, escolhida);
-				strcpy(escolhida, leitura);
-			}
-			//Cidade errada escolhida
-			else {
-				erros++;
-				if (menu == 2) {
-					strcpy(anterior, escolhida);
-					strcpy(escolhida, aleatorio1);
-				}
-				else {
-					strcpy(anterior, escolhida);
-					strcpy(escolhida, aleatorio2);
-				}
-			}
-			break;
-		case 1:
-			printf("1- %s2- %s3- %s", aleatorio2, anterior, aleatorio1);
-			scanf("%i", &menu);
-			//Cidade certa
-			if (menu == 2) {
-				erros--;
-				strcpy(leitura, anterior);
-				strcpy(anterior, escolhida);
-				strcpy(escolhida, leitura);
-			}
-			//Cidade errada
-			else {
-				erros++;
-				if (menu == 1) {
-					strcpy(anterior, escolhida);
-					strcpy(escolhida, aleatorio2);
-				}
-				else {
-					strcpy(anterior, escolhida);
-					strcpy(escolhida, aleatorio1);
-				}
-			}
-
-			break;
-		case 2:
-			printf("1- %s2- %s3- %s", aleatorio2, aleatorio1, anterior);
-			scanf("%i", &menu);
-			//Cidade certa
-			if (menu == 3) {
-				erros--;
-				strcpy(leitura, anterior);
-				strcpy(anterior, escolhida);
-				strcpy(escolhida, leitura);
-			}
-			//Cidade errada
-			else {
-				erros++;
-				if (menu == 1) {
-					strcpy(anterior, escolhida);
-					strcpy(escolhida, aleatorio2);
-				}
-				else {
-					strcpy(anterior, escolhida);
-					strcpy(escolhida, aleatorio1);
-				}
-			}
-			break;
-		default:
-			printf("Error...\n");
-			break;
-		}
-		if (erros == 1) {
-			strcpy(anterior, ogAnterior);
-		}
-	}
-	//Por algum motivo, mesmo sendo uma funcao void sem retorno, os valores em departPlane eram alteraidos por essa funcao
-	//Entao eu salvei os valores originais e depois eles sao salvos nas suas repectivas variaveis
-	strcpy(anterior, ogAnterior);
-	strcpy(escolhida, ogEscolha);
-}
-
-//FUNCAO DE VIAJAR DO JOGO - Nao ta funcionando
+//MENU DE VIAJAR - Nao ta funcionando
 void DepartPlane(int dificuldade, int caso) {
 	//Declaracao variaveis
-	FILE *arquivoCaso, *arquivoCidades = fopen("cidades.txt", "r");
+	FILE *arquivoCaso, *arquivoCidades = fopen("ListaDeCidades.txt", "r");
 	char anterior[50], atual[50], destino[50];
 	char aleatorio1[50], aleatorio2[50], leitura[500];
 	int lerNivel, ordem, menu, cidadeAleatoria, max = 0, booleanCidade = 0, restantes;
@@ -755,7 +332,7 @@ void DepartPlane(int dificuldade, int caso) {
 	}
 }
 
-//FUNCAO PARA INVESTIGAR NA CIDADE
+//MENU INVESTIGAR NA CIDADE
 int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int cidade, int horas, Botoes botoes) {
 	char botaoApertado = '^';
 	int aleatorio;
@@ -798,10 +375,10 @@ int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int
 	}
 
 	else if (cidade == 10) {
-		
+
 		//Cria um valor aleatorio entre 1 e 3
 		aleatorio = NumeroRandomico(3);
-		
+
 		switch (aleatorio) {
 		case 1:
 			//Opcoes
@@ -829,7 +406,7 @@ int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int
 					horas = horas + 1000;
 					return horas;
 					printf("%s\n", dica3);
-					
+
 				}
 				else if (botaoApertado == botoes.botao0) {
 					system("cls");
@@ -885,7 +462,7 @@ int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int
 					horas = horas + 4;
 				}
 				else if (botaoApertado == botoes.botao2) {
-					
+
 					system("cls");
 					printf("%s\n", dica3);
 					horas = horas + 1000;
@@ -904,7 +481,7 @@ int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int
 			break;
 		}
 	}
-	
+
 	else {
 		while (botaoApertado != botoes.botao0) {
 			PrintDasHoras(horas);
@@ -937,6 +514,305 @@ int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int
 	}
 }
 
+//MENU INTERPOL - Funcao para Pesquisar Suspeitos no Database
+int Interpol(Botoes botoes) {
+	char leitura[50], opcaoYN, compativel[50], menu;
+	int prisao = 0, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
+	Vilao vilao, cmpDados;
+	FILE *dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
+
+	//Pergunta se o usuario quer procurar por um suspeito
+	system("cls");
+	printf("Deseja buscar o suspeito do caso? (Y/N)\n");
+	scanf("%c", &opcaoYN);
+	getchar();
+	while (opcaoYN != 'y'&& opcaoYN != 'Y' && opcaoYN != 'n'&& opcaoYN != 'N') {
+		system("cls");
+		printf("Opcao invalida\nDigite uma opcao valida (Y/N)\n");
+		scanf("%c", &opcaoYN);
+		getchar();
+	}
+
+	//Caso a opcao seja sim...
+	if (opcaoYN == 'y' || opcaoYN == 'Y') {
+		//O usuario digita as informacoes sobre o suspeito
+		//Sexo
+		system("cls");
+		printf("\nEscolha o sexo:\n");
+		printf("%c- MASCULINO    %c- FEMININO     %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao0);
+		scanf("%c", &menu);
+		getchar();
+		
+		if (menu == botoes.botao1) {
+			strcpy(cmpDados.sexo, "Masculino\n");
+		}
+		else if (menu == botoes.botao2) {
+			strcpy(cmpDados.sexo, "Feminino\n");
+		}
+		else if (menu == botoes.botao0) {
+			strcpy(cmpDados.sexo, "desconhecido\n");
+		}
+
+		//Hobby
+		printf("\nEscolha o hobby:\n");
+		printf("%c- MUSICA     %c- VIAJAR  %c- FILMES   %c- DANCA   %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
+		scanf("%c", &menu);
+		getchar();
+
+		if (menu == botoes.botao1) {
+			strcpy(cmpDados.hobby, "Musica\n");
+		}		
+		else if (menu == botoes.botao2) {
+			strcpy(cmpDados.hobby, "Viajar\n");
+		}
+		else if (menu == botoes.botao3) {
+			strcpy(cmpDados.hobby, "Filmes\n");
+		}
+		else if (menu == botoes.botao4) {
+			strcpy(cmpDados.hobby, "Danca\n");
+		}
+		else if (menu == botoes.botao0) {
+			strcpy(cmpDados.hobby, "desconhecido\n");
+		}
+
+		//Cabelo
+		printf("\nEscolha a cor do cabelo:\n");
+		printf("%c- PRETO    %c- CASTANHO     %c- LOIRO    %c- RUIVO    %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
+		scanf("%c", &menu);
+		getchar();
+
+		if (menu == botoes.botao1) {
+			strcpy(cmpDados.cabelo, "Preto\n");
+		}
+		else if (menu == botoes.botao2) {
+			strcpy(cmpDados.cabelo, "Castanho\n");
+		}
+		else if (menu == botoes.botao3) {
+			strcpy(cmpDados.cabelo, "Loiro\n");
+		}
+		else if (menu == botoes.botao4) {
+			strcpy(cmpDados.cabelo, "Ruivo\n");
+		}
+		else if (menu == botoes.botao0) {
+			strcpy(cmpDados.cabelo, "desconhecido\n");
+		}
+
+		//Destaque
+		printf("\nEscolha uma caracteristica de destaque:\n");
+		printf("%c- ANEL    %c- JOIA     %c- TATTOO    %c- BENGALA     %c-DESCONHECIDO \n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
+		scanf("%c", &menu);
+		getchar();
+
+		if (menu == botoes.botao1) {
+			strcpy(cmpDados.destaque, "Anel\n");
+		}
+		else if (menu == botoes.botao2) {
+			strcpy(cmpDados.destaque, "Joia\n");
+		}
+		else if (menu == botoes.botao3) {
+			strcpy(cmpDados.destaque, "Tattoo\n");
+		}
+		else if (menu == botoes.botao4) {
+			strcpy(cmpDados.destaque, "Bengala\n");
+		}
+		else if (menu == botoes.botao0) {
+			strcpy(cmpDados.destaque, "desconhecido\n");
+		}
+
+		//Carro
+		printf("\nEscolha um carro:\n");
+		printf("%c- CONVERSIVEL    %c- JIPE     %c- LIMOUSINE     %c- ESPORTIVO    %c- DESCONHECIDO\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
+		scanf("%c", &menu);
+		getchar();
+
+		if (menu == botoes.botao1) {
+			strcpy(cmpDados.carro, "Conversivel\n");
+		}
+		else if (menu == botoes.botao2) {
+			strcpy(cmpDados.carro, "Jipe\n");
+		}
+		else if (menu == botoes.botao3) {
+			strcpy(cmpDados.carro, "Limousine\n");
+		}
+		else if (menu == botoes.botao4) {
+			strcpy(cmpDados.carro, "Esportivo\n");
+		}
+		else if (menu == botoes.botao0) {
+			strcpy(cmpDados.carro, "desconhecido\n");
+		}
+		
+		system("cls"); //Limpa a tela
+		printf("Suspeitos encontrados:\n");
+		
+		//Procura pelas caracteristicas no database
+		while (!feof(dadosSuspeitos)) {
+			fgets(vilao.nome, sizeof(vilao.nome), dadosSuspeitos);
+			fgets(vilao.sexo, sizeof(vilao.sexo), dadosSuspeitos);
+			fgets(vilao.hobby, sizeof(vilao.hobby), dadosSuspeitos);
+			fgets(vilao.cabelo, sizeof(vilao.cabelo), dadosSuspeitos);
+			fgets(vilao.destaque, sizeof(vilao.destaque), dadosSuspeitos);
+			fgets(vilao.carro, sizeof(vilao.carro), dadosSuspeitos);
+
+			//Compara sexo
+			if (strcmp(vilao.sexo, cmpDados.sexo) == 0) {
+				rSexo = 1;
+			}
+			else {
+				if (strcmp(cmpDados.sexo, "desconhecido\n") == 0) {
+					rSexo = 2;
+				}
+				else {
+					rSexo = 0;
+				}
+			}
+
+			//Compara hobby
+			if (strcmp(vilao.hobby, cmpDados.hobby) == 0) {
+				rHobby = 1;
+			}
+			else {
+				if (strcmp(cmpDados.hobby, "desconhecido\n") == 0) {
+					rHobby = 2;
+				}
+				else {
+					rHobby = 0;
+				}
+			}
+
+			//Compara cabelo
+			if (strcmp(vilao.cabelo, cmpDados.cabelo) == 0) {
+				rCabelo = 1;
+			}
+			else {
+				if (strcmp(cmpDados.cabelo, "desconhecido\n") == 0) {
+					rCabelo = 2;
+				}
+				else {
+					rCabelo = 0;
+				}
+			}
+
+			//Compara destaque
+			if (strcmp(vilao.destaque, cmpDados.destaque) == 0) {
+				rDestaque = 1;
+			}
+			else {
+				if (strcmp(cmpDados.destaque, "desconhecido\n") == 0) {
+					rDestaque = 2;
+				}
+				else {
+					rDestaque = 0;
+				}
+			}
+
+			//Compara carro
+			if (strcmp(vilao.carro, cmpDados.carro) == 0) {
+				rCarro = 1;
+			}
+			else {
+				if (strcmp(cmpDados.carro, "desconhecido\n") == 0) {
+					rCarro = 2;
+				}
+				else {
+					rCarro = 0;
+				}
+			}
+
+			//Caso um vilao do arquivo seja compativel com os dados lidos, o programa imprime seu nome na tela
+			if (rSexo != 0 && rHobby != 0 && rCabelo != 0 && rDestaque != 0 && rCarro != 0) {
+				strcpy(compativel, vilao.nome);
+				printf("%s", compativel);
+				suspeitosRestantes++;
+			}
+			fgets(leitura, sizeof(leitura), dadosSuspeitos); //pula o \n que separa os viloes no arquivo
+		}
+		//Caso so exista um suspeito restante, o programa imprime na tela, notificando o jogador de que ele pode prender o suspeito
+		if (suspeitosRestantes == 1) {
+			printf("\nVoce tem permissao para prender %s\n\n\n", compativel);
+			return 1;
+		}
+		else if (suspeitosRestantes == 0) {
+			printf("\nNenhum suspeito foi encontrado com essas caracteristicas\n\n\n");
+		}
+		else {
+			printf("\nVoce precisa de mais informacoes para prender um deles\n\n\n");
+		}
+		system("pause");
+		system("cls");
+	}
+
+	//opcao N: caso o usuario nao queira pesquisar por um suspeito no programa principal, ele volta ao menu anterior, sem perder tempo
+	else {
+		system("cls");
+		printf("Voltando para o menu...\n");
+	}
+	return 0;
+}
+
+
+//IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
+Jogador IdentificarAgente(char nomeAgente[]) {
+	FILE *agentes, *admin;
+	int id = 0, nivel, sucesso;
+	char leitura[30], opcaoYN;
+	char pulaLinha[5];
+	nivelDificuldade nivelAgente;
+	Jogador jogador;
+
+	agentes = fopen("DadosDosAgentes.txt", "r");
+
+	//Busca o nome do agente no arquivo. Caso seja encontrado, o loop para, se nao, ao final do loop o novo nome sera cadastrado
+	while (!feof(agentes) && id == 0) {
+		fgets(leitura, sizeof(leitura), agentes);
+		strtok(leitura, "\n");
+		//Caso o nome lido seja encontrado, a variavel id indica que o nome foi encontrado
+		if (strcmp(leitura, nomeAgente) == 0) {
+			id = 1;
+		}
+		//Caso nao encontre, o programa pula as 2 proximas linhas, que possui o nivel do jogador antes de recomecar o loop.
+		else {
+			fgets(pulaLinha, sizeof(pulaLinha), agentes);
+			fgets(pulaLinha, sizeof(pulaLinha), agentes);
+		}
+	}
+
+	//Agente ja existente
+	if (id == 1) {
+		printf("Agente identificado.\nBem-vindo, agente %s\n", nomeAgente);
+		strcpy(jogador.nome, nomeAgente);
+		fscanf(agentes, "%i", &jogador.patente);
+		fscanf(agentes, "%i", &jogador.pontos);
+		return jogador;
+
+	}
+	//Cadastro de novo agente, caso ele deseje
+	if (id == 0) {
+		getchar();
+		printf("Nao achamos o seu nome na lista\nGostaria de registra-lo?(Y/N)\n");
+		scanf("%c", &opcaoYN);
+		if (opcaoYN == 'y' || opcaoYN == 'Y') {
+			fclose(agentes);
+			agentes = fopen("DadosDosAgentes.txt", "a");
+			fprintf(agentes, "%s\n1\n0\n", nomeAgente);
+			fflush(agentes);
+			printf("O seu nome foi salvo\nBem-vindo a agencia, %s!\n", nomeAgente);
+			nivelAgente = iniciante;
+		}
+		else {
+			if (opcaoYN == 'n' || opcaoYN == 'N') {
+				jogador.patente = 4;
+				return jogador;
+			}
+			else {
+				jogador.patente = 5;
+				return jogador;
+			}
+		}
+	}
+	jogador.patente = nivelAgente;
+	return jogador;
+}
+
 //MENU PARA CASO FACIL
 void MenuJogoFacil(CasoFacil caso, Botoes botoes){
 	int menu, horas = 8, fimJogo = 0, cidadeAtual = 0, vilaoEncontrado = 0;
@@ -963,7 +839,7 @@ void MenuJogoFacil(CasoFacil caso, Botoes botoes){
 		switch (menu) {
 		case 1:
 			//VIAJAR
-			//DepartPlane(1, 1); 
+			DepartPlane(1, 1); 
 			//Tem arrumar isso. Pra caso facil a gente sabe que vai ser sempre nivel 1, mas nao sabemos que caso vai ser, porque eu to usando struct nesse menu.
 			//Tem que dar return de em qual cidade o jogador esta
 			//ciadeAtual = Departplane();
@@ -1008,11 +884,10 @@ void MenuJogoFacil(CasoFacil caso, Botoes botoes){
 	printf("Parabens detetive! Voce prendeu o suspeito!\n\n");
 }
 
-
 //MAIN
 int main() {
 	char agente[20], botaoApertado;
-	int nivelAgente, numeroCaso;
+	int nivelAgente, numeroCaso, menu;
 	bool saidaWhile = false;
 	CasoFacil casoF;
 	CasoMedio casoM;
@@ -1104,10 +979,32 @@ int main() {
 			
 
 			if (botaoApertado == botoes.botao1) {
-				ranking();
+				ranking5();
 			}
 			else if (botaoApertado == botoes.botao2) {
-				printf("ranking geral");
+				system("cls");
+				printf("%c- Por Nome\n%c- Por Nivel\n%c- Por Ranking\n", botoes.botao1, botoes.botao2, botoes.botao3);
+				scanf("%c", &botaoApertado);
+				getchar();
+				
+				if (botaoApertado == botoes.botao1) {
+					menu = 1;
+					system("cls");
+					rankingGeral(menu);
+				}
+				else if (botaoApertado == botoes.botao2) {
+					menu = 2;
+					system("cls");
+					rankingGeral(menu);
+				}
+				else if (botaoApertado == botoes.botao3) {
+					menu = 3;
+					system("cls");
+					rankingGeral(menu);
+				}
+				else {
+					printf("ERRO! - Opcao invalida!");
+				}
 			}
 
 			printf("\n\n");

@@ -13,3 +13,6 @@ Daniel
 leo
 1
 0
+Mestre
+3
+500

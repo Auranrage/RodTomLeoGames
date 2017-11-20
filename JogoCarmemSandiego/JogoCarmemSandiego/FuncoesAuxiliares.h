@@ -14,4 +14,7 @@ typedef enum {
 void PrintDasHoras(int horas);
 int NumeroRandomico(int maximo);
 int SorteioCaso(int dificuldade);
-void ranking();
+void ranking5();
+void rankingGeral(int menu);
+void CidadeErrada(char escolhida[], char anterior[]);
+
