@@ -15,6 +15,98 @@ typedef enum {
 	avancado,
 } nivelDificuldade;
 
+//PRINT DAS HORAS E DO DIA
+void PrintDasHoras(int horas) {
+	int dia = horas / 24;
+	
+	//Print do dia
+	if (dia == 0) {
+		printf("Segunda-feira, ");
+	}
+	else if (dia == 1) {
+		printf("Terca-feira, ");
+	}
+	else if (dia == 2) {
+		printf("Quarta-feira, ");
+	}
+	else if (dia == 3) {
+		printf("Quinta-feira, ");
+	}
+	else if (dia == 4) {
+		printf("Sexta-feira, ");
+	}
+	else if (dia == 5) {
+		printf("Sabado, ");
+	}
+	else if (dia == 6) {
+		printf("Domingo, ");
+	}
+
+	//Print da hora
+	if (horas%24 < 10) {
+		printf("0%i:00\n\n", horas%24);
+	}
+	else {
+		printf("%i:00\n\n", horas%24);
+	}
+}
+
+//NUMERO RANDOMICO - Cria um numero randomico entre 1 e maximo
+int NumeroRandomico(int maximo) {
+	int numAleatorio;
+	int divisor = RAND_MAX / maximo;		//int divisor = RAND_MAX/(limit+1). Nesse programa, limit+1 da errado.
+											//Nao entendi porque no site falava que precisava do +1. Usando divisao por 5 funciona
+	do {
+		numAleatorio = (rand() % divisor) + 1;
+	} while (numAleatorio > maximo);				// Colocar 5 no lugar do limit
+
+	return numAleatorio;
+}
+
+//CASO ALEATORIO - Funcao que sorteia um caso e retorna o numero sorteado
+int SorteioCaso(int dificuldade) {
+	int caso, maximo = 1;
+	char leitura[500], cmp[20];
+	FILE *listaCasos;
+
+	sprintf(cmp, "%i\n", maximo);
+
+	//Switch para determinar qual arquivo sera lido
+	switch (dificuldade) {
+	case 1:
+		listaCasos = fopen("CasosFaceis.txt", "r");
+		break;
+	case 2:
+		listaCasos = fopen("CasosMedios.txt", "r");
+		break;
+	case 3:
+		listaCasos = fopen("CasosDificieis.txt", "r");
+		break;
+	default:
+		printf("ERRO! - Nao foi possivel abrir o arquivo para a funcao sorteio caso.\n");
+		break;
+	}
+	//Determina o numero de casos existente no nivel de dificuldade do jogador
+	while (!feof(listaCasos)) {
+		fgets(leitura, sizeof(leitura), listaCasos);
+		if (strcmp(leitura, cmp) == 0) {
+			maximo++;
+			sprintf(cmp, "%i\n", maximo);
+		}
+	}
+	maximo--;
+	//Caso so exista um unico caso na dificuldade escolhida
+	if (maximo == 1) {
+		caso = 1;
+	}
+	//Caso exista mais de um caso na dificuldade escolhida
+	else {
+		caso = NumeroRandomico(maximo);
+	}
+
+	return caso;
+}
+
 //MENU INTERPOL - NAO TA FUNCIONANDO Funcao para Pesquisar Suspeitos no Database
 void Interpol() {
 	char leitura[30], opcaoYN, compativel[30];
@@ -247,56 +339,7 @@ void Interpol() {
 	}
 }
 
-//CASO ALEATORIO - Funcao que sorteia um caso e retorna o numero sorteado
-int SorteioCaso(int dificuldade) {
-	int caso, maximo = 1;
-	char leitura[500], cmp[20];
-	FILE *listaCasos;
-		
-	sprintf(cmp, "%i\n", maximo);
 
-	//Switch para determinar qual arquivo sera lido
-	switch (dificuldade) {
-	case 1:
-		listaCasos = fopen("CasosFaceis.txt", "r");
-		break;
-	case 2:
-		listaCasos = fopen("CasosMedios.txt", "r");
-		break;
-	case 3:
-		listaCasos = fopen("CasosDificieis.txt", "r");
-		break;
-	default:
-		printf("ERRO! - Nao foi possivel abrir o arquivo para a funcao sorteio caso.\n");
-		break;
-	}
-	//Determina o numero de casos existente no nivel de dificuldade do jogador
-	while (!feof(listaCasos)) {
-		fgets(leitura, sizeof(leitura), listaCasos);
-		if (strcmp(leitura, cmp) == 0) {
-			maximo++;
-			sprintf(cmp, "%i\n", maximo);
-		}
-	}
-	maximo--;
-	//Caso so exista um unico caso na dificuldade escolhida
-	if (maximo == 1) {
-		caso = 1;
-	}
-	//Caso exista mais de um caso na dificuldade escolhida
-	else {
-		int divisor = RAND_MAX / maximo;		//int divisor = RAND_MAX/(limit+1). Nesse programa, limit+1 da errado.
-												//Nao entendi porque no site falava que precisava do +1. Usando divisao por 5 funciona.
-		do {
-			caso = (rand() % divisor) + 1;
-		} while (caso > maximo);				// Colocar 5 no lugar do limit
-
-		//caso = rand() % (maximo - 1) + 1; sorteio de um numero entre 1 e (maximo - 1)
-		//[Deveria ser entre 1 e maximo, nao maximo menos 1, por isso tava dando sempre 1 porque ficava entre 1 e 1]
-	}
-
-return caso;
-}
 
 //IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
 Jogador IdentificarAgente(char nomeAgente[]) {
@@ -808,31 +851,206 @@ void DepartPlane(int dificuldade, int caso) {
 	}
 }
 
+//FUNCAO PARA INVESTIGAR NA CIDADE
+int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int cidade, int horas, Botoes botoes) {
+	char botaoApertado = '^';
+	int aleatorio;
+
+	if (cidade == 0) {
+		while (botaoApertado != botoes.botao0) {
+			//Lembrar do dia da semana aqui
+			PrintDasHoras(horas);
+
+			printf("Escolha um local para investigar:\n\n");
+			printf("%c - Prefeitura   %c - Aeroporto   %c - Lojinha  %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
+			scanf("%c", &botaoApertado);
+			getchar();
+
+			if (botaoApertado == botoes.botao1) {
+				system("cls");
+				printf("%s\n", dica1);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao2) {
+				system("cls");
+				printf("%s\n", dica2);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao3) {
+				system("cls");
+				printf("%s\n", dica3);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao4) {
+				system("cls");
+				printf("%s\n", dica4);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao0) {
+				system("cls");
+				return horas;
+			}
+		}
+	}
+
+	else if (cidade == 10) {
+		
+		//Cria um valor aleatorio entre 1 e 3
+		aleatorio = NumeroRandomico(3);
+		
+		switch (aleatorio) {
+		case 1:
+			//Opcoes
+			while (botaoApertado != botoes.botao0) {
+				PrintDasHoras(horas);
+
+				printf("Escolha um local para investigar:\n\n");
+				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+				scanf("%c", &botaoApertado);
+				getchar();
+
+				if (botaoApertado == botoes.botao1) {
+					system("cls");
+					printf("%s\n", dica1);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao2) {
+					system("cls");
+					printf("%s\n", dica2);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao3) {
+					system("cls");
+					printf("%s\n", dica3);
+					horas = horas + 1000;
+					return horas;
+					printf("%s\n", dica3);
+					
+				}
+				else if (botaoApertado == botoes.botao0) {
+					system("cls");
+					return horas;
+				}
+			}
+			break;
+		case 2:
+			//Opcoes
+			while (botaoApertado != botoes.botao0) {
+				PrintDasHoras(horas);
+
+				printf("Escolha um local para investigar:\n\n");
+				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+				scanf("%c", &botaoApertado);
+				getchar();
+
+				if (botaoApertado == botoes.botao1) {
+					system("cls");
+					printf("%s\n", dica3);
+					horas = horas + 1000;
+					return horas;
+				}
+				else if (botaoApertado == botoes.botao2) {
+					system("cls");
+					printf("%s\n", dica2);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao3) {
+					system("cls");
+					printf("%s\n", dica1);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao0) {
+					system("cls");
+					return horas;
+				}
+			}
+			break;
+		case 3:
+			//Opcoes
+			while (botaoApertado != botoes.botao0) {
+				PrintDasHoras(horas);
+
+				printf("Escolha um local para investigar:\n\n");
+				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+				scanf("%c", &botaoApertado);
+				getchar();
+
+				if (botaoApertado == botoes.botao1) {
+					system("cls");
+					printf("%s\n", dica1);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao2) {
+					
+					system("cls");
+					printf("%s\n", dica3);
+					horas = horas + 1000;
+					return horas;
+				}
+				else if (botaoApertado == botoes.botao3) {
+					system("cls");
+					printf("%s\n", dica2);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao0) {
+					system("cls");
+					return horas;
+				}
+			}
+			break;
+		}
+	}
+	
+	else {
+		while (botaoApertado != botoes.botao0) {
+			PrintDasHoras(horas);
+
+			printf("Escolha um local para investigar:\n\n");
+			printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+			scanf("%c", &botaoApertado);
+			getchar();
+
+			if (botaoApertado == botoes.botao1) {
+				system("cls");
+				printf("%s\n", dica1);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao2) {
+				system("cls");
+				printf("%s\n", dica2);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao3) {
+				system("cls");
+				printf("%s\n", dica3);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao0) {
+				system("cls");
+				return horas;
+			}
+		}
+	}
+}
 
 //MENU PARA CASO FACIL
-void MenuJogoFacil(CasoFacil caso){
-	int menu, horas = 8, fimJogo = 0;
+void MenuJogoFacil(CasoFacil caso, Botoes botoes){
+	int menu, horas = 8, fimJogo = 0, cidadeAtual = 0;
 	char diaSemana[30], cidade[50];
+	char dica1[120], dica2[120], dica3[120];
 
 
 	//Imrprime mensagem inicial do caso
 	printf("\n*********** NEWS FLASH ***********\n");
 	printf("O tesouro %s foi roubado na cidade de %s. Um suspeito %s foi encontrado no local!\n", caso.tesouro, caso.cidade[0].nome, caso.vilaoDoCaso.sexo);
 	printf("Agente, voce deve localizar o suspeito e prende-lo antes que ele escape!\n");
-	printf("Voce tem ate as 19:00 do Domingo para prende-lo. Boa sorte!\n\n");
+	printf("Voce tem ate as 20:00 do Domingo para prende-lo. Boa sorte!\n\n");
 	system("pause");
 	system("cls");
 
-	strcpy(diaSemana, "Segunda-Feira");
-
 	while (fimJogo == 0) {
-		printf("%s, ", diaSemana);
-		if (horas < 10) {
-			printf("0%i:00\n\n", horas);
-		}
-		else {
-			printf("%i:00\n\n", horas);
-		}
+		PrintDasHoras(horas);
+
 		printf("Bem vindo a %s\n%s\n", caso.cidade[0].nome,caso.cidade[0].breveDescricao);
 		printf("O que voce deseja fazer, agente?\n\n");
 		printf("1- Viajar   2- Investigar   3- Interpol\n");
@@ -840,19 +1058,47 @@ void MenuJogoFacil(CasoFacil caso){
 		getchar();
 		switch (menu) {
 		case 1:
-			//viajar
-			DepartPlane(1, 1); //Tem arrumar isso. Pra caso facil a gente sabe que vai ser sempre nivel 1, mas nao sabemos que caso vai ser, porque eu to usando struct nesse menu.
+			//VIAJAR
+			//DepartPlane(1, 1); 
+			//Tem arrumar isso. Pra caso facil a gente sabe que vai ser sempre nivel 1, mas nao sabemos que caso vai ser, porque eu to usando struct nesse menu.
+			//Tem que dar return de em qual cidade o jogador esta
+			//ciadeAtual = Departplane();
+			cidadeAtual = cidadeAtual + 1;
 			break;
 		case 2:
-			//investigar
+			//INVESTIGAR
+			if (cidadeAtual == 0) {
+				system("cls");
+				horas = InvestigarCidade(caso.dica[0], caso.dica[1], caso.dica[2], caso.dica[3], cidadeAtual, horas, botoes);
+			}
+			else if(cidadeAtual == 1) {
+				system("cls");
+				horas = InvestigarCidade(caso.dica[4], caso.dica[5], caso.dica[6], "Nada", cidadeAtual, horas, botoes);
+			}
+			else {
+				system("cls");
+				strcpy(dica1, "Aqui esta muito perigoso! Se eu fosse voce, saia da cidade.\n");
+				strcpy(dica2, "Parece que o ladrao esta muito proximo. Continue procurando.\n");
+				strcpy(dica3, "Suspeito encontrado!\n");
+				cidadeAtual = 10;
+				horas = InvestigarCidade(dica1, dica2, dica3, "Nada", cidadeAtual, horas, botoes);
+
+				if (horas > 1000) {
+					fimJogo = 1;
+				}
+			}
 			break;
 		case 3:
+			//INTERPOL
 			Interpol();
+			//Colocar pra retornar se pode ou nao prender o caso.vilaoDoCaso?
 			break;
 		default:
 			break;
 		}
 	}
+
+	printf("Parabens detetive! Voce prendeu o suspeito!\n\n");
 }
 
 
@@ -912,7 +1158,7 @@ int main() {
 				case 1:
 					printf("Nivel: Iniciante\n");
 					casoF = arquivoParaObjetoCasoFacil(SorteioCaso(jogador.patente));
-					MenuJogoFacil(casoF);
+					MenuJogoFacil(casoF, botoes);
 					saidaWhile = true;
 					break;
 				case 2:
