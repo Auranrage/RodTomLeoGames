@@ -15,6 +15,16 @@ typedef enum {
 	avancado,
 } nivelDificuldade;
 
+//struct com informacoes sobre o vilao do caso para Interpol()
+struct vilaoLeitura {
+	char nome[50], sexo[20], hobby[20], cabelo[20], destaque[20], carro[25];
+};
+
+//strcut para comparar dados lidos com o database para Interpol()
+struct cmpVilao {
+	char nome[50], sexo[20], hobby[20], cabelo[20], destaque[20], carro[25];
+};
+
 //PRINT DAS HORAS E DO DIA
 void PrintDasHoras(int horas) {
 	int dia = horas / 24;
@@ -107,280 +117,26 @@ int SorteioCaso(int dificuldade) {
 	return caso;
 }
 
-//RANKING DO PLAYERS - Funcao que imprime o ranking na tela
-void ranking() {
-	FILE *arqAgentes = fopen("DadosDosAgentes.txt", "r");
-	char nomeAgente[50], leitura[50];
-	int pontos, qtde = 0, contador1 = 0, contador2 = 0, aux;
-
-
-	//loop para contar qtde de agentes no arquivo
-	while (!feof(arqAgentes)) {
-		fgets(leitura, sizeof(leitura), arqAgentes);
-		fgets(leitura, sizeof(leitura), arqAgentes);
-		fgets(leitura, sizeof(leitura), arqAgentes);
-		qtde++;
-	}
-	rewind(arqAgentes);
-
-	int colocacao[qtde], jogador[qtde];
-
-	//loop para zerar colocacao
-	for (contador1 = 0; contador1 < qtde; contador1++) {
-		colocacao[contador1] = 0;
-		jogador[contador1] = contador1 + 1;
-	}
-	contador1 = 0;
-
-	//armazenar pontos nas matrizes
-	while (!feof(arqAgentes)) {
-		fgets(leitura, sizeof(leitura), arqAgentes);
-		fgets(leitura, sizeof(leitura), arqAgentes);
-		fscanf(arqAgentes, "%i", &pontos);
-		colocacao[contador1] = pontos;
-		fgets(leitura, sizeof(leitura), arqAgentes);
-		contador1++;
-	}
-	rewind(arqAgentes);
-
-	//bubble sort para colocacao[]
-	for (contador1 = 0; contador1 < qtde - 1; contador1++) {
-		for (contador2 = 0; contador2 < qtde - 1 - contador1; contador2++) {
-			if (colocacao[contador2] < colocacao[contador2 + 1]) {
-				aux = colocacao[contador2 + 1];
-				colocacao[contador2 + 1] = colocacao[contador2];
-				colocacao[contador2] = aux;
-				aux = jogador[contador2 + 1];
-				jogador[contador2 + 1] = jogador[contador2];
-				jogador[contador2] = aux;
-			}
-		}
-	}
-
-	//imprime o ranking na tela
-	contador1 = 0;
-	printf("         RANKIING\n");
-	while (contador1 < qtde) {
-		for (contador2 = 0; contador2 < jogador[contador1]; contador2++) {
-			fgets(nomeAgente, sizeof(nomeAgente), arqAgentes);
-			strtok(nomeAgente, "\n");
-			fgets(leitura, sizeof(leitura), arqAgentes);
-			fgets(leitura, sizeof(leitura), arqAgentes);
-		}
-		rewind(arqAgentes);
-		printf("%s", nomeAgente);
-		for (contador2 = 0; contador2 < (20 - strlen(nomeAgente)); contador2++) {
-			printf(" ");
-		}
-		printf("%ipts\n", colocacao[contador1]);
-		contador1++;
-	}
-}
-
-//FUNCAO PARA INVESTIGAR NA CIDADE
-int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int cidade, int horas, Botoes botoes) {
-	char botaoApertado = '^';
-	int aleatorio;
-
-	if (cidade == 0) {
-		while (botaoApertado != botoes.botao0) {
-			//Lembrar do dia da semana aqui
-			PrintDasHoras(horas);
-
-			printf("Escolha um local para investigar:\n\n");
-			printf("%c - Prefeitura   %c - Aeroporto   %c - Lojinha  %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
-			scanf("%c", &botaoApertado);
-			getchar();
-
-			if (botaoApertado == botoes.botao1) {
-				system("cls");
-				printf("%s\n", dica1);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao2) {
-				system("cls");
-				printf("%s\n", dica2);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao3) {
-				system("cls");
-				printf("%s\n", dica3);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao4) {
-				system("cls");
-				printf("%s\n", dica4);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao0) {
-				system("cls");
-				return horas;
-			}
-		}
-	}
-
-	else if (cidade == 10) {
-
-		//Cria um valor aleatorio entre 1 e 3
-		aleatorio = NumeroRandomico(3);
-
-		switch (aleatorio) {
-		case 1:
-			//Opcoes
-			while (botaoApertado != botoes.botao0) {
-				PrintDasHoras(horas);
-
-				printf("Escolha um local para investigar:\n\n");
-				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
-				scanf("%c", &botaoApertado);
-				getchar();
-
-				if (botaoApertado == botoes.botao1) {
-					system("cls");
-					printf("%s\n", dica1);
-					horas = horas + 4;
-				}
-				else if (botaoApertado == botoes.botao2) {
-					system("cls");
-					printf("%s\n", dica2);
-					horas = horas + 4;
-				}
-				else if (botaoApertado == botoes.botao3) {
-					system("cls");
-					printf("%s\n", dica3);
-					horas = horas + 1000;
-					return horas;
-					printf("%s\n", dica3);
-
-				}
-				else if (botaoApertado == botoes.botao0) {
-					system("cls");
-					return horas;
-				}
-			}
-			break;
-		case 2:
-			//Opcoes
-			while (botaoApertado != botoes.botao0) {
-				PrintDasHoras(horas);
-
-				printf("Escolha um local para investigar:\n\n");
-				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
-				scanf("%c", &botaoApertado);
-				getchar();
-
-				if (botaoApertado == botoes.botao1) {
-					system("cls");
-					printf("%s\n", dica3);
-					horas = horas + 1000;
-					return horas;
-				}
-				else if (botaoApertado == botoes.botao2) {
-					system("cls");
-					printf("%s\n", dica2);
-					horas = horas + 4;
-				}
-				else if (botaoApertado == botoes.botao3) {
-					system("cls");
-					printf("%s\n", dica1);
-					horas = horas + 4;
-				}
-				else if (botaoApertado == botoes.botao0) {
-					system("cls");
-					return horas;
-				}
-			}
-			break;
-		case 3:
-			//Opcoes
-			while (botaoApertado != botoes.botao0) {
-				PrintDasHoras(horas);
-
-				printf("Escolha um local para investigar:\n\n");
-				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
-				scanf("%c", &botaoApertado);
-				getchar();
-
-				if (botaoApertado == botoes.botao1) {
-					system("cls");
-					printf("%s\n", dica1);
-					horas = horas + 4;
-				}
-				else if (botaoApertado == botoes.botao2) {
-
-					system("cls");
-					printf("%s\n", dica3);
-					horas = horas + 1000;
-					return horas;
-				}
-				else if (botaoApertado == botoes.botao3) {
-					system("cls");
-					printf("%s\n", dica2);
-					horas = horas + 4;
-				}
-				else if (botaoApertado == botoes.botao0) {
-					system("cls");
-					return horas;
-				}
-			}
-			break;
-		}
-	}
-
-	else {
-		while (botaoApertado != botoes.botao0) {
-			PrintDasHoras(horas);
-
-			printf("Escolha um local para investigar:\n\n");
-			printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
-			scanf("%c", &botaoApertado);
-			getchar();
-
-			if (botaoApertado == botoes.botao1) {
-				system("cls");
-				printf("%s\n", dica1);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao2) {
-				system("cls");
-				printf("%s\n", dica2);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao3) {
-				system("cls");
-				printf("%s\n", dica3);
-				horas = horas + 4;
-			}
-			else if (botaoApertado == botoes.botao0) {
-				system("cls");
-				return horas;
-			}
-		}
-	}
-}
-
-//MENU INTERPOL - NAO TA FUNCIONANDO Funcao para Pesquisar Suspeitos no Database
+//MENU INTERPOL - Funcao para Pesquisar Suspeitos no Database
 void Interpol() {
-	char leitura[30], opcaoYN, compativel[30];
-	int menu, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
-	Vilao vilao, cmpDados;
+	char leitura[50], opcaoYN, compativel[50];
+	int menu, prisao = 0, suspeitosRestantes = 0, rSexo, rHobby, rCabelo, rDestaque, rCarro;
+	struct vilaoLeitura vilao;
+	struct cmpVilao cmpDados;
 	FILE *dadosSuspeitos = fopen("DadosDosSuspeitos.txt", "r");
 
-	//Pergunta se o Usuario quer Procurar por um Suspeito
+	//pergunta se o usuario quer procurar por um suspeito
 	printf("Deseja buscar o suspeito do caso? (Y/N)\n");
-	getchar();
 	scanf("%c", &opcaoYN);
-	
 	while (opcaoYN != 'y'&& opcaoYN != 'Y' && opcaoYN != 'n'&& opcaoYN != 'N') {
 		printf("Opcao invalida\nDigite uma opcao valida (Y/N)\n");
-		getchar();
 		scanf("%c", &opcaoYN);
 	}
 
-	//Caso a Opcao seja SIM...
+	//caso a opcao seja sim...
 	if (opcaoYN == 'y' || opcaoYN == 'Y') {
-		//O usuario digita as informacoes sobre o Suspeito
-		//Sexo
+		//o usuario digita as informacoes sobre o suspeito
+		//sexo
 		printf("Escolha o sexo:\n");
 		printf("1- MASCULINO    2- FEMININO     3- DESCONHECIDO\n");
 		scanf("%i", &menu);
@@ -398,9 +154,9 @@ void Interpol() {
 			break;
 		}
 
-		//Hobby
+		//hobby
 		printf("Escolha o hobby:\n");
-		printf("1- MUSICA   2- VIAJAR  3- FILMES   4- DANCA    5- DESCONHECIDO\n");
+		printf("1- MUSICA     2- VIAJAR  3- FILMES   4- DANCA    5- DESCONHECIDO\n");
 		scanf("%i", &menu);
 		switch (menu) {
 		case 1:
@@ -417,36 +173,35 @@ void Interpol() {
 			break;
 		case 5:
 			strcpy(cmpDados.hobby, "desconhecido\n");
-			break;
 		default:
 			break;
 		}
 
-		//Cabelo
+		//cabelo
 		printf("Escolha a cor do cabelo:\n");
 		printf("1- PRETO    2- CASTANHO     3- LOIRO    4- RUIVO    5- DESCONHECIDO\n");
 		scanf("%i", &menu);
 		switch (menu) {
 		case 1:
-			strcpy(cmpDados.corCabelo, "Preto\n");
+			strcpy(cmpDados.cabelo, "Preto\n");
 			break;
 		case 2:
-			strcpy(cmpDados.corCabelo, "Castanho\n");
+			strcpy(cmpDados.cabelo, "Castanho\n");
 			break;
 		case 3:
-			strcpy(cmpDados.corCabelo, "Loiro\n");
+			strcpy(cmpDados.cabelo, "Loiro\n");
 			break;
 		case 4:
-			strcpy(cmpDados.corCabelo, "Ruivo\n");
+			strcpy(cmpDados.cabelo, "Ruivo\n");
 			break;
 		case 5:
-			strcpy(cmpDados.corCabelo, "desconhecido\n");
+			strcpy(cmpDados.cabelo, "desconhecido\n");
 			break;
 		default:
 			break;
 		}
 
-		//Destaque
+		//destaque
 		printf("Escolha uma caracteristica de destaque:\n");
 		printf("1- ANEL    2- JOIA     3- TATTOO    4- BENGALA     5-DESCONHECIDO \n");
 		scanf("%i", &menu);
@@ -470,7 +225,7 @@ void Interpol() {
 			break;
 		}
 
-		//Carro
+		//carro
 		printf("Escolha um carro:\n");
 		printf("1- CONVERSIVEL    2- JIPE     3- LIMOUSINE     4- ESPORTIVO     5- DESCONHECIDO\n");
 		scanf("%i", &menu);
@@ -494,16 +249,16 @@ void Interpol() {
 			break;
 		}
 
-		//Procura pelas Caracteristicas no Database
+		//procura pelas caracteristicas no database
 		while (!feof(dadosSuspeitos)) {
 			fgets(vilao.nome, sizeof(vilao.nome), dadosSuspeitos);
 			fgets(vilao.sexo, sizeof(vilao.sexo), dadosSuspeitos);
 			fgets(vilao.hobby, sizeof(vilao.hobby), dadosSuspeitos);
-			fgets(vilao.corCabelo, sizeof(vilao.corCabelo), dadosSuspeitos);
+			fgets(vilao.cabelo, sizeof(vilao.cabelo), dadosSuspeitos);
 			fgets(vilao.destaque, sizeof(vilao.destaque), dadosSuspeitos);
 			fgets(vilao.carro, sizeof(vilao.carro), dadosSuspeitos);
 
-			//Compara Sexo
+			//compara sexo
 			if (strcmp(vilao.sexo, cmpDados.sexo) == 0) {
 				rSexo = 1;
 			}
@@ -516,7 +271,7 @@ void Interpol() {
 				}
 			}
 
-			//Compara Hobby
+			//compara hobby
 			if (strcmp(vilao.hobby, cmpDados.hobby) == 0) {
 				rHobby = 1;
 			}
@@ -529,12 +284,12 @@ void Interpol() {
 				}
 			}
 
-			//Compara Cabelo
-			if (strcmp(vilao.corCabelo, cmpDados.corCabelo) == 0) {
+			//compara cabelo
+			if (strcmp(vilao.cabelo, cmpDados.cabelo) == 0) {
 				rCabelo = 1;
 			}
 			else {
-				if (strcmp(cmpDados.corCabelo, "desconhecido\n") == 0) {
+				if (strcmp(cmpDados.cabelo, "desconhecido\n") == 0) {
 					rCabelo = 2;
 				}
 				else {
@@ -542,7 +297,7 @@ void Interpol() {
 				}
 			}
 
-			//Compara Destaque
+			//compara destaque
 			if (strcmp(vilao.destaque, cmpDados.destaque) == 0) {
 				rDestaque = 1;
 			}
@@ -555,7 +310,7 @@ void Interpol() {
 				}
 			}
 
-			//Compara Carro
+			//compara carro
 			if (strcmp(vilao.carro, cmpDados.carro) == 0) {
 				rCarro = 1;
 			}
@@ -568,20 +323,20 @@ void Interpol() {
 				}
 			}
 
-			//Caso um Vilao do Arquivo seja compativel com os dados lidos, o programa imprime seu Nome na tela
+			//caso um vilao do arquivo seja compativel com os dados lidos, o programa imprime seu nome na tela
 			if (rSexo != 0 && rHobby != 0 && rCabelo != 0 && rDestaque != 0 && rCarro != 0) {
 				strcpy(compativel, vilao.nome);
 				printf("%s", compativel);
 				suspeitosRestantes++;
 			}
-			fgets(leitura, sizeof(leitura), dadosSuspeitos); //IMPORTANT - pula o \n que separa os viloes no arquivo
+			fgets(leitura, sizeof(leitura), dadosSuspeitos); //pula o \n que separa os viloes no arquivo
 		}
-		//Caso so exista um suspeito restante, o programa imprime na tela, notificando o jogador de que ele pode prender o suspeito
+		//caso so exista um suspeito restante, o programa imprime na tela, notificando o jogador de que ele pode prender o suspeito
 		if (suspeitosRestantes == 1) {
-			printf("Voce tem permissao para prender %s\n\n", compativel);
+			printf("Voce tem permissao para prender %s", compativel);
 		}
 		if (suspeitosRestantes == 0) {
-			printf("Nao foi encontrado nenhum suspeito com essas caracteristicas\n\n");
+			printf("Nenhum suspeito foi encontrado com essas caracteristicas\n");
 		}
 	}
 
@@ -591,7 +346,9 @@ void Interpol() {
 	}
 }
 
-//IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
+
+
+//IDENTIFICAÃ‡ÃƒO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
 Jogador IdentificarAgente(char nomeAgente[]) {
 	FILE *agentes, *admin;
 	int id = 0, nivel, sucesso;
@@ -654,7 +411,7 @@ Jogador IdentificarAgente(char nomeAgente[]) {
 	return jogador;
 }
 
-//CIDADE ERRADA - Funcao para quando o usuario escolher uma cidade errada
+//CIDADE ERRADA - Funcao para quando o usuario escolher uma idade errada
 void CidadeErrada(char escolhida[], char anterior[]) {
 	FILE *cidades = fopen("cidades.txt", "r");
 	char aleatorio1[50], aleatorio2[50], leitura[500], ogEscolha[50], ogAnterior[50];
@@ -1101,6 +858,188 @@ void DepartPlane(int dificuldade, int caso) {
 	}
 }
 
+//FUNCAO PARA INVESTIGAR NA CIDADE
+int InvestigarCidade(char dica1[], char dica2[], char dica3[], char dica4[], int cidade, int horas, Botoes botoes) {
+	char botaoApertado = '^';
+	int aleatorio;
+
+	if (cidade == 0) {
+		while (botaoApertado != botoes.botao0) {
+			//Lembrar do dia da semana aqui
+			PrintDasHoras(horas);
+
+			printf("Escolha um local para investigar:\n\n");
+			printf("%c - Prefeitura   %c - Aeroporto   %c - Lojinha  %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao4, botoes.botao0);
+			scanf("%c", &botaoApertado);
+			getchar();
+
+			if (botaoApertado == botoes.botao1) {
+				system("cls");
+				printf("%s\n", dica1);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao2) {
+				system("cls");
+				printf("%s\n", dica2);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao3) {
+				system("cls");
+				printf("%s\n", dica3);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao4) {
+				system("cls");
+				printf("%s\n", dica4);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao0) {
+				system("cls");
+				return horas;
+			}
+		}
+	}
+
+	else if (cidade == 10) {
+		
+		//Cria um valor aleatorio entre 1 e 3
+		aleatorio = NumeroRandomico(3);
+		
+		switch (aleatorio) {
+		case 1:
+			//Opcoes
+			while (botaoApertado != botoes.botao0) {
+				PrintDasHoras(horas);
+
+				printf("Escolha um local para investigar:\n\n");
+				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+				scanf("%c", &botaoApertado);
+				getchar();
+
+				if (botaoApertado == botoes.botao1) {
+					system("cls");
+					printf("%s\n", dica1);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao2) {
+					system("cls");
+					printf("%s\n", dica2);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao3) {
+					system("cls");
+					printf("%s\n", dica3);
+					horas = horas + 1000;
+					return horas;
+					printf("%s\n", dica3);
+					
+				}
+				else if (botaoApertado == botoes.botao0) {
+					system("cls");
+					return horas;
+				}
+			}
+			break;
+		case 2:
+			//Opcoes
+			while (botaoApertado != botoes.botao0) {
+				PrintDasHoras(horas);
+
+				printf("Escolha um local para investigar:\n\n");
+				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+				scanf("%c", &botaoApertado);
+				getchar();
+
+				if (botaoApertado == botoes.botao1) {
+					system("cls");
+					printf("%s\n", dica3);
+					horas = horas + 1000;
+					return horas;
+				}
+				else if (botaoApertado == botoes.botao2) {
+					system("cls");
+					printf("%s\n", dica2);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao3) {
+					system("cls");
+					printf("%s\n", dica1);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao0) {
+					system("cls");
+					return horas;
+				}
+			}
+			break;
+		case 3:
+			//Opcoes
+			while (botaoApertado != botoes.botao0) {
+				PrintDasHoras(horas);
+
+				printf("Escolha um local para investigar:\n\n");
+				printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+				scanf("%c", &botaoApertado);
+				getchar();
+
+				if (botaoApertado == botoes.botao1) {
+					system("cls");
+					printf("%s\n", dica1);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao2) {
+					
+					system("cls");
+					printf("%s\n", dica3);
+					horas = horas + 1000;
+					return horas;
+				}
+				else if (botaoApertado == botoes.botao3) {
+					system("cls");
+					printf("%s\n", dica2);
+					horas = horas + 4;
+				}
+				else if (botaoApertado == botoes.botao0) {
+					system("cls");
+					return horas;
+				}
+			}
+			break;
+		}
+	}
+	
+	else {
+		while (botaoApertado != botoes.botao0) {
+			PrintDasHoras(horas);
+
+			printf("Escolha um local para investigar:\n\n");
+			printf("%c - Prefeitura   %c - Aeroporto   %c - Ruas   %c - Voltar\n", botoes.botao1, botoes.botao2, botoes.botao3, botoes.botao0);
+			scanf("%c", &botaoApertado);
+			getchar();
+
+			if (botaoApertado == botoes.botao1) {
+				system("cls");
+				printf("%s\n", dica1);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao2) {
+				system("cls");
+				printf("%s\n", dica2);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao3) {
+				system("cls");
+				printf("%s\n", dica3);
+				horas = horas + 4;
+			}
+			else if (botaoApertado == botoes.botao0) {
+				system("cls");
+				return horas;
+			}
+		}
+	}
+}
+
 //MENU PARA CASO FACIL
 void MenuJogoFacil(CasoFacil caso, Botoes botoes){
 	int menu, horas = 8, fimJogo = 0, cidadeAtual = 0;
@@ -1187,7 +1126,7 @@ int main() {
 	botoes.botao4 = '4';
 	srand(time(NULL));
 
-	//Introduçao
+	//IntroduÃ§ao
 	printf("Em que lugar da Terra esta Carmem Sandiego?\n\n");
 	printf("| RodTomLeoGames |\n\n");
 	system("pause");
@@ -1258,7 +1197,6 @@ int main() {
 		
 		//Ranking dos Jogadores
 		else if (botaoApertado == botoes.botao2) {
-			ranking();
 			printf("Imprimir os jogadores por ordem de pontuacao aqui.\n");
 			system("pause");
 		}
@@ -1335,5 +1273,4 @@ int main() {
 	}
 	system("pause");
 }
-
 
