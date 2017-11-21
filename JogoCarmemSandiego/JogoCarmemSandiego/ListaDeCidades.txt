@@ -1,30 +1,78 @@
 Nova Iorque
-Descricao de New York
+A cidade que nunca dorme, Nova Iorque nunca deixa de encantar seus turistas com sua infinita beleza e sua enorme variedade de lojas. A Times Square eh um dos maiores fatores que deram a alcunha da cidade, pois suas luzes substituem o sol para aqueles que nela estiverem.
 Rio de Janeiro
-Descricao de RiodeJaneiro
+Famosa tanto por suas praias quanto por suas atrações turisticas dentro da cidade, a tambem chamada "cidade maravilhosa" habita o famoso Cristo Redentor, uma das sete maravilhas do mundo.
 Sao Paulo
-Descricao de Sao Paulo
+Sao Paulo eh a maior cidade de todo o hemisferio sul e do continente americano, e por curiosidade a cidade brasileira com a maior populacao nordestina. Sua populacao eh de mais de 12 milhoes de habitantes, e sua area eh de 1500 quilometros quadrados.
 Berlim
-Descricao de Berlim
+Capital da Alemannha e local que fora dividido em dois durante a Segunda Guerra Mundial. Como muitas cidades da Europa, o que nao lhe falta sao monumentos belos e marcantes para representar su profunda história, como o Portao de Brandemburgo e o Museu de Pergamo.
 Paris
-Descricao de Paris
+A encantadora Paris eh a cidade mais populosa da Europa, conhecida principalmente pela gloriosa Torre Eiffel. Sua riqueza visual eh o que torna a cidade o local mais visitado do mundo por turistas, registrando mais de 18 milhoes de visitantes estrangeiros por ano.
 Los Angeles
-Descricao de Los Angeles
+Los Angeles eh uma cidade da California, nos Estados Unidos, conhecida por sua grande quantidade de pessoas famosas que nela moram, e pelo grande letreiro de Hollywood e pela Calcada da Fama, onde muitos artistas de todas as areas ja deixaram suas marcas.
 Roma
-Descricao de Roma
+Antiga capital do Imperio Romano e atual capital da Italia. Dentro da cidade encontra-se o Coliseu, famoso por ter cediado batalhas de gladiadores no passado distante, e o Vaticano, o menor pais do mundo e a cede da igreja catolica.
 Montreal
-Descricao de Montreal
+Montreal eh a maior cidade da provincia de Quebec, no parte francesa do Canada. Apesar da fama de seu pais por ser constantemente frio, a cidade existe em uma regiao com quatro estacoes bem distintas, fazendo com que seus veroes sejam bem quentes e os invernos cobertos de neve.
 Moscou
-Descricao de Moscow
+A megacidade mais ao norte na Terra, Moscou eh a capital da Federacao Russa. Por mais que a maior parte do pais encontre-se na Asia, sua maior cidade esta situada na Europa, pois o continente sempre possuiu muitos outros centros politicos e economicos ao longo da historia.
 Londres
-Descricao de Londres
+Lar do Big Ben, do palacio de Buckingham e da familia real do Reino Unido, esta cidade quase sempre nublada eh a capital da Inglaterra e uma antiga cidade, com sua historia se extendendo ate mais de 2000 anos atras, ja tendo sido ate mesmo parte do imperio romano no seculo 1 A.C.
 Atenas
-Descricao de Atenas
+Uma das mais antigas cidades do mundo, Atenas é a maior cidade da Grecia e capital do pais. A mesma tem sido continuamente habitada ha 3400 anos. Filosofos famosos ja moraram nela, como Platao e Aristoteles, e sua maior atracao eh o Partenon, local dedicado para a deusa da sabedoria e das artes, Athena.
 Toquio
-DescricaodeToquio bem vindo a toquio, a cidade do futuro.
+Bem vindo a Toquio, a cidade do futuro. Atual capital do Japao, precedida por Kyoto ate o final do xogunato em 1868. Eh a area urbana mais populosa do mundo, isto eh, com maior quantidade de habitantes por quilometro quadrado, com uma populacao total de quase 9,8 milhoes de habitantes.
 Sydney
+<<<<<<< HEAD
 Descricao de Sydney
 Dubai
 Descricao de Dubai
 Viena
 Descricao de Viena
+=======
+Sydney eh a capital do estado australiano de Nova Gales do Sul, e a cidade mais populosa de toda a Oceania. A cidade fica localizada em um dos maiores portos naturais do mundo, e aqueles que a visitam nao podem deixar de conhecer a Opera de Sydney.
+Oslo
+Fundada ha quase 1000 anos pelo rei noruegues Haroldo III. Em 1624, a cidade fora devastada por um enorme incendio, mas o ate entao rei Cristiano IV reconstruiu-a com o nome de Cristiania, que fora substituido pelo nome Oslo, que se mantem ate hoje, em 1924, no aniversario de 300 anos de sua reconstrucao.
+Instanbul
+Tambem conhecida como Bizancio ate 330 D.C., e Constantinopla ate 1453, Istanbul eh a maior cidade da Turquia, mesmo nao sendo sua capital. A maioria de sua populacao eh muculmana, sendo a cidade tambem a maior capital do islamismo da atualidade.
+Buenos Aires
+Buenos Aires eh a segunda maior area metropolitana da America do Sul, perdendo para Sao Paulo, e a capital da Argentina. Localizada na costa sudeste do estuario do Rio da Prata, o qual da nome ao pais, a cidade ate 1996 tinha seus prefeitos escolhidos pelo presidente, e so naquele ano realizou sua primeira eleicao de um chefe de governo.
+Pequim
+Centro politico, cultural e educacional da China, e segunda cidade mais habitada do pais. Sua historia remonta a mais de tres milenios, e eh o lar de sete patrimonios culturais de acordo com a UNESCO, como a Cidade Proibida, a Grande Muralha, o Templo do Ceu, o Palacio de Verao, entre outros.
+Campinas
+Campinas eh a decima cidade mais rica do Brasil, e a quinta colocada no Indice das Melhores e Maiores Cidades Brasileiras. Polo industrial regional e terceiro maior polo de pesquisa e desenvolvimento brasileiro, a cidade eh um grande centro economico do estado de sao Paulo.
+Cidade do Mexico
+A Cidade do Mexico eh nao so a capital do Mexico, como tambem a cidade mais populosa da America do Norte, com uma densidade demografica de 6,9 mil habitantes por quilometro quadrado. Situada a uma altitude de 2200 metros, tambem ja fora a capital do Imperiio Asteca, e na epoca era chamada de Tenochtitlan.
+Cairo
+A maior cidade da Arabia e da Africa, fora fundada em 116 A.C. pelos romanos, substituindo como capital a cidade de Menfis. Cairo fora invadida pelos mamelucos, otomanos, Napoleao e pelos britanicos, e apenas em 1922 se converteu em capital soberana do Egito.
+Dubai
+Conhecida por sua grande aglomeracao de riquezas e por seus arranha-ceus, Dubai eh a maior cidade e emirado dos Emirados Arabes Unidos, pais formado por sete monarquias hereditarias arabes chamadas de emirados. Na grande cidade encontra-se o Burj Khalifa, o maior edificio do planeta e tambem local turistico mais famoso da cidade.
+Baghdad
+Baghdad, em portugues Bagda, eh a capital do Iraque e da provincia de mesmo nome. Situa-se na margem do Rio Tigre, e possui origens pre-islamicas. Atualmente esta envolvida em conflitos, devido a guerra do Iraque, e sua area metropolitana possui uma popiulacao de 9 milhoes de habitantes.
+Delhi
+A cidade de Delhi eh a segunda maior cidade da India, e fora capital 1947, enquanto o pais estava sob dominio da Inglaterra, quando consgtruiu-se a nova capital Nova Delhi ao sul da antiga. Um de seus  locais turisticos mais conhecidos eh o Forte Vermelho, um complexo estrutural de fortificacao da cidade usado como defesa de invasores.
+Lagos
+Lagos eh a maior cidade da Nigeria e segunda maior cidade da Africa, atras de Cairo. Em 1991 foi deixou de ser a capital nacional e foi substituida por Abuja, mas nao perdeu suas importancias financeira, economica e mercantil. A cidade eh composta por uma parte continental e uma serie de ilhas ao redor da lagoa de Lagos.
+Karachi
+Cidade mais populosa do Paquistao e cede das maiores corporacoes que atuam no pais. A cidade se encontra na costa do Mar da Arabia e ao noroeste do Rio Indo, concedendo-lhe uma posicao privilegiada para negocios maritimos. Desde sua independencia do Reino Unido em 1947, a cidade recebe muitos emigrantes todos os anos.
+Dhaka
+Dhaka eh a capital e maior cidade de Bangladesh. A cidade tem sua historia iniciada no seculo XI, e sua importancia comeca a surgir quando estava sob o dominio mongol. Chamada de Cidade das Mesquitas, seus mais importantes monumentos sao o palacio de Ahsan Manzil, o nao finalizado Forte de Lalbagh, e a mesquita Hoseni Dalan.
+Seoul
+Tambem chamada de Cidade Especial de Seul, eh a capital da republica da Coreia. Apos a Guerra da Coreia, a cidade que ate entao era um amontoado de ruinas se transformou na quarta maior economia economia metropolitana do mundo, apos passar pelo chamado Milagre do Rio Han, um boom economico que auxiliou no crescimento da capital.
+Bogota
+Anteriormente conhecida como Santa Fe de Bogota, trata-se da maior cidade e capital da Colombia, situada "2600 metros mais perto das estrelas", como diz seu lema. Eh a terceira capital mais elevada do mundo em altitude, atras de La Paz, na Colombia, e Quito, no Equador. A cidade possui 58 museus, 62 galerias, 150 monumentos nacionais, 75 paruqes de atracao, entre muitas outras areas de lazer e cultura.
+Hong Kong
+Regiao conhecida por uma imensidao de arranha-ceus em seu horizonte e por um vasto porto natural, Hong Kong eh uma regiao administrativa especial da China, delimitada pelo delta formado pelo Rio das Perolas e pelo Mar da China Meridional. A cidade teve seu dominio alternado devido a diversos confrontos ao longo da historia, tornando-se de controle chines apenas em 2009.
+Casablanca
+Casablanca eh a maior cidade do Marrocos, e eh o maior centro industrial e o maior porto do pais. O nome da cidade em arabe, ad-Dar al-Bayda, significa Casa Branca, mas depois do terremoto de 1755 que nela ocorrera, a cidade fora ocupada por muitos mercadores espanhois, que passaram a chama-la em sua propria lingua, dai o nome em espanhol.
+Santiago
+Capital do Chile, vizinha da Cordilheira dos Andes, a cidade recebe os maiores centros financeiros, culturais, administrativos, comerciais e governamentais do pais. Eh classificada como a terceira cidade latina com melhores condicoes de vida, atras de Montevideu e buenos Aires. Tambem eh uma aglomeracao de 32 comunas de maneira integra e 11 comunas de maneira parcial.
+Lisboa
+Com quase tres milhos de habitantes, Lisboa eh a capital de Portugal, alem da capital mais a oeste da Europa na costa do Oceano Atlantico. A cidade eh muito conhecida gastronomicamente por seu alto consumo de bacalhau e pelos famosos pasteisinhos de Belem. Gracas a sua posicao privilegiada no litoral do Atlantico, possui atualmente um crescimento economico crescente, tornando-a um dos principais centros economicos do continente europeu.
+Hanoi
+Uma das cinco "cidades centralmente governadas" do Vietna, eh a capital e segunda maior cidade do pais. Em 2008, seus limites administrativos foram expandidos para quase o quadruplo da area anterior, sendo boa parte da nova aquisicao rural. O pais ja fora ocupado por franceses e japoneses ao longo do tempo, mas de 1946 ate 1954 lutaram para se libertar, podendo se consagrar como republica Socialista do Vietname, com Hanoi como sua capital desde entao.
+Viena
+Viena eh a capital da Austria, e conta com um quarto de toda a populacao do pais. Eh a segunda maior cidade de lingua alema do mundo, atras de Berlim, e setima maior cidade da Uniao Europeia. Desde 1921, a "lei da separacao" classifica a cidade tambem como um dos nove estados austriacos. Eh sede de organizacoes internacionais importantes, como a Organizacao dos Paises Exportadores de Petroleo e a Organizacao para a Seguranca e Cooperacao na Europa.
+Cidade do Cabo
+Capital legislativa da Africa do Sul, onde se encontram muitos escritorios do governo e o Parlamento Nacional, eh a segunda cidade mais populosa do pais, atras de Joanesburgo, que mesmo nao sendo um dos tres centros administrativos do pais, eh uma de suas cidades mais importantes. Alem de seu porto natura extenso, a cidade eh conhecida por marcos como a baia da Mesa e a montanha da Mesa.
+>>>>>>> d799251699477d8204cae3ff99381848d9ca34a7
