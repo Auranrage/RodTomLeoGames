@@ -1,4 +1,4 @@
-Nova Iorque
+﻿Nova Iorque
 A cidade que nunca dorme, Nova Iorque nunca deixa de encantar seus turistas com sua infinita beleza e sua enorme variedade de lojas. A Times Square eh um dos maiores fatores que deram a alcunha da cidade, pois suas luzes substituem o sol para aqueles que nela estiverem.
 Rio de Janeiro
 Famosa tanto por suas praias quanto por suas atrações turisticas dentro da cidade, a tambem chamada "cidade maravilhosa" habita o famoso Cristo Redentor, uma das sete maravilhas do mundo.
@@ -23,13 +23,6 @@ Uma das mais antigas cidades do mundo, Atenas é a maior cidade da Grecia e capi
 Toquio
 Bem vindo a Toquio, a cidade do futuro. Atual capital do Japao, precedida por Kyoto ate o final do xogunato em 1868. Eh a area urbana mais populosa do mundo, isto eh, com maior quantidade de habitantes por quilometro quadrado, com uma populacao total de quase 9,8 milhoes de habitantes.
 Sydney
-<<<<<<< HEAD
-Descricao de Sydney
-Dubai
-Descricao de Dubai
-Viena
-Descricao de Viena
-=======
 Sydney eh a capital do estado australiano de Nova Gales do Sul, e a cidade mais populosa de toda a Oceania. A cidade fica localizada em um dos maiores portos naturais do mundo, e aqueles que a visitam nao podem deixar de conhecer a Opera de Sydney.
 Oslo
 Fundada ha quase 1000 anos pelo rei noruegues Haroldo III. Em 1624, a cidade fora devastada por um enorme incendio, mas o ate entao rei Cristiano IV reconstruiu-a com o nome de Cristiania, que fora substituido pelo nome Oslo, que se mantem ate hoje, em 1924, no aniversario de 300 anos de sua reconstrucao.
@@ -75,4 +68,4 @@ Viena
 Viena eh a capital da Austria, e conta com um quarto de toda a populacao do pais. Eh a segunda maior cidade de lingua alema do mundo, atras de Berlim, e setima maior cidade da Uniao Europeia. Desde 1921, a "lei da separacao" classifica a cidade tambem como um dos nove estados austriacos. Eh sede de organizacoes internacionais importantes, como a Organizacao dos Paises Exportadores de Petroleo e a Organizacao para a Seguranca e Cooperacao na Europa.
 Cidade do Cabo
 Capital legislativa da Africa do Sul, onde se encontram muitos escritorios do governo e o Parlamento Nacional, eh a segunda cidade mais populosa do pais, atras de Joanesburgo, que mesmo nao sendo um dos tres centros administrativos do pais, eh uma de suas cidades mais importantes. Alem de seu porto natura extenso, a cidade eh conhecida por marcos como a baia da Mesa e a montanha da Mesa.
->>>>>>> d799251699477d8204cae3ff99381848d9ca34a7
+
