@@ -1,4 +1,3 @@
-
 Nova Iorque
 Descricao de New York
 Rio de Janeiro
@@ -25,25 +24,7 @@ Toquio
 DescricaodeToquio bem vindo a toquio, a cidade do futuro.
 Sydney
 Descricao de Sydney
-Oslo
-Instanbul
-Buenos Aires
-Pequim
-Campinas
-Cidade do Mexico
-Cairo
 Dubai
-Baghdad
-Delhi
-Lagos
-Karachi
-Dhaka
-Seoul
-Bogota
-Hong Kong
-Casablanca
-Santiago
-Lisboa
-Hanoi
+Descricao de Dubai
 Viena
-Cidade do Cabo
+Descricao de Viena

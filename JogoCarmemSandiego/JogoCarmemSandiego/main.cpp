@@ -9,30 +9,443 @@
 #include "FuncoesAuxiliares.h"
 #include "FuncoesAdmin.h"
 
-//MENU DE VIAJAR
-int ProximaCidade(char cidadeAtual[], char proximaAtual[]) {
-	return 0;
-}
+//MENU VIAJAR
+int ProximaCidade(int numCidadeAtual, char cidadeAtual[], char cidadeProxima[], char cidadeAnterior[]) {
+	FILE *arquivoCidades = fopen("ListaDeCidades.txt", "r");
+	char aleatorio1[50], aleatorio2[50], leitura[500], descricao[500];
+	int max = 0, cidadeAleatoria, ordem, menu;
+	bool booleanCidade = false;
 
-//MENU DE VIAJAR - Nao ta funcionando
-void DepartPlane(int dificuldade, int caso) {
-	//Declaracao variaveis
-	FILE *arquivoCaso, *arquivoCidades = fopen("ListaDeCidades.txt", "r");
-	char anterior[50], atual[50], destino[50];
-	char aleatorio1[50], aleatorio2[50], leitura[500];
-	int lerNivel, ordem, menu, cidadeAleatoria, max = 0, booleanCidade = 0, restantes;
-	srand(time(NULL));
-
-	//Define a qtde de cidades no registradas no arquivo
+	//Define a qtde de cidades registradas no arquivo
 	while (!feof(arquivoCidades)) {
 		fgets(leitura, sizeof(leitura), arquivoCidades);
+		fgets(descricao, sizeof(descricao), arquivoCidades);
 		max++;
 	}
 	rewind(arquivoCidades);
 
-	//Switch para ver qual arquivo de caso sera lido
+	
+	strcpy(aleatorio1, cidadeProxima);
+	strcpy(aleatorio2, cidadeProxima);
+	
+	//////////////////////SE FOR A PRIMEIRA CIDADE////////////////
+	if (numCidadeAtual == 0) {
+		//Sorteio de duas cidades aleatorias
+		while (strcmp(aleatorio2, aleatorio1) == 0 || strcmp(aleatorio1, cidadeAtual) == 0 || strcmp(aleatorio1, cidadeProxima) == 0 || strcmp(aleatorio2, cidadeAtual) == 0 || strcmp(aleatorio2, cidadeProxima) == 0) {
+			//sorteio da primeira cidade aleatoria
+			cidadeAleatoria = NumeroRandomico(max);
+			for (int i = 0; i < cidadeAleatoria; i++) {
+				fgets(leitura, sizeof(leitura), arquivoCidades);
+				fgets(descricao, sizeof(descricao), arquivoCidades);
+			}
+			strcpy(aleatorio1, leitura);
+			strtok(aleatorio1, "\n");
+			rewind(arquivoCidades);
+
+			//Sorteio da segunda cidade aleatoria
+			cidadeAleatoria = NumeroRandomico(max);
+			for (int i = 0; i < cidadeAleatoria; i++) {
+				fgets(leitura, sizeof(leitura), arquivoCidades);
+				fgets(descricao, sizeof(descricao), arquivoCidades);
+			}
+			strcpy(aleatorio2, leitura);
+			strtok(aleatorio2, "\n");
+			rewind(arquivoCidades);
+		}
+
+		//sorteio de ordem de cidades impressas na tela
+		ordem = NumeroRandomico(3);
+
+		//enquanto o usuario nao escolhe a primeira cidade correta
+		while (booleanCidade != true) {
+			system("cls");
+			printf("\nVoce esta no aeroporto de %s. Para onde deseja viajar?", cidadeAtual);
+			switch (ordem) {
+			case 1:
+				printf("\n1- %s\n2- %s\n3- %s\n\n", cidadeProxima, aleatorio1, aleatorio2);
+				scanf("%i", &menu);
+				getchar();
+				if (menu == 1) {
+					booleanCidade = true;
+				}
+				else {
+					if (menu == 2) {
+						system("cls");
+						printf("Cidade errada!");
+						/*printf("Atual enviada = %s", atual);
+						cidadeErrada(aleatorio1, atual);
+						printf("Atual reccebida = %s", atual);
+						*/
+					}
+					else {
+						system("cls");
+						printf("Cidade errada!");
+						/*printf("Atual enviada = %s", atual);
+						cidadeErrada(aleatorio2, atual);
+						printf("Atual reccebida = %s", atual);
+						*/
+					}
+				}
+				break;
+			case 2:
+				printf("\n1- %s\n2- %s\n3- %s\n\n", aleatorio1, cidadeProxima, aleatorio2);
+				scanf("%i", &menu);
+				getchar();
+				if (menu == 2) {
+					booleanCidade = true;
+				}
+				else {
+					if (menu == 1) {
+						system("cls");
+						printf("Cidade errada!");
+						/*printf("Atual enviada = %s", atual);
+						cidadeErrada(aleatorio1, atual);
+						printf("Atual reccebida = %s", atual);*/
+					}
+					else {
+						system("cls");
+						printf("Cidade errada!");
+						/*printf("Atual enviada = %s", atual);
+						cidadeErrada(aleatorio2, atual);
+						printf("Atual reccebida = %s", atual);
+						*/
+					}
+				}
+				break;
+			case 3:
+				printf("\n1- %s\n2- %s\n3- %s\n\n", aleatorio1, aleatorio2, cidadeProxima);
+				scanf("%i", &menu);
+				if (menu == 3) {
+					booleanCidade = true;
+				}
+				else {
+					if (menu == 1) {
+						system("cls");
+						printf("Cidade errada!");
+						/*printf("Atual enviada = %s", atual);
+						cidadeErrada(aleatorio1, atual);
+						printf("Atual reccebida = %s", atual);
+					*/
+					}
+					else {
+						system("cls");
+						printf("Cidade errada!");
+						/*printf("Atual enviada = %s", atual);
+						cidadeErrada(aleatorio2, atual);
+						printf("Atual reccebida = %s", atual);
+					*/
+					}
+				}
+				break;
+			default:
+				printf("ordem error...\n");
+				break;
+			}
+		}
+		system("cls");
+		printf("Voce achou um membro da VILE! Voce deve estar no caminho certo!\n\n");
+		return numCidadeAtual + 1;
+	}
+	/////////////////////SE NAO FOR A PRIMEIRA CIDADE//////////////////////
+	else { 
+			//sorteio de duas cidades aleatorias
+			while (strcmp(aleatorio2, aleatorio1) == 0 || strcmp(aleatorio1, cidadeAtual) == 0 || strcmp(aleatorio1, cidadeProxima) == 0 || strcmp(aleatorio1,cidadeAnterior) == 0 || strcmp(aleatorio2, cidadeAtual) == 0 || strcmp(aleatorio2, cidadeProxima) == 0 || strcmp(aleatorio2, cidadeAnterior) == 0) {
+				
+				//sorteio da primeira cidade aleatoria
+				cidadeAleatoria = NumeroRandomico(max);
+				
+				for (int i = 0; i < cidadeAleatoria; i++) {
+					fgets(leitura, sizeof(leitura), arquivoCidades);
+					fgets(descricao, sizeof(descricao), arquivoCidades);
+				}
+				strcpy(aleatorio1, leitura);
+				strtok(aleatorio1, "\n");
+				rewind(arquivoCidades);
+
+				//sorteio da segunda cidade aleatoria
+				cidadeAleatoria = NumeroRandomico(max);
+				for (int i = 0; i < cidadeAleatoria; i++) {
+					fgets(leitura, sizeof(leitura), arquivoCidades);
+					fgets(descricao, sizeof(descricao), arquivoCidades);
+				}
+				strcpy(aleatorio2, leitura);
+				strtok(aleatorio2, "\n");
+				rewind(arquivoCidades);
+			}
+
+			//sorteio da ordem das cidades
+			ordem = NumeroRandomico(4);
+
+			//enquanto o usuario nao escolher uma cidade certa
+			while (booleanCidade != true) {
+				system("cls");
+				printf("\nVoce esta no aeroporto de %s. Para onde deseja viajar?\n\n", cidadeAtual);
+				switch (ordem) {
+				case 1:
+					printf("1- %s\n2- %s\n3- %s\n4- %s\n", cidadeProxima, cidadeAnterior, aleatorio1, aleatorio2);
+					scanf("%i", &menu);
+					getchar();
+
+					//switch para opcao que o usuario escolher
+					switch (menu) {
+					case 1:
+						booleanCidade = true;
+						break;
+					case 2:
+						printf("Cidade errada!");
+						//cidadeErrada(anterior, atual);
+						break;
+					case 3:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio1, atual);
+						break;
+					case 4:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio2, atual);
+						break;
+					default:
+						break;
+					}
+					break;
+				case 2:
+					printf("1- %s\n2- %s\n3- %s\n4- %s\n", aleatorio1, cidadeProxima, aleatorio2, cidadeAnterior);
+					scanf("%i", &menu);
+					getchar();
+
+					switch (menu) {
+					case 1:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio1, atual);
+						break;
+					case 2:
+						booleanCidade = 1;
+						break;
+					case 3:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio2, atual);
+						break;
+					case 4:
+						printf("Cidade errada!");
+						//cidadeErrada(anterior, atual);
+						break;
+					default:
+						break;
+					}
+					break;
+				case 3:
+					printf("1- %s\n2- %s\n3- %s\n4- %s\n", cidadeAnterior, aleatorio1, aleatorio2, cidadeProxima);
+					scanf("%i", &menu);
+					getchar();
+
+					switch (menu) {
+					case 1:
+						printf("Cidade errada!");
+						//cidadeErrada(anterior, atual);
+						break;
+					case 2:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio1, atual);
+						break;
+					case 3:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio2, atual);
+						break;
+					case 4:
+						booleanCidade = 1;
+						break;
+					default:
+						break;
+					}
+					break;
+				case 4:
+					printf("1- %s\n2- %s\n3- %s\n4- %s\n", aleatorio1, cidadeAnterior, cidadeProxima, aleatorio2);
+					scanf("%i", &menu);
+					getchar();
+
+					switch (menu) {
+					case 1:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio1, atual);
+						break;
+					case 2:
+						printf("Cidade errada!");
+						//cidadeErrada(anterior, atual);
+						break;
+					case 3:
+						booleanCidade = 1;
+						break;
+					case 4:
+						printf("Cidade errada!");
+						//cidadeErrada(aleatorio2, atual);
+						break;
+					default:
+						break;
+					}
+					break;
+				default:
+					printf("ordem2 error");
+					break;
+				}
+			}
+			
+			system("cls");
+			printf("Voce achou um membro da VILE! Voce deve estar no caminho certo!\n\n");
+			return numCidadeAtual + 1;
+		}
+	}
+
+//funcao para quando o usuario escolher uma cidade errada
+void cidadeErrada(char escolhida[], char anterior[]) {
+	FILE *cidades = fopen("ListaDeCidades.txt", "r");
+	char aleatorio1[50], aleatorio2[50], leitura[500], ogEscolha[50], ogAnterior[50], descricao[500];
+	int menu, ordem, random, max = 0, erros = 1;
+
+	strcpy(ogAnterior, anterior);
+	strcpy(ogEscolha, escolhida);
+
+	//define a qtde de cidades no registradas no arquivo
+	while (!feof(cidades)) {
+		fgets(leitura, sizeof(leitura), cidades);
+		fgets(descricao, sizeof(descricao), cidades);
+		max++;
+	}
+	rewind(cidades);
+
+	//enqunato o jogador ainda estiver em uma cidade errada
+	while (erros > 0) {
+
+		printf("\nBem vindo a %s", escolhida);
+
+		strcpy(aleatorio1, escolhida);
+		strcpy(aleatorio2, escolhida);
+
+		//sorteio de duas cidades aleatorias
+		while (strcmp(aleatorio2, aleatorio1) == 0 || strcmp(aleatorio1, anterior) == 0 || strcmp(aleatorio1, escolhida) == 0 || strcmp(aleatorio2, anterior) == 0 || strcmp(aleatorio2, escolhida) == 0) {
+			//sorteio da primeira cidade aleatoria
+			random = rand() % max;
+			for (int i = 0; i < random; i++) {
+				fgets(leitura, sizeof(leitura), cidades);
+				fgets(descricao, sizeof(descricao), cidades);
+			}
+			strcpy(aleatorio1, leitura);
+			rewind(cidades);
+
+			//sorteio da segunda cidade aleatoria
+			random = rand() % max;
+			for (int i = 0; i < random; i++) {
+				fgets(leitura, sizeof(leitura), cidades);
+				fgets(descricao, sizeof(descricao), cidades);
+			}
+			strcpy(aleatorio2, leitura);
+			rewind(cidades);
+		}
+		//sorteio de ordem das cidades no menu
+		ordem = rand() % 3;
+		switch (ordem) {
+		case 0:
+			printf("1- %s2- %s3- %s", anterior, aleatorio1, aleatorio2);
+			scanf("%i", &menu);
+			//cidade certa escolhida
+			if (menu == 1) {
+				erros--;
+				strcpy(leitura, anterior);
+				strcpy(anterior, escolhida);
+				strcpy(escolhida, leitura);
+			}
+			//cidade errada escolhida
+			else {
+				erros++;
+				if (menu == 2) {
+					strcpy(anterior, escolhida);
+					strcpy(escolhida, aleatorio1);
+				}
+				else {
+					strcpy(anterior, escolhida);
+					strcpy(escolhida, aleatorio2);
+				}
+			}
+			break;
+		case 1:
+			printf("1- %s2- %s3- %s", aleatorio2, anterior, aleatorio1);
+			scanf("%i", &menu);
+			//cidade certa
+			if (menu == 2) {
+				erros--;
+				strcpy(leitura, anterior);
+				strcpy(anterior, escolhida);
+				strcpy(escolhida, leitura);
+			}
+			//cidade errada
+			else {
+				erros++;
+				if (menu == 1) {
+					strcpy(anterior, escolhida);
+					strcpy(escolhida, aleatorio2);
+				}
+				else {
+					strcpy(anterior, escolhida);
+					strcpy(escolhida, aleatorio1);
+				}
+			}
+
+			break;
+		case 2:
+			printf("1- %s2- %s3- %s", aleatorio2, aleatorio1, anterior);
+			scanf("%i", &menu);
+			//cidade certa
+			if (menu == 3) {
+				erros--;
+				strcpy(leitura, anterior);
+				strcpy(anterior, escolhida);
+				strcpy(escolhida, leitura);
+			}
+			//cidade errada
+			else {
+				erros++;
+				if (menu == 1) {
+					strcpy(anterior, escolhida);
+					strcpy(escolhida, aleatorio2);
+				}
+				else {
+					strcpy(anterior, escolhida);
+					strcpy(escolhida, aleatorio1);
+				}
+			}
+			break;
+		default:
+			printf("Error...\n");
+			break;
+		}
+		if (erros == 1) {
+			strcpy(anterior, ogAnterior);
+		}
+	}
+	//por algum motivo, mesmo sendo uma funcao void sem retorno, os valores em departPlane eram alteraidos por essa funcao
+	//entao eu salvei os valores originais e depois eles sao salvos nas suas repectivas variaveis
+	strcpy(anterior, ogAnterior);
+	strcpy(escolhida, ogEscolha);
+}
+
+//MENU VIAJAR
+void DepartPlane(int dificuldade, int caso) {
+	//declaracao variaveis
+	FILE *arquivoCaso, *arquivoCidades = fopen("ListaDeCidades.txt", "r");
+	char anterior[50], atual[50], destino[50];
+	char aleatorio1[50], aleatorio2[50], leitura[500], descricao[500];
+	int lerNivel, ordem, menu, cidadeAleatoria, max = 0, booleanCidade = 0, restantes;
+	srand(time(NULL));
+
+	//define a qtde de cidades no registradas no arquivo
+	while (!feof(arquivoCidades)) {
+		fgets(leitura, sizeof(leitura), arquivoCidades);
+		fgets(descricao, sizeof(descricao), arquivoCidades);
+		max++;
+	}
+	rewind(arquivoCidades);
+
+	//switch para ver qual arquivo de caso sera lido
 	switch (dificuldade) {
-	//Nivel Facil
+		//nivel facil
 	case 1:
 		arquivoCaso = fopen("CasosFaceis.txt", "r");
 		restantes = 1;
@@ -46,7 +459,7 @@ void DepartPlane(int dificuldade, int caso) {
 			}
 		}
 		break;
-	//Nivel Medio
+		//nivel medio
 	case 2:
 		arquivoCaso = fopen("CasosMedios.txt", "r");
 		restantes = 3;
@@ -60,7 +473,7 @@ void DepartPlane(int dificuldade, int caso) {
 			}
 		}
 		break;
-	//Nivel Dificil
+		//nivel dificil
 	case 3:
 		arquivoCaso = fopen("CasosDificieis.txt", "r");
 		restantes = 5;
@@ -81,50 +494,52 @@ void DepartPlane(int dificuldade, int caso) {
 	}
 
 
-	//Pula as 3 primeiras linhas do arquivo para ler a primeira cidade
+	//pula as 3 primeiras linhas do arquivo para ler a primeira cidade
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 
-	//Leitura da primeira ciadade
+	//leitura da primeira ciadade
 	fgets(atual, sizeof(atual), arquivoCaso);
 
-	//Pula as primeiras quatro dicas
+	//pula as primeiras quatro dicas
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 	fgets(leitura, sizeof(leitura), arquivoCaso);
 
-	//Leitura do proximo destino correto
+	//leitura do proximo destino correto
 	fgets(destino, sizeof(destino), arquivoCaso);
 
 	strcpy(aleatorio1, destino);
 	strcpy(aleatorio2, destino);
 
-	//Sorteio de duas cidades aleatorias
+	//sorteio de duas cidades aleatorias
 	while (strcmp(aleatorio2, aleatorio1) == 0 || strcmp(aleatorio1, atual) == 0 || strcmp(aleatorio1, destino) == 0 || strcmp(aleatorio2, atual) == 0 || strcmp(aleatorio2, destino) == 0) {
 		//sorteio da primeira cidade aleatoria
 		cidadeAleatoria = rand() % max;
 		for (int i = 0; i < cidadeAleatoria; i++) {
 			fgets(leitura, sizeof(leitura), arquivoCidades);
+			fgets(descricao, sizeof(descricao), arquivoCidades);
 		}
 		strcpy(aleatorio1, leitura);
 		rewind(arquivoCidades);
 
-		//Sorteio da segunda cidade aleatoria
+		//sorteio da segunda cidade aleatoria
 		cidadeAleatoria = rand() % max;
 		for (int i = 0; i < cidadeAleatoria; i++) {
 			fgets(leitura, sizeof(leitura), arquivoCidades);
+			fgets(descricao, sizeof(descricao), arquivoCidades);
 		}
 		strcpy(aleatorio2, leitura);
 		rewind(arquivoCidades);
 	}
 
 
-	//Sorteio de ordem de cidades impressas na tela
+	//sorteio de ordem de cidades impressas na tela
 	ordem = rand() % 3;
 
-	//Enquanto o usuario nao escolhe a primeira cidade correta
+	//enquanto o usuario nao escolhe a primeira cidade correta
 	while (booleanCidade != 1) {
 		printf("\nBem vindo a %s", atual);
 		switch (ordem) {
@@ -137,12 +552,12 @@ void DepartPlane(int dificuldade, int caso) {
 			else {
 				if (menu == 2) {
 					printf("Atual enviada = %s", atual);
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					printf("Atual reccebida = %s", atual);
 				}
 				else {
 					printf("Atual enviada = %s", atual);
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					printf("Atual reccebida = %s", atual);
 				}
 			}
@@ -156,12 +571,12 @@ void DepartPlane(int dificuldade, int caso) {
 			else {
 				if (menu == 1) {
 					printf("Atual enviada = %s", atual);
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					printf("Atual reccebida = %s", atual);
 				}
 				else {
 					printf("Atual enviada = %s", atual);
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					printf("Atual reccebida = %s", atual);
 				}
 			}
@@ -175,12 +590,12 @@ void DepartPlane(int dificuldade, int caso) {
 			else {
 				if (menu == 1) {
 					printf("Atual enviada = %s", atual);
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					printf("Atual reccebida = %s", atual);
 				}
 				else {
 					printf("Atual enviada = %s", atual);
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					printf("Atual reccebida = %s", atual);
 				}
 			}
@@ -200,13 +615,13 @@ void DepartPlane(int dificuldade, int caso) {
 
 	printf("\nVoce achou um membro da VILE! Voce deve estar no caminho certo!\n\n");
 
-	//Enqunato houver cidades restantes no caso
+	//enqunato houver cidades restantes no caso
 	while (restantes > 0) {
-		//Pula as 3 dicas no arquivo caso
+		//pula as 3 dicas no arquivo caso
 		fgets(leitura, sizeof(leitura), arquivoCaso);
 		fgets(leitura, sizeof(leitura), arquivoCaso);
 		fgets(leitura, sizeof(leitura), arquivoCaso);
-		//Le o proximo destino correto
+		//le o proximo destino correto
 		fgets(destino, sizeof(destino), arquivoCaso);
 
 		strcpy(aleatorio1, destino);
@@ -214,28 +629,30 @@ void DepartPlane(int dificuldade, int caso) {
 
 		booleanCidade = 0;
 
-		//Sorteio de duas cidades aleatorias
+		//sorteio de duas cidades aleatorias
 		while (strcmp(aleatorio2, aleatorio1) == 0 || strcmp(aleatorio1, atual) == 0 || strcmp(aleatorio1, destino) == 0 || strcmp(aleatorio2, atual) == 0 || strcmp(aleatorio2, destino) == 0) {
-			//Sorteio da primeira cidade aleatoria
+			//sorteio da primeira cidade aleatoria
 			cidadeAleatoria = rand() % max;
 			for (int i = 0; i < cidadeAleatoria; i++) {
 				fgets(leitura, sizeof(leitura), arquivoCidades);
+				fgets(descricao, sizeof(descricao), arquivoCidades);
 			}
 			strcpy(aleatorio1, leitura);
 			rewind(arquivoCidades);
 
-			//Sorteio da segunda cidade aleatoria
+			//sorteio da segunda cidade aleatoria
 			cidadeAleatoria = rand() % max;
 			for (int i = 0; i < cidadeAleatoria; i++) {
 				fgets(leitura, sizeof(leitura), arquivoCidades);
+				fgets(descricao, sizeof(descricao), arquivoCidades);
 			}
 			strcpy(aleatorio2, leitura);
 			rewind(arquivoCidades);
 		}
-		//Sorteio da ordem das cidades
+		//sorteio da ordem das cidades
 		ordem = rand() % 4;
 
-		//Enquanto o usuario nao escolher uma cidade certa
+		//enquanto o usuario nao escolher uma cidade certa
 		while (booleanCidade != 1) {
 			printf("\nBem vindo a %s", atual);
 			switch (ordem) {
@@ -248,13 +665,13 @@ void DepartPlane(int dificuldade, int caso) {
 					booleanCidade = 1;
 					break;
 				case 2:
-					CidadeErrada(anterior, atual);
+					cidadeErrada(anterior, atual);
 					break;
 				case 3:
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					break;
 				case 4:
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					break;
 				default:
 					break;
@@ -265,16 +682,16 @@ void DepartPlane(int dificuldade, int caso) {
 				scanf("%i", &menu);
 				switch (menu) {
 				case 1:
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					break;
 				case 2:
 					booleanCidade = 1;
 					break;
 				case 3:
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					break;
 				case 4:
-					CidadeErrada(anterior, atual);
+					cidadeErrada(anterior, atual);
 					break;
 				default:
 					break;
@@ -285,13 +702,13 @@ void DepartPlane(int dificuldade, int caso) {
 				scanf("%i", &menu);
 				switch (menu) {
 				case 1:
-					CidadeErrada(anterior, atual);
+					cidadeErrada(anterior, atual);
 					break;
 				case 2:
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					break;
 				case 3:
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					break;
 				case 4:
 					booleanCidade = 1;
@@ -305,16 +722,16 @@ void DepartPlane(int dificuldade, int caso) {
 				scanf("%i", &menu);
 				switch (menu) {
 				case 1:
-					CidadeErrada(aleatorio1, atual);
+					cidadeErrada(aleatorio1, atual);
 					break;
 				case 2:
-					CidadeErrada(anterior, atual);
+					cidadeErrada(anterior, atual);
 					break;
 				case 3:
 					booleanCidade = 1;
 					break;
 				case 4:
-					CidadeErrada(aleatorio2, atual);
+					cidadeErrada(aleatorio2, atual);
 					break;
 				default:
 					break;
@@ -330,6 +747,7 @@ void DepartPlane(int dificuldade, int caso) {
 			printf("\nVoce achou um membro da VILE! Voce deve estar no caminho certo!\n\n");
 		}
 	}
+
 }
 
 //MENU INVESTIGAR NA CIDADE
@@ -749,7 +1167,6 @@ int Interpol(Botoes botoes) {
 	return 0;
 }
 
-
 //IDENTIFICAÇÃO DO JOGADOR - Funcao para identificar o nome lido no arquivo e, no caso de um novo agente, cadastra-lo no mesmo
 Jogador IdentificarAgente(char nomeAgente[]) {
 	FILE *agentes, *admin;
@@ -839,11 +1256,16 @@ void MenuJogoFacil(CasoFacil caso, Botoes botoes){
 		switch (menu) {
 		case 1:
 			//VIAJAR
-			DepartPlane(1, 1); 
-			//Tem arrumar isso. Pra caso facil a gente sabe que vai ser sempre nivel 1, mas nao sabemos que caso vai ser, porque eu to usando struct nesse menu.
-			//Tem que dar return de em qual cidade o jogador esta
-			//ciadeAtual = Departplane();
-			cidadeAtual = cidadeAtual + 1;
+			if (cidadeAtual == 0) {
+				cidadeAtual = ProximaCidade(cidadeAtual, caso.cidade[0].nome, caso.cidade[1].nome, "nada");
+			}
+			else if (cidadeAtual == 1) {
+				cidadeAtual = ProximaCidade(cidadeAtual, caso.cidade[1].nome, caso.cidade[2].nome, caso.cidade[0].nome);
+			}
+			else {
+				system("cls");
+				printf("Parece que o aeroporto esta fechado por medo dos ladroes da VILE. Tente investigar a cidade.\n\n");
+			}
 			break;
 		case 2:
 			//INVESTIGAR
