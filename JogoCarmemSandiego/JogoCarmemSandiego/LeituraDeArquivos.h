@@ -58,3 +58,5 @@ struct CasoDificil {
 
 
 CasoFacil arquivoParaObjetoCasoFacil(int numero);
+CasoMedio arquivoParaObjetoCasoMedio(int numero);
+CasoDificil arquivoParaObjetoCasoDificil(int numero);

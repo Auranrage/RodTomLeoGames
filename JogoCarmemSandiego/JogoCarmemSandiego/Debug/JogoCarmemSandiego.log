@@ -1,15 +1,16 @@
 ﻿  main.cpp
 c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.h(13): warning C4091: 'typedef ': ignorado à esquerda de 'Botoes' quando nenhuma variável é declarada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(435): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1172): warning C4101: 'nivel': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1172): warning C4101: 'sucesso': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1171): warning C4101: 'admin': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1235): warning C4101: 'cidade': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1235): warning C4101: 'diaSemana': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1323): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1311): warning C4101: 'nivelAgente': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1315): warning C4101: 'casoD': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1311): warning C4101: 'numeroCaso': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1314): warning C4101: 'casoM': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(932): warning C4715: 'InvestigarCidade': nem todos os caminhos de controle retornam um valor
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(729): warning C4101: 'nivel': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(729): warning C4101: 'sucesso': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(728): warning C4101: 'admin': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(792): warning C4101: 'cidade': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(792): warning C4101: 'diaSemana': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(870): warning C4101: 'cidade': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(870): warning C4101: 'diaSemana': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(949): warning C4101: 'cidade': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(949): warning C4101: 'diaSemana': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1040): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1028): warning C4101: 'nivelAgente': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1028): warning C4101: 'numeroCaso': variável local não referenciada
+c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(489): warning C4715: 'InvestigarCidade': nem todos os caminhos de controle retornam um valor
   JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
