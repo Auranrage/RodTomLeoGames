@@ -1,16 +1,8 @@
 ﻿Erros
- - Interpol
-   - Tem alguma coisa errada com o interpol(). Quando eu, Rodrigo, testei, mesmo se eu colocasse Feminino e todo o resto desconhecido, o programa nao imprimia no terminal nenhum nome.
-   - Agora nem o Y e N do intepol estao funcionando.
 - Cadastro de caso do Admin 
-  - Deu erro na hora de cadastrar caso, cadastrar vilao, nao querer cadastrar alguém, depois coloquei "Carmem Sandiego" e travou o programa. Ou nao ta conseguindo abrir o arquivo, ou nao ta conseguindo pegar a linha... talvez o strcat nao funciona direito porcausa do scanf e tem que dar sgets.
+  - Deu erro na hora de cadastrar caso, cadastrar vilao, nao querer cadastrar alguém, depois coloquei "Carmen Sandiego" e travou o programa. Ou nao ta conseguindo abrir o arquivo, ou nao ta conseguindo pegar a linha... talvez o strcat nao funciona direito porcausa do scanf e tem que dar sgets.(4, entra, 2, tesourou, vilao que nao existe, N, vila que existe/ou nao)
  
 Implementar
  - Cadastro de caso do Admin
-   - Implementação pro ADMIN poder cadastrar descricao de cidade.
-   - Rever as funções de cadastro e arrumar e erros e design do terminal.
-   - Mudar como os casos sao cadastrados nos arquivos. Tirar o "Caso 1, Caso 2" e deixar só com "1, 2"
-   - Mudar o cadastro de cidade de "1 - Cidade 1\n 2 - Cidade\n" para "Cidade 1\n Descricao de cidade 1\n Cidade 2\n Descricao de cidade 2\n"
- - Ranking dos players();
- - Viagem();
- - Fazer o mesmo que foi feito com Caso Facil com os Casos Medio e Dificil.
+   - Rever as funções de cadastro e arrumar e erros e design do terminal. 50%
+   
