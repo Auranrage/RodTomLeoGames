@@ -12,6 +12,7 @@ Ele passou aqui ontem, procurando livros sobre uma grande estátua. O cabelo del
 Ele passou uma noite aqui neste hotel. Na manha seguinte, ele foi embora em uma limousine.
 Ele partiu em um aviao com uma bandeira azul, verde e amarela.
 Rio de Janeiro
+
 2
 Joias do Sheik
 Matthew Drinkwater
@@ -25,3 +26,36 @@ Ele passou por aqui ontem. Notei que estava usando uma corrente de ouro.
 Ele me disse que iria visitar um pais na Asia.
 Ele trocou todo o dinheiro dele por wons.
 Seoul
+
+3
+t
+d
+Hugo
+dadeDoHugo
+
+4
+Tesouro
+Vilao
+Santiago
+test1
+test1
+test2
+test4
+Paris
+teste5
+teste6
+teste7
+Moscou
+
+4
+prova de apc
+rodrigoCampinas
+puc
+xastre
+lab informatica
+republica
+limeira
+lfdkfdkfkdf 
+dica2
+dica 3
+Sao Paulo

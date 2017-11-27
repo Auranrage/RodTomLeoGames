@@ -46,7 +46,7 @@ Delhi
 A cidade de Delhi eh a segunda maior cidade da India, e fora capital 1947, enquanto o pais estava sob dominio da Inglaterra, quando consgtruiu-se a nova capital Nova Delhi ao sul da antiga. Um de seus  locais turisticos mais conhecidos eh o Forte Vermelho, um complexo estrutural de fortificacao da cidade usado como defesa de invasores.
 Lagos
 Lagos eh a maior cidade da Nigeria e segunda maior cidade da Africa, atras de Cairo. Em 1991 foi deixou de ser a capital nacional e foi substituida por Abuja, mas nao perdeu suas importancias financeira, economica e mercantil. A cidade eh composta por uma parte continental e uma serie de ilhas ao redor da lagoa de Lagos.
-Karachi
+Carachi
 Cidade mais populosa do Paquistao e cede das maiores corporacoes que atuam no pais. A cidade se encontra na costa do Mar da Arabia e ao noroeste do Rio Indo, concedendo-lhe uma posicao privilegiada para negocios maritimos. Desde sua independencia do Reino Unido em 1947, a cidade recebe muitos emigrantes todos os anos.
 Dhaka
 Dhaka eh a capital e maior cidade de Bangladesh. A cidade tem sua historia iniciada no seculo XI, e sua importancia comeca a surgir quando estava sob o dominio mongol. Chamada de Cidade das Mesquitas, seus mais importantes monumentos sao o palacio de Ahsan Manzil, o nao finalizado Forte de Lalbagh, e a mesquita Hoseni Dalan.
@@ -68,8 +68,6 @@ Viena
 Viena eh a capital da Austria, e conta com um quarto de toda a populacao do pais. Eh a segunda maior cidade de lingua alema do mundo, atras de Berlim, e setima maior cidade da Uniao Europeia. Desde 1921, a "lei da separacao" classifica a cidade tambem como um dos nove estados austriacos. Eh sede de organizacoes internacionais importantes, como a Organizacao dos Paises Exportadores de Petroleo e a Organizacao para a Seguranca e Cooperacao na Europa.
 Cidade do Cabo
 Capital legislativa da Africa do Sul, onde se encontram muitos escritorios do governo e o Parlamento Nacional, eh a segunda cidade mais populosa do pais, atras de Joanesburgo, que mesmo nao sendo um dos tres centros administrativos do pais, eh uma de suas cidades mais importantes. Alem de seu porto natura extenso, a cidade eh conhecida por marcos como a baia da Mesa e a montanha da Mesa.
-Xian
-Descricao de Xian
 Pretoria
 Descricao de Pretoria
 Ottawa
@@ -81,4 +79,9 @@ Descricao de Abuja
 Cidade do Vaticano
 Descricao de Cidade do Vaticano
 Machu Picchu
-Descricao de Machu Picchu
+Descricao de Machu PicchuHugo
+
+
+limeira
+
+

@@ -1,16 +1,9 @@
-﻿  main.cpp
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.h(13): warning C4091: 'typedef ': ignorado à esquerda de 'Botoes' quando nenhuma variável é declarada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(729): warning C4101: 'nivel': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(729): warning C4101: 'sucesso': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(728): warning C4101: 'admin': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(792): warning C4101: 'cidade': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(792): warning C4101: 'diaSemana': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(870): warning C4101: 'cidade': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(870): warning C4101: 'diaSemana': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(949): warning C4101: 'cidade': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(949): warning C4101: 'diaSemana': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1040): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1028): warning C4101: 'nivelAgente': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(1028): warning C4101: 'numeroCaso': variável local não referenciada
-c:\users\rodrigo cardoso\desktop\rodtomleogames\jogocarmemsandiego\jogocarmemsandiego\main.cpp(489): warning C4715: 'InvestigarCidade': nem todos os caminhos de controle retornam um valor
-  JogoCarmemSandiego.vcxproj -> C:\Users\Rodrigo Cardoso\Desktop\RodTomLeoGames\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
+﻿  FuncoesAdmin.cpp
+c:\users\16430126\desktop\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.h(13): warning C4091: 'typedef ': ignorado à esquerda de 'Botoes' quando nenhuma variável é declarada
+c:\users\16430126\desktop\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(168): warning C4477: 'scanf': a cadeia de formato '%s' requer um argumento do tipo 'char *', mas um argumento variadic 1 tem o tipo 'char *[]'
+c:\users\16430126\desktop\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(544): warning C4474: 'printf': excesso de argumentos transmitidos para cadeia de caracteres de formato
+  c:\users\16430126\desktop\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(544): note: espaços reservados e seus parâmetros esperam 0 argumentos variadic, mas 1 foram fornecidos
+c:\users\16430126\desktop\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(40): warning C4172: retornando o endereço da variável local ou temporário: arquivoOriginal
+c:\users\16430126\desktop\jogocarmemsandiego\jogocarmemsandiego\funcoesadmin.cpp(87): warning C4172: retornando o endereço da variável local ou temporário: arquivoOriginal
+  JogoCarmemSandiego.vcxproj -> C:\Users\16430126\Desktop\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.exe
+  JogoCarmemSandiego.vcxproj -> C:\Users\16430126\Desktop\JogoCarmemSandiego\JogoCarmemSandiego\Debug\JogoCarmemSandiego.pdb (Partial PDB)
