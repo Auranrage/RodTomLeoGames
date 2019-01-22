@@ -1,2 +1,2 @@
 # RodTomLeoGames
-Early access game! very good one!
+Jogo baseado no jogo antigo da Carmem Sandiego, programado em C.
